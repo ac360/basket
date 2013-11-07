@@ -1,0 +1,28 @@
+<section data-ng-controller="IndexController">
+	<div class="row">
+
+		<div id="signup-form-container" class="">
+			<h1>Servant</h1>
+			<form class="signup form" action="/users/signup" method="post">
+				<div class="form-group">
+					<input type="text" class="form-control" name="name" placeholder="Full Name" value="">
+				</div>
+				<div class="form-group">
+					<input type="text" class="form-control" name="username" placeholder="Username" value="">
+				</div>
+				<div class="form-group">
+					<input id="email" class="form-control" type="email" name="email" placeholder="Email" value="">
+				</div>
+				<div class="form-group">
+					<input type="password" class="form-control" name="password" placeholder="Password" value="">
+				</div>
+				<div class="form-actions">
+					<button class="btn btn-danger btn-lg" type="submit">Get A Servant</button><br/>
+					or <a href="/signin">Log In</a>
+				</div>
+			</form>
+		</div>
+	</div>
+
+
+</section>

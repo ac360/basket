@@ -1,0 +1,31 @@
+extends auth
+
+block auth
+  .row 
+    .col-md-offset-4.col-md-4
+      h2 Sign Up
+  .row 
+    .col-md-offset-4.col-md-4
+        if (typeof errors !== 'undefined')
+          .fade.in.alert.alert-danger
+            a.close(data-dismiss="alert", href="javascript:void(0)") x
+            ul.list-unstyled
+              each error in errors
+                li= error
+  .row
+    .col-md-offset-4.col-md-4
+      form.signup.form(action="/users/signup", method="post")
+          div.form-group
+            input#name.form-control(type='text', name="name", placeholder='Full name', value=user.name)
+          div.form-group
+            input#username.form-control(type='text', name="username", placeholder='Username', value=user.username)
+          div.form-group
+            input#email.form-control(type='text', name="email", placeholder='Email', value=user.email)
+          div.form-group
+            input#password.form-control(type='password', name="password", placeholder='Password')
+          .form-actions
+            button.btn.btn-primary(type='submit') Sign up
+            &nbsp;
+            | or&nbsp;
+            a.show-login(href="/signin") login    
+      

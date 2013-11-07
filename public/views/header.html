@@ -1,0 +1,15 @@
+<div class="" data-ng-controller="HeaderController">
+    <ul class="list-inline" data-ng-show="global.authenticated">
+        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
+            <a href="#!/{{item.link}}">{{item.title}}</a>
+        </li>
+        <li>
+            <a href="/signout">Signout</a>
+        </li>
+    </ul>
+    <div class="row" data-ng-hide="global.authenticated">
+        <div id="top-bar" class="col-md-12">
+
+        </div>
+    </div>
+</div>

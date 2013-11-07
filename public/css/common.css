@@ -1,0 +1,31 @@
+
+body {background:#eaeaea;}
+#top-bar {background:#444;height:30px;}
+
+.navbar .nav>li>a.brand {
+    padding-left:20px;
+    margin-left:0
+}
+
+#signup-form-container {background:#f6f6f6;width:350px;margin:30px auto 10px auto;padding:20px 20px;}
+#signup-form-container .signup {max-width:200px;margin:0 auto;}
+.signup .form-control {border:1px solid #ddd;background:#fff;}
+.signup .form-group { margin-bottom:4px;}
+.signup .form-actions { text-align:center; }
+
+footer {
+    position:fixed;
+    left:0px;
+    bottom:0px;
+    height:30px;
+    width:100%;
+    background:#ddd;
+    -webkit-box-shadow:0 8px 6px 6px black;
+    -moz-box-shadow:0 8px 6px 6px black;
+    box-shadow:0 8px 6px 6px black
+}
+
+footer p {
+    padding:5px 0 12px 10px
+}
+
