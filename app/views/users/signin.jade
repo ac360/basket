@@ -6,12 +6,16 @@ block auth
       h2 Sign In
   .row 
     .col-md-offset-4.col-md-4
-        if (typeof errors !== 'undefined')
-          .fade.in.alert.alert-block.alert-error
+        if (typeof message !== 'undefined')
+          .fade.in.alert.alert-danger
             a.close(data-dismiss="alert", href="javascript:void(0)") x
-            ul
+            p= message
+        if (typeof errors !== 'undefined')
+          .fade.in.alert.alert-danger
+            a.close(data-dismiss="alert", href="javascript:void(0)") x
+            ul.list-unstyled
               each error in errors
-                li= error.type
+                li= error
   .row 
     .col-md-offset-4.col-md-4
       form.signin.form(action="/users/session", method="post")

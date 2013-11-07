@@ -55,6 +55,17 @@ exports.create = function(req, res) {
     user.provider = 'local';
     user.save(function(err) {
         if (err) {
+            console.log(err)
+            // 11000 is an error triggered by MongoDb for uniqueness validations
+            if (err.code === 11000) {
+                err.errors = [];
+                var value = err.err.match(/"([^"]+)"/)[1] + " is already in use";
+                err.errors.push(value);
+                return res.render('users/signup', {
+                    errors: err.errors,
+                    user: user
+                });
+            };
             return res.render('users/signup', {
                 errors: err.errors,
                 user: user
