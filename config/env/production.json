@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://localhost/bettertown-production",
+    "db": "mongodb://<user>:<password>@paulo.mongohq.com:10005/app19512142",
     "app": {
         "name": "BetterTown"
     },
