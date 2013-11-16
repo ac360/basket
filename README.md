@@ -1,1 +1,1 @@
-# Servant v.2
+# BetterTown
