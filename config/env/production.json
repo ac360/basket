@@ -1,12 +1,12 @@
 {
-    "db": "mongodb://heroku:320026a76a8f2e4c6c4ef998572387ff@paulo.mongohq.com:10005/app19512142",
+    "db": "",
     "app": {
         "name": "BetterTown"
     },
     "facebook": {
-        "clientID": "APP_ID",
-        "clientSecret": "APP_SECRET",
-        "callbackURL": "http://localhost:3000/auth/facebook/callback"
+        "clientID": "490819701015510",
+        "clientSecret": "3957d6256ec42b380da6d44a519ca736",
+        "callbackURL": "http://bettertown.herokuapp.com/auth/facebook/callback"
     },
     "twitter": {
         "clientID": "CONSUMER_KEY",
