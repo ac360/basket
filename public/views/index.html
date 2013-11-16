@@ -1,28 +1,49 @@
 <section data-ng-controller="IndexController">
 	<div class="row">
-
-		<div id="signup-form-container" class="">
-			<h1>Servant</h1>
-			<form class="signup form" action="/users/signup" method="post">
-				<div class="form-group">
-					<input type="text" class="form-control" name="name" placeholder="Full Name" value="">
+		<div id="main-container" class="col-md-offset-2 col-md-8">
+			<div class="row">
+				<div id="title-tab" class="">
+					<h1><span style="font-weight:normal">Better</span>Town</h1>
 				</div>
-				<div class="form-group">
-					<input type="text" class="form-control" name="username" placeholder="Username" value="">
+			</div> <!-- row -->
+			<div class="row">
+				<div id="body-container" class="col-md-12">
+					<!-- BEGIN SEARCH AREA -->
+					<div class="row">
+						<div id="search-container" class="col-md-offset-3 col-md-6">
+							<div class="row">
+								<div class="col-md-12">
+									<input type="text" class="form-control input-lg" placeholder="Enter A Town">
+								</div>
+							</div> <!-- row -->
+						</div>
+					</div> <!-- row -->
+					<!-- BEGIN MAP AREA -->
+					<div class="row">
+						<div id="map-container" class="col-md-12">
+							<div id='map' class='dark'></div>
+							  <script>
+							  var map = L.mapbox.map('map', 'austen.g9ol6a3h')
+							      .addLayer(L.mapbox.tileLayer('austen.g9ol6a3h', {
+								        detectRetina: true
+								    }));
+							  </script>
+						</div>
+					</div> <!-- row -->
+					<!-- BEGIN OPTIONS AREA -->
+					<div class="row">
+						<div id="options-container" class="col-md-offset-1 col-md-10">
+							<a class="pull-right btn btn-primary" href="/#!/issues/create">Report Issue</a>
+						</div>
+					</div> <!-- row -->
+					<!-- BEGIN ISSUE AREA -->
+					<div class="row">
+						<div id="issue-container" class="col-md-offset-1 col-md-10">
+							
+						</div>
+					</div> <!-- row -->
 				</div>
-				<div class="form-group">
-					<input id="email" class="form-control" type="email" name="email" placeholder="Email" value="">
-				</div>
-				<div class="form-group">
-					<input type="password" class="form-control" name="password" placeholder="Password" value="">
-				</div>
-				<div class="form-actions">
-					<button class="btn btn-danger btn-lg" type="submit">Get A Servant</button><br/>
-					or <a href="/signin">Log In</a>
-				</div>
-			</form>
-		</div>
-	</div>
-
-
+			</div> <!-- row -->
+		</div><!-- #main-container -->
+	</div> <!-- row -->
 </section>

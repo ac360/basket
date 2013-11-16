@@ -1,11 +1,11 @@
 {
-    "db": "mongodb://localhost/servant-dev",
+    "db": "mongodb://localhost/bettertown-dev",
     "app": {
-        "name": "Servant - Development"
+        "name": "BetterTown - Development"
     },
     "facebook": {
-        "clientID": "APP_ID",
-        "clientSecret": "APP_SECRET",
+        "clientID": "490819701015510",
+        "clientSecret": "3957d6256ec42b380da6d44a519ca736",
         "callbackURL": "http://localhost:3000/auth/facebook/callback"
     },
     "twitter": {

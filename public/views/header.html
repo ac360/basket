@@ -1,15 +1,24 @@
 <div class="" data-ng-controller="HeaderController">
-    <ul class="list-inline" data-ng-show="global.authenticated">
-        <li data-ng-repeat="item in menu" data-ng-show="global.user" ui-route="/{{item.link}}" ng-class="{active: $uiRoute}">
-            <a href="#!/{{item.link}}">{{item.title}}</a>
-        </li>
-        <li>
-            <a href="/signout">Signout</a>
-        </li>
-    </ul>
+    
+    <!-- Authenticated -->
+    <div id="top-bar" class="col-md-offset-3 col-md-7">
+        <ul class="list-inline pull-right" data-ng-show="global.authenticated">
+            <li>
+                <a href="/signout">Signout</a>
+            </li>
+        </ul>
+    </div>
+    <!-- UnAuthenticated -->
     <div class="row" data-ng-hide="global.authenticated">
-        <div id="top-bar" class="col-md-12">
-
+        <div id="top-bar" class="col-md-offset-3 col-md-7">
+            <ul class="list-inline pull-right" data-ng-hide="global.authenticated">
+                <li>
+                    <a href="/auth/facebook">Register via Facebook</a>
+                </li>
+                <li>
+                    <a href="/auth/facebook">Sign In</a>
+                </li>
+            </ul>
         </div>
     </div>
 </div>

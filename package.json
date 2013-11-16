@@ -1,9 +1,9 @@
 {
-    "name": "mean",
-    "description": "MEAN - A Modern Stack: MongoDB, ExpressJS, AngularJS, NodeJS. (BONUS: Passport User Support).",
+    "name": "BetterTown",
+    "description": "Making towns better.",
     "version": "1.0.0",
     "private": false,
-    "author": "Amos Haviv",
+    "author": "Austen Collins",
     "repository": {
         "type": "git",
         "url": "https://github.com/linnovate/mean.git"

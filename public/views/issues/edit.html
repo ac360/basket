@@ -1,10 +1,10 @@
-<section data-ng-controller="ArticlesController" data-ng-init="findOne()">
+<section data-ng-controller="IssuesController" data-ng-init="findOne()">
 	<form class="form-horizontal" data-ng-submit="update()">
 		<div class="control-group">
 			<label class="control-label" for="title">Title</label>
 
 			<div class="controls">
-				<input type="text" data-ng-model="article.title" id="title" placeholder="Title" required>
+				<input type="text" data-ng-model="issue.title" id="title" placeholder="Title" required>
 				</input>
 			</div>
 		</div>
@@ -12,7 +12,7 @@
 			<label class="control-label" for="content">Content</label>
 
 			<div class="controls">
-				<textarea data-ng-model="article.content" id="content" cols="30" rows="10" placeholder="Content">
+				<textarea data-ng-model="issue.content" id="content" cols="30" rows="10" placeholder="Content">
 				</textarea>
 			</div>
 		</div>

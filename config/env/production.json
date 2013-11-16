@@ -1,7 +1,7 @@
 {
-    "db": "mongodb://localhost/servant-production",
+    "db": "mongodb://localhost/bettertown-production",
     "app": {
-        "name": "Servant"
+        "name": "BetterTown"
     },
     "facebook": {
         "clientID": "APP_ID",

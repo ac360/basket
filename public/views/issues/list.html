@@ -1,0 +1,11 @@
+<section data-ng-controller="IssuesController" data-ng-init="find()">
+	<ul class="issues unstyled">
+		<li data-ng-repeat="issue in issues">
+			<span>{{issue.created | date:'medium'}}</span> /
+			<span>{{issue.user.name}}</span>
+			<h2><a data-ng-href="#!/issues/{{issue._id}}">{{issue.title}}</a></h2>
+			<div>{{issue.content}}</div>
+		</li>
+	</ul>
+	<h1 data-ng-hide="!issues || issues.length">No Issues yet. <br> Why don't you <a href="/#!/issues/create">Create One</a>?</h1>
+</section>

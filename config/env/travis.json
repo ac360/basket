@@ -1,8 +1,8 @@
 {
-    "db": "mongodb://localhost/servant-travis",
+    "db": "mongodb://localhost/bettertown-travis",
     "port": 3001,
     "app": {
-        "name": "Servant - Travis"
+        "name": "BetterTown - Travis"
     },
     "facebook": {
         "clientID": "APP_ID",
