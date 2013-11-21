@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://btAdmin:bettertown%76@paulo.mongohq.com:10005/app19512142",
+    "db": "mongodb://heroku:9c37fd539f53539a1637d7c724e69f0e@paulo.mongohq.com:10005/app19512142",
     "app": {
         "name": "BetterTown"
     },
