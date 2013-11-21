@@ -1,7 +1,8 @@
 
 body {background:#60b1d1;}
-.btn-primary {background:#f36865;border:none;-webkit-box-shadow:  0px 2px 0px 0px #b8443d;box-shadow:  0px 2px 0px 0px #b8443d;}
-.btn-primary:hover {background:#f57e7b;cursor:pointer;}
+input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!important;}
+.btn-primary {background:#f36865!important;border:none;}
+.btn-primary:hover {background:#f57e7b!important;cursor:pointer;}
 
 #top-bar a {color:#e9f8ff;}
 
@@ -21,6 +22,8 @@ body {background:#60b1d1;}
 #options-container {height:35px;margin-top:10px;}
 
 #issue-container {min-height:200px;background:#b4d387;margin-top:10px;}
+
+#issueModal form {max-width:250px;margin:0px auto;}
 
 
 

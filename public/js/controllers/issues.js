@@ -3,15 +3,13 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$routeP
 
     $scope.create = function() {
         var issue = new Issues({
-            title: this.title,
-            content: this.content
+            title:       this.title,
+            description: this.description
         });
-        issue.$save(function(response) {3
-            $location.path("issues/" + response._id);
+        issue.$save(function(response) {
+            console.log(response);
+            //$location.path("issues/" + response._id);
         });
-
-        this.title = "";
-        this.content = "";
     };
 
     $scope.remove = function(issue) {

@@ -60,16 +60,16 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the userId param
     app.param('userId', users.user);
 
-    //Article Routes
-    var articles = require('../app/controllers/articles');
-    app.get('/articles', articles.all);
-    app.post('/articles', auth.requiresLogin, articles.create);
-    app.get('/articles/:articleId', articles.show);
-    app.put('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.update);
-    app.del('/articles/:articleId', auth.requiresLogin, auth.article.hasAuthorization, articles.destroy);
+    //Issue Routes
+    var issues = require('../app/controllers/issues');
+    app.get('/issues', issues.all);
+    app.post('/issues', auth.requiresLogin, issues.create);
+    app.get('/issues/:issueId', issues.show);
+    app.put('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.update);
+    app.del('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.destroy);
 
-    //Finish with setting up the articleId param
-    app.param('articleId', articles.article);
+    //Finish with setting up the issueId param
+    app.param('issueId', issues.issue);
 
     //Client Routes
     var clients = require('../app/controllers/clients');
@@ -89,7 +89,7 @@ module.exports = function(app, passport, auth) {
     app.param('clientId', clients.client);
 
     // External API V1 Endpoints
-    app.get('/api/v1/articles', passport.authenticate('bearer', { session: false }), articles.all);
+    app.get('/api/v1/issues', passport.authenticate('bearer', { session: false }), issues.all);
 
     //Home route
     var index = require('../app/controllers/index');

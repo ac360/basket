@@ -33,7 +33,7 @@
 					<!-- BEGIN OPTIONS AREA -->
 					<div class="row">
 						<div id="options-container" class="col-md-offset-1 col-md-10">
-							<a class="pull-right btn btn-primary" href="/#!/issues/create">Report Issue</a>
+							<button class="pull-right btn btn-primary" ng-click="newIssue()">Report Issue</button>
 						</div>
 					</div> <!-- row -->
 					<!-- BEGIN ISSUE AREA -->
@@ -46,4 +46,33 @@
 			</div> <!-- row -->
 		</div><!-- #main-container -->
 	</div> <!-- row -->
+
+	<!-- Modal -->
+	<div id="issueModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	        <h4 class="modal-title">Report An Issue</h4>
+	      </div>
+	      <div class="modal-body">
+	        <form class="form-horizontal" data-ng-submit="createIssue()">
+				<div class="form-group">
+					<label class="control-label" for="title">Title</label>
+					<input type="text" class="form-control" data-ng-model="title" id="title" placeholder="Title">
+				</div>
+				<div class="form-group">
+					<label class="control-label" for="content">Description</label>
+					<textarea data-ng-model="description" class="form-control" id="content" cols="30" rows="10" placeholder="Content"></textarea>
+				</div>
+				<div class="form-group">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<input type="submit" class="btn btn-primary" value="Report Issue">
+				</div>
+			</form>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
 </section>

@@ -7,9 +7,9 @@ var mongoose = require('mongoose'),
 
 
 /**
- * Article Schema
+ * Issue Schema
  */
-var ArticleSchema = new Schema({
+var IssueSchema = new Schema({
     created: {
         type: Date,
         default: Date.now
@@ -17,11 +17,19 @@ var ArticleSchema = new Schema({
     title: {
         type: String,
         default: '',
+        required: true,
         trim: true
     },
-    content: {
+    description: {
         type: String,
         default: '',
+        required: true,
+        trim: true
+    },
+    town: {
+        type: String,
+        default: '',
+        required: true,
         trim: true
     },
     user: {
@@ -33,14 +41,14 @@ var ArticleSchema = new Schema({
 /**
  * Validations
  */
-ArticleSchema.path('title').validate(function(title) {
+IssueSchema.path('title').validate(function(title) {
     return title.length;
 }, 'Title cannot be blank');
 
 /**
  * Statics
  */
-ArticleSchema.statics = {
+IssueSchema.statics = {
     load: function(id, cb) {
         this.findOne({
             _id: id
@@ -48,4 +56,4 @@ ArticleSchema.statics = {
     }
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('Issue', IssueSchema);

@@ -21,11 +21,11 @@ exports.user = {
 };
 
 /**
- * Article authorizations routing middleware
+ * Issue authorizations routing middleware
  */
-exports.article = {
+exports.issue = {
     hasAuthorization: function(req, res, next) {
-        if (req.article.user.id != req.user.id) {
+        if (req.issue.user.id != req.user.id) {
             return res.send(401, 'User is not authorized');
         }
         next();
