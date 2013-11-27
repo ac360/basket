@@ -68,6 +68,10 @@ module.exports = function(app, passport, auth) {
     app.put('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.update);
     app.del('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.destroy);
 
+    //Issue Routes
+    var cities = require('../app/controllers/cities');
+    app.get('/cities/:cityName', cities.search);
+
     //Finish with setting up the issueId param
     app.param('issueId', issues.issue);
 

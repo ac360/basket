@@ -64,22 +64,13 @@ var CitySchema = new Schema({
     }
 });
 
-/**
- * Validations
- */
-// CitySchema.path('title').validate(function(title) {
-//     return title.length;
-// }, 'Title cannot be blank');
-
-/**
- * Statics
- */
-// CitySchema.statics = {
-//     load: function(id, cb) {
-//         this.findOne({
-//             _id: id
-//         }).exec(cb);
-//     }
-// };
+// Statics
+CitySchema.statics = {
+    load: function(name, cb) {
+        this.findOne({
+            name: name
+        }).exec(cb);
+    }
+};
 
 mongoose.model('City', CitySchema);

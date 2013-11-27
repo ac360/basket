@@ -13,7 +13,20 @@
 						<div id="search-container" class="col-md-offset-3 col-md-6">
 							<div class="row">
 								<div class="col-md-12">
-									<input type="text" class="form-control input-lg" placeholder="Enter A Town">
+									<script type="text/javascript">
+										var inputCity = function(cityName){
+											document.getElementById('town-search-field').value = cityName;
+										};	
+									</script>
+							        <input id="town-search-field" auto-complete ui-items="names" ng-model="query" class="form-control input-lg" placeholder="Enter A Town" ng-change="autocompleteCity()" ng-blur="hideAutocompletePopover()">
+							        <div id="autocomplete-container" data-ng-show="showAutocomplete">
+							        	<p class="st-no-margin" style="color:#999"><small>&nbsp;Choose One...</small></p>
+							        	<ul class="list-unstyled">
+											<li data-ng-repeat="city in cities" ng-click="selectCity(city)">
+												<span class="city-title">{{city.name}}</span>, <span class="city-state">{{city.admin1_code}}</span>
+											</li>
+										</ul>
+							        </div>
 								</div>
 							</div> <!-- row -->
 						</div>
@@ -33,13 +46,26 @@
 					<!-- BEGIN OPTIONS AREA -->
 					<div class="row">
 						<div id="options-container" class="col-md-offset-1 col-md-10">
-							<button class="pull-right btn btn-primary" ng-click="newIssue()">Report Issue</button>
+							<div class="row" data-ng-show="cityMode">
+								<div class="col-md-6 st-no-padding">
+									<h4>{{issues.length}} Issues in {{city.name}}</h4>
+								</div>
+								<div class="col-md-6 st-no-padding">
+									<button class="pull-right btn btn-primary st-capitalize" ng-click="newIssue()">Report Issue in {{city.name}}</button>
+								</div>
+							</div>
 						</div>
 					</div> <!-- row -->
 					<!-- BEGIN ISSUE AREA -->
 					<div class="row">
 						<div id="issue-container" class="col-md-offset-1 col-md-10">
-							
+							<div data-ng-show="cityMode">
+								<ul class="list-unstyled">
+									<li data-ng-repeat="issue in issues" ng-click="">
+										<span class="issue-title">{{issue.title}}</span>
+									</li>
+								</ul>
+							</div>
 						</div>
 					</div> <!-- row -->
 				</div>
