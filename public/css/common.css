@@ -9,7 +9,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .st-no-margin {margin:0px;}
 .st-no-padding {padding:0px;}
 .st-capitalize {text-transform: capitalize;}
-.st-white {color:#fff;}
+.st-white {color:#ffffff;}
 
 #top-bar a {color:#e9f8ff;}
 
