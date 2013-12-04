@@ -10,7 +10,9 @@
     "angular-bootstrap": "~0.6.0",
     "json3": "~3.2.4",
     "jquery": "~1.9.1",
-    "mapbox.js": "~1.4.2"
+    "mapbox.js": "~1.4.2",
+    "angular-google-maps": "1.0.0",
+    "angular-ui-router": "0.2.0"
   },
   "resolutions": {
     "angular": "1.2.3"
