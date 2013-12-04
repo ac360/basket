@@ -6,3 +6,24 @@ app.directive('ngBlur', function() {
     });
   };
 });
+
+// Google Places AutoComplete
+app.directive('googleplace', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, model) {
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: {}
+            };
+            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+ 
+            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+                scope.$apply(function() {
+                	scope.loadCity();
+                    model.$setViewValue(element.val());               
+                });
+            });
+        }
+    };
+});

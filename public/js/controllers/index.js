@@ -1,8 +1,25 @@
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Issues', 'Cities', function ($scope, Global, Issues, Cities) {
+angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Issues', function ($scope, Global, Issues) {
     // Set Defaults
     $scope.global = Global;
     $scope.cityMode = false;
-    $scope.showAutocomplete = false;
+    $scope.gPlace;
+   
+    angular.extend($scope, {
+        center: {
+            latitude: 0, // initial map center latitude
+            longitude: 0, // initial map center longitude
+        },
+        markers: [], // an array of markers,
+        zoom: 8, // the zoom level
+    });
+
+    $scope.loadCity = function() {
+        $scope.cityMode = true;
+        $scope.city = $scope.gPlace.getPlace()
+        console.log($scope.city);
+    };
+
+  
 
     $scope.newIssue = function() {
         $('#issueModal').modal('toggle');
@@ -21,39 +38,6 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
 	    // issue.$save(function(response) {
 	    //     console.log(response);
 	    // });
-    };
-
-    $scope.autocompleteCity = function() {
-        if (!$scope.query == '') {
-            Cities.query({query: $scope.query}, function(cities, err) {
-                if (cities && cities.length > 0) {
-                    $scope.cities = cities;
-                    console.log($scope.cities);
-                    $scope.showAutocomplete = true;
-                } else {
-                    $scope.showAutocomplete = false;
-                };
-            });
-        } else {
-            $scope.showAutocomplete = false;
-        };
-    };
-
-    $scope.hideAutocompletePopover = function() {
-        if ($('.popover').hasClass('in')){
-            setTimeout(function(){
-                $('#town-search-field').popover('hide');
-            },300);
-        };
-        console.log("burleD!");
-    };
-
-    $scope.selectCity = function(city) {
-        $scope.city = city;
-        $scope.cityMode = true;
-        $('#town-search-field').val(city.name + ', ' + city.admin1_code);
-        this.getIssues($scope.city);
-        $scope.showAutocomplete = false;
     };
 
     $scope.getIssues = function(city) {
