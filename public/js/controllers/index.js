@@ -1,25 +1,19 @@
 angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Issues', function ($scope, Global, Issues) {
     // Set Defaults
     $scope.global = Global;
-    $scope.cityMode = false;
     $scope.gPlace;
-   
-    angular.extend($scope, {
-        center: {
-            latitude: 0, // initial map center latitude
-            longitude: 0, // initial map center longitude
-        },
-        markers: [], // an array of markers,
-        zoom: 8, // the zoom level
-    });
 
     $scope.loadCity = function() {
         $scope.cityMode = true;
-        $scope.city = $scope.gPlace.getPlace()
-        console.log($scope.city);
+        $scope.place = $scope.gPlace.getPlace()
+        console.log($scope.place);
+        $scope.coordinates = $scope.place.geometry.location;
+        var mapOptions = {
+          center: new google.maps.LatLng($scope.coordinates.pb, $scope.coordinates.qb),
+          zoom: 13
+        };
+        var map = new google.maps.Map(document.getElementById("bettertown-map"), mapOptions);
     };
-
-  
 
     $scope.newIssue = function() {
         $('#issueModal').modal('toggle');

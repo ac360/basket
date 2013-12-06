@@ -29,19 +29,18 @@
 						</div>
 					</div> <!-- row -->
 					<!-- BEGIN MAP AREA -->
-					<div class="row" data-ng-controller="MapController">
-						<div id="map-container" data-ng-show="cityMode"></div>
-						<!-- <google-map center="center" draggable="true" zoom="zoom" data="tester" markers="markers" mark-click="true" style="height: 300px" class="col-md-12" refresh="!isMapElementHidden"></google-map> -->
+					<div class="row" data-ng-show="cityMode">
+						<div id="bettertown-map" class="col-md-12"></div>
 					</div> <!-- row -->
 					<!-- BEGIN OPTIONS AREA -->
 					<div class="row" data-ng-show="cityMode">
 						<div id="options-container" class="col-md-offset-1 col-md-10">
 							<div class="row">
 								<div class="col-md-6">
-									<h4>{{issues.length}} Issues in {{city.formatted_address}}</h4>
+									<h5>{{issues.length}} Issues in {{place.formatted_address}}</h5>
 								</div>
 								<div class="col-md-6">
-									<button class="pull-right btn btn-primary st-capitalize" ng-click="newIssue()">Report Issue in {{city.name}}</button>
+									<button class="pull-right btn btn-primary st-capitalize" ng-click="newIssue()">Report Issue in {{place.name}}</button>
 								</div>
 							</div>
 						</div>
