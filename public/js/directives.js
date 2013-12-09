@@ -21,6 +21,7 @@ app.directive('googleplace', function() {
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                 scope.$apply(function() {
                 	scope.loadCity();
+                    console.log(element);
                     model.$setViewValue(element.val());               
                 });
             });

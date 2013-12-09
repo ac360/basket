@@ -5,14 +5,40 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
 
     $scope.loadCity = function() {
         $scope.cityMode = true;
-        $scope.place = $scope.gPlace.getPlace()
+        $scope.place = $scope.gPlace.getPlace();
         console.log($scope.place);
         $scope.coordinates = $scope.place.geometry.location;
-        var mapOptions = {
-          center: new google.maps.LatLng($scope.coordinates.pb, $scope.coordinates.qb),
-          zoom: 13
+        $scope.map_options = {
+            center: new google.maps.LatLng($scope.coordinates.pb, $scope.coordinates.qb),
+            zoom: 12,
+            panControl: false
         };
-        var map = new google.maps.Map(document.getElementById("bettertown-map"), mapOptions);
+        $scope.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.map_options);
+
+        google.maps.event.addListener($scope.map, 'click', function(event) {
+            console.log(event);
+            $scope.marker = new google.maps.Marker({
+                position: event.latLng,
+                map: $scope.map,
+                title: 'Issue',
+                draggable: true
+            });
+            google.maps.event.addListener($scope.marker, 'dragend', function(event) {
+                console.log(event);
+            });
+        });
+    }; // loadCity
+
+    $scope.addMarker = function() {
+        alert("Tap location in this map");
+        google.maps.event.addListener(map, 'click', function(event) {
+            console.log(event);
+            // mArray[count] = new google.maps.Marker({
+            //     position: event.latLng,
+            //     map: map
+            // });
+            // mArray[count].getPosition();
+        });
     };
 
     $scope.newIssue = function() {

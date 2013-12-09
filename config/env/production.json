@@ -4,8 +4,8 @@
         "name": "BetterTown"
     },
     "facebook": {
-        "clientID": "490819701015510",
-        "clientSecret": "3957d6256ec42b380da6d44a519ca736",
+        "clientID": "197277687128309",
+        "clientSecret": "1959ec94248783265a6d02495d7bf6f1",
         "callbackURL": "http://bettertown.herokuapp.com/auth/facebook/callback"
     },
     "twitter": {

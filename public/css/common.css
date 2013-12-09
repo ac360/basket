@@ -42,9 +42,14 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 
 #issue-container {min-height:200px;background:#b4d387;margin-top:10px;}
 
+#issueModal {color:#fff;}
+#issueModal .modal-content {background:#acca81;border:none;-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);}
+#issueModal .modal-header {border:none;text-align: center}
+#issueModal .modal-header h3 {margin:0px;}
+#issueModal .modal-body {padding:0px 10px 10px 10px;}
 #issueModal form {max-width:250px;margin:0px auto;}
-.modal-backdrop    {background:#acca81;}
-.modal-backdrop.in {background:#acca81;opacity:0.8;}
+.modal-backdrop    {background:#60b1d1;}
+.modal-backdrop.in {background:#60b1d1;opacity:0.8;}
 
 
 /* Mapbox Styles */
