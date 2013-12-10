@@ -9,11 +9,12 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         console.log($scope.place);
         $scope.coordinates = $scope.place.geometry.location;
         $scope.map_options = {
-            center: new google.maps.LatLng($scope.coordinates.pb, $scope.coordinates.qb),
+            center: new google.maps.LatLng($scope.coordinates.nb, $scope.coordinates.ob),
             zoom: 12,
             panControl: false
         };
         $scope.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.map_options);
+        console.log("SCOPE:", $scope);
 
         google.maps.event.addListener($scope.map, 'click', function(event) {
             console.log(event);
