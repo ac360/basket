@@ -1,7 +1,7 @@
 <div class="" data-ng-controller="HeaderController">
     
     <!-- Authenticated -->
-    <div id="top-bar" class="col-md-offset-3 col-md-7">
+    <div id="top-bar" class="col-md-offset-2 col-md-8">
         <ul class="list-inline pull-right" data-ng-show="global.authenticated">
             <li>
                 <a href="/signout">Sign Out</a>
@@ -10,13 +10,10 @@
     </div>
     <!-- UnAuthenticated -->
     <div class="row" data-ng-hide="global.authenticated">
-        <div id="top-bar" class="col-md-offset-3 col-md-7">
+        <div id="top-bar" class="col-md-offset-2 col-md-8">
             <ul class="list-inline pull-right" data-ng-hide="global.authenticated">
                 <li>
-                    <a href="/auth/facebook">Register With Facebook</a>
-                </li>
-                <li>
-                    <a href="/auth/facebook">Sign In</a>
+                    <a href="/auth/facebook">Sign In with Facebook</a>
                 </li>
             </ul>
         </div>

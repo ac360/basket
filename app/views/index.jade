@@ -3,6 +3,7 @@ extends layouts/default
 block content
   section.content
     section.container
+      header(data-ng-include="'views/header.html'")
       section(ui-view)
       script(type="text/javascript").
         window.user = !{user};
