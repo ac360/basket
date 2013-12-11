@@ -12,7 +12,8 @@
     "jquery": "~1.9.1",
     "mapbox.js": "~1.4.2",
     "angular-google-maps": "1.0.0",
-    "angular-ui-router": "0.2.0"
+    "angular-ui-router": "0.2.0",
+    "angular-animate": "~1.2.4"
   },
   "resolutions": {
     "angular": "1.2.4"

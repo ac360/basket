@@ -32,6 +32,9 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
                 console.log(event);
             });
         });
+        
+        mZoomIn('.mZoomIn');
+
         console.log($scope);
     }; // loadCity
 
@@ -51,7 +54,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
         $('#issueModal').modal('show');
         $('#issueModal').on('shown.bs.modal', function (e) {
             $scope.new_issue.map = new google.maps.Map(document.getElementById("issue-map-container"), $scope.map_options);
-              google.maps.event.addListener($scope.new_issue.map, 'click', function(event) {
+            google.maps.event.addListener($scope.new_issue.map, 'click', function(event) {
                 if (!$scope.new_issue.marker) {
                     $scope.new_issue.marker = new google.maps.Marker({
                         position: event.latLng,
