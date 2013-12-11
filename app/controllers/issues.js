@@ -7,9 +7,7 @@ var mongoose = require('mongoose'),
     _ = require('underscore');
 
 
-/**
- * Find issue by id
- */
+// Find issue by id
 exports.issue = function(req, res, next, id) {
     Issue.load(id, function(err, issue) {
         if (err) return next(err);
@@ -19,19 +17,15 @@ exports.issue = function(req, res, next, id) {
     });
 };
 
-/**
- * Create a issue
- */
+// Create a issue
 exports.create = function(req, res) {
     var issue = new Issue(req.body);
+    console.log(req.body);
     issue.user = req.user;
-    
+
     issue.save(function(err) {
         if (err) {
-            return res.send('users/signup', {
-                errors: err.errors,
-                issue: issue
-            });
+            console.log(err);
         } else {
             res.jsonp(issue);
         }

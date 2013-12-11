@@ -20,7 +20,8 @@
 								    </div><!-- /input-group -->
 								</div>
 								<div class="col-md-7">
-									<button class="btn btn-primary mZoomIn btn-lg pull-right" ng-click="newIssue()">Report Issue in {{town.place_object.name}}</button>
+									<button class="btn btn-primary mZoomIn btn-lg pull-right" ng-click="newIssue()" style="margin-left:10px;">Report Issue in {{town.place_object.name}}</button>
+									<button class="btn btn-default btn-lg pull-right" ng-click="removeIssues()" ng-show="town">Clear Issues</button>
 								</div>
 							</div>							    
 						</div> <!-- #search-container -->
@@ -64,12 +65,12 @@
 	        <form class="form" data-ng-submit="createIssue()">
 	        	<div class="row">
 		        	<div class="col-md-offset-1 col-md-10">
-		        		<input type="text" class="form-control" data-ng-model="new_issue.title" id="issue-title" placeholder="Issue Title">
+		        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title">
 		        	</div>
 		        </div>
 		        <div class="row">
 		        	<div class="col-md-offset-1 col-md-10">
-		        		<textarea data-ng-model="new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
+		        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
 		        	</div>
 	        	</div>
 	        	<div class="row">

@@ -1,7 +1,7 @@
-//Issues service used for articles REST endpoint
+// Issues service used for issues REST endpoint
 angular.module('mean.issues').factory("Issues", ['$resource', function($resource) {
     return $resource('issues/:issueId', {
-        articleId: '@_id'
+        issueId: '@_id'
     }, {
         update: {
             method: 'PUT'

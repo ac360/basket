@@ -63,9 +63,9 @@ var IssueSchema = new Schema({
 /**
  * Validations
  */
-IssueSchema.path('title').validate(function(title) {
-    return title.length;
-}, 'Title cannot be blank');
+// IssueSchema.path('title').validate(function(title) {
+//     return title.length;
+// }, 'Title cannot be blank');
 
 /**
  * Statics

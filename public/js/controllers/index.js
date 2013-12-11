@@ -5,6 +5,7 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     $scope.global = Global;
     $scope.gPlace;
     $scope.town = false;
+    $scope.town.issues = false;
 
     $scope.loadTown = function() {
         // Set Defaults
@@ -25,15 +26,43 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             panControl: false
         };
         $scope.town.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.town.map_options);
+        // Load Issues
+        this.loadCityIssues();
         // Animated Elements
         mZoomIn('.mZoomIn');
     }; // loadCity
+
+    $scope.loadCityIssues = function() {
+        // Load Issues
+        Issues.query({ google_place_formatted_address: $scope.town.place_object.formatted_address}, function(issues) {
+            console.log(issues);
+            $scope.town.issues = issues;
+            $scope.town.issues.forEach(function(i) {
+                var l = new google.maps.LatLng(i.location.nb, i.location.ob)
+                i.marker = new google.maps.Marker({
+                    position: l,
+                    map: $scope.town.map
+                });
+            });
+        });
+    };
+
+    $scope.removeIssues = function() {
+        // Clear Existing Issues
+        if ($scope.town.issues) {
+            $scope.town.issues.forEach(function(i){
+                i.marker.setMap(null)
+            });
+            $scope.town.issues = false;
+        };
+    };
 
     $scope.newIssue = function() {
         $('#issueModal').modal('show');
         $('#issueModal').on('shown.bs.modal', function (e) {
             // Instantiate Second Map for Adding Issue
             if (!$scope.town.new_issue.map) {
+                var viewport = $scope.town.map.getBounds()
                 $scope.town.new_issue.map = new google.maps.Map(document.getElementById("issue-map-container"), $scope.town.map_options);
             };
             // Event Listeners
@@ -45,7 +74,8 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
                         draggable: true
                     });
                     $('#issue-map-options').slideDown('fast');
-                    console.log("Marker: ", $scope.town.new_issue.marker);
+                    console.log("Marker Object: ", $scope.town.new_issue.marker);
+                    console.log("Marker getPosition Result: ", $scope.town.new_issue.marker.getPosition());
                     // google.maps.event.addListener($scope.new_issue.marker, 'dragend', function(event) {});
                 }
             });
@@ -61,18 +91,18 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
     };
 
     $scope.createIssue = function() {
-    	if (this.title == undefined || this.description == undefined || this.title.length == 0 || this.description.length == 0 || this.city.length == 0 ) {
-    		alert("Empty fields!");
-    		return false;
-    	};
         var issue = new Issues({
-            title:       $scope.town.new_issue.title,
-            description: $scope.town.new_issue.description,
-            location:    $scope.town.new_issue.marker.position,
+            title:                               $scope.town.new_issue.title,
+            description:                         $scope.town.new_issue.description,
+            location:                            $scope.town.new_issue.marker.position,
+            google_place_name:                   $scope.town.place_object.name,
+            google_place_formatted_address:      $scope.town.place_object.formatted_address,
+            google_place_id:                     $scope.town.place_object.id,
+            google_place_reference:              $scope.town.place_object.reference
         });
         issue.$save(function(response) {
             console.log(response);
-            
+            $('#issueModal').modal('hide');
         });
     };
 
@@ -81,6 +111,11 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             $scope.issues = issues;
             console.log("Issues: ", issues);
         })
+    };
+
+    $scope.testFunction = function() {
+        var viewport = $scope.town.map.getBounds()
+        console.log(viewport);
     };
 
 }]);
