@@ -8,7 +8,7 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$routeP
         });
         issue.$save(function(response) {
             console.log(response);
-            //$location.path("issues/" + response._id);
+            
         });
     };
 

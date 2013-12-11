@@ -2,8 +2,9 @@
 body {background:#60b1d1;padding:10px;font-weight:400;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
   Helvetica, Arial, "Lucida Grande", sans-serif;-webkit-font-smoothing: antialiased;}
 input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!important;}
-.btn-primary {background:#f36865!important;border:none;letter-spacing:0px;}
-.btn-primary:hover {background:#f57e7b!important;cursor:pointer;}
+.btn-primary {background:#f36865!important;border:1px solid #f36865!important;letter-spacing:0px;}
+.btn-primary:hover {background:#f57e7b!important;border:1px solid #f57e7b!important;cursor:pointer;}
+.btn-default {border: 1px solid rgba(0,0,0,0.3);background:transparent;color:rgba(0,0,0,0.3);}
 .popover-content {padding:5px 5px;}
 
 .st-centered {text-align:center;}
@@ -35,7 +36,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 
 #issues-container {min-height:400px;background:#60b1d1;margin-top:0px;border-radius: 0px 6px 0px 0px;}
 
-#bettertown-map-container {display:block;position:relative;min-height:450px;background:#B4D387;padding:0px 10px 10px 10px;}
+#bettertown-map-container {position:relative;min-height:450px;background:#B4D387;padding:0px 10px 10px 10px;}
 #bettertown-map {width:100%;min-height:350px;}
 .angular-google-map-container {
     width: 100%;
@@ -59,7 +60,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 #issueModal ::-moz-placeholder {  /* Firefox 19+ */ color: rgba(0,0,0,0.5); }
 #issueModal :-ms-input-placeholder {color: rgba(0,0,0,0.5); } 
 #issueModal #issue-map-container {height:250px;background:#ccc;overflow:hidden;-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);}
-#issueModal #issue-map-options   {margin-top:10px;margin-bottom:10px;}
+#issueModal #issue-map-options p {margin-top:20px;margin-bottom:10px;color:#777;text-align:center;}
 #issueModal #issue-title {margin:10px 0px;}
 #issueModal #issue-actions {margin:10px 0px;}
 .modal-backdrop    {background:#60b1d1;}

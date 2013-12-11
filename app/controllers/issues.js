@@ -25,7 +25,7 @@ exports.issue = function(req, res, next, id) {
 exports.create = function(req, res) {
     var issue = new Issue(req.body);
     issue.user = req.user;
-
+    
     issue.save(function(err) {
         if (err) {
             return res.send('users/signup', {

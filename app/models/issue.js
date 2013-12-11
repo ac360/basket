@@ -26,7 +26,29 @@ var IssueSchema = new Schema({
         required: true,
         trim: true
     },
-    town: {
+    location: {
+        type: Object,
+        required: true
+    },
+    google_place_name: {
+        type: String,
+        default: '',
+        required: true,
+        trim: true
+    },
+    google_place_formatted_address: {
+        type: String,
+        default: '',
+        required: true,
+        trim: true
+    },
+    google_place_id: {
+        type: String,
+        default: '',
+        required: true,
+        trim: true
+    },
+    google_place_reference: {
         type: String,
         default: '',
         required: true,

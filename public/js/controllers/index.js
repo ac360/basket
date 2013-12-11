@@ -1,93 +1,79 @@
 angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Issues', function ($scope, Global, Issues) {
+    
+    $('#bettertown-map-container').slideDown("slow");
     // Set Defaults
     $scope.global = Global;
     $scope.gPlace;
-    $scope.townMode = false;
-    $scope.new_issue = {};
-        $scope.new_issue.title;
-        $scope.new_issue.description;
-        $scope.new_issue.map;
-        $scope.new_issue.marker = null;
+    $scope.town = false;
 
-    $scope.loadCity = function() {
-        $scope.townMode = true;
-        $scope.town = $scope.gPlace.getPlace();
-        console.log("Town: ", $scope.town);
-        $scope.map_options = {
-            center: new google.maps.LatLng($scope.town.geometry.location.nb, $scope.town.geometry.location.ob),
+    $scope.loadTown = function() {
+        // Set Defaults
+        $scope.town = {}
+        $scope.town.new_issue = {};
+            $scope.town.new_issue.title = null;
+            $scope.town.new_issue.description = null;
+            $scope.town.new_issue.marker = null;
+            $scope.town.new_issue.map = null;
+        $('#issue-map-options').hide()
+        // Get Google Place Object
+        $scope.town.place_object = $scope.gPlace.getPlace();
+        console.log("Town Place Object: ", $scope.town.place_object);
+        // Instantiate Map
+        $scope.town.map_options = {
+            center: new google.maps.LatLng($scope.town.place_object.geometry.location.nb, $scope.town.place_object.geometry.location.ob),
             zoom: 12,
             panControl: false
         };
-        $scope.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.map_options);
-
-        google.maps.event.addListener($scope.map, 'click', function(event) {
-            console.log(event);
-            $scope.marker = new google.maps.Marker({
-                position: event.latLng,
-                map: $scope.map,
-                title: 'Issue',
-                draggable: true
-            });
-            google.maps.event.addListener($scope.marker, 'dragend', function(event) {
-                console.log(event);
-            });
-        });
-        
+        $scope.town.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.town.map_options);
+        // Animated Elements
         mZoomIn('.mZoomIn');
-
-        console.log($scope);
     }; // loadCity
-
-    $scope.addMarker = function() {
-        alert("Tap location in this map");
-        google.maps.event.addListener(map, 'click', function(event) {
-            console.log(event);
-            // mArray[count] = new google.maps.Marker({
-            //     position: event.latLng,
-            //     map: map
-            // });
-            // mArray[count].getPosition();
-        });
-    };
 
     $scope.newIssue = function() {
         $('#issueModal').modal('show');
         $('#issueModal').on('shown.bs.modal', function (e) {
-            $scope.new_issue.map = new google.maps.Map(document.getElementById("issue-map-container"), $scope.map_options);
-            google.maps.event.addListener($scope.new_issue.map, 'click', function(event) {
-                if (!$scope.new_issue.marker) {
-                    $scope.new_issue.marker = new google.maps.Marker({
+            // Instantiate Second Map for Adding Issue
+            if (!$scope.town.new_issue.map) {
+                $scope.town.new_issue.map = new google.maps.Map(document.getElementById("issue-map-container"), $scope.town.map_options);
+            };
+            // Event Listeners
+            google.maps.event.addListener($scope.town.new_issue.map, 'click', function(event) {
+                if (!$scope.town.new_issue.marker) {
+                    $scope.town.new_issue.marker = new google.maps.Marker({
                         position: event.latLng,
-                        map: $scope.new_issue.map,
-                        title: 'Issue',
+                        map: $scope.town.new_issue.map,
                         draggable: true
                     });
+                    $('#issue-map-options').slideDown('fast');
+                    console.log("Marker: ", $scope.town.new_issue.marker);
                     // google.maps.event.addListener($scope.new_issue.marker, 'dragend', function(event) {});
-                } else {};
+                }
             });
         })
     };
 
     $scope.removeIssueMarker = function() {
-        if ($scope.new_issue.marker) {
-            $scope.new_issue.marker.setMap(null)
-            $scope.new_issue.marker = null;
+        if ($scope.town.new_issue.marker) {
+            $scope.town.new_issue.marker.setMap(null)
+            $scope.town.new_issue.marker = null;
+            $('#issue-map-options').slideUp('fast');
         };
     };
 
     $scope.createIssue = function() {
-    	console.log(this.title, this.description);
     	if (this.title == undefined || this.description == undefined || this.title.length == 0 || this.description.length == 0 || this.city.length == 0 ) {
     		alert("Empty fields!");
     		return false;
     	};
-     //    var issue = new Issues({
-	    //     title:       this.title,
-	    //     description: this.description
-	    // });
-	    // issue.$save(function(response) {
-	    //     console.log(response);
-	    // });
+        var issue = new Issues({
+            title:       $scope.town.new_issue.title,
+            description: $scope.town.new_issue.description,
+            location:    $scope.town.new_issue.marker.position,
+        });
+        issue.$save(function(response) {
+            console.log(response);
+            
+        });
     };
 
     $scope.getIssues = function(city) {
