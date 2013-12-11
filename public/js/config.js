@@ -5,9 +5,14 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     // Now set up the states
     $stateProvider
-        .state('search', {
+        .state('home', {
           url: "/",
           templateUrl: "views/index.html"
+
+        })
+        .state('issue-create', {
+          url: "/issues/new",
+          templateUrl: "views/create_issue.html"
         })
 
 });
