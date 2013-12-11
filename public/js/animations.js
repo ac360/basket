@@ -1,11 +1,13 @@
 
 
 mZoomIn = function(e){
-var moveBack = move(e).scale(1)
+var settleBack = move(e)
+  .scale(1)
+  .x(0)
 move(e)
   .set('opacity', 1)
   .scale(1.1)
-  .then(moveBack)
-  .duration('0.4s')
+  .then(settleBack)
+  .duration('0.2s')
   .end();
 };
