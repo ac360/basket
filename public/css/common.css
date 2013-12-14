@@ -1,10 +1,11 @@
 
-body {background:#60b1d1;padding:10px;font-weight:400;font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", 
-  Helvetica, Arial, "Lucida Grande", sans-serif;-webkit-font-smoothing: antialiased;}
+body {background: url('/img/bg1.png') no-repeat #60b1d1;background-size:100% auto;padding:10px;font-weight:400;font-family:"proxima-nova",sans-serif!important;-webkit-font-smoothing: antialiased;}
+h1, h2, h3, h4, h5, h6, p {font-family:"proxima-nova",sans-serif;}
 input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!important;}
 .btn-primary {background:#f36865!important;border:1px solid #f36865!important;letter-spacing:0px;}
 .btn-primary:hover {background:#f57e7b!important;border:1px solid #f57e7b!important;cursor:pointer;}
 .btn-default {border: 1px solid rgba(0,0,0,0.3);background:transparent;color:rgba(0,0,0,0.3);}
+.btn-xl {padding:20px 40px;font-size:26px;-webkit-border-radius: 9px;border-radius: 9px;}
 .popover-content {padding:5px 5px;}
 
 .st-centered {text-align:center;}
@@ -19,13 +20,13 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 
 #main-container {background:transparent;}
 #title-tab {width:200px;margin:0px;height:40px;background:#acca81;padding-top:10px;border-radius: 4px 4px 0px 0px;background:#B4D387;}
-#title-tab h1 {font-size:24px;margin:0px;color:#fff;text-align:center;}
+#title-tab h1 {font-family:"proxima-nova",sans-serif;font-size:28px;margin:0px;color:#fff;text-align:center;}
 #body-container {min-height:200px;overflow:hidden;background:transparent;padding-bottom:0px;border-radius:0px 6px 6px 6px;margin-bottom:20px;}
 
 #instructions-container h3 {margin-top:30px;margin-bottom:0px;}
 
 #search-container {float:left;min-height:80px;padding-top:15px;background:#B4D387;border-radius:0px 0px 0px 6px;overflow:hidden;}
-#search-container input {border:none;text-align:center;border-radius:4px;text-transform: capitalize;}
+#search-container input {font-size:20px;border:none;text-align:center;border-radius:4px;text-transform: capitalize;}
 .pac-container  {background:#f6f6f6;height:auto;width:100%;margin-top:5px;padding:10px;border-radius:4px;border:none;letter-spacing:0px!important;}
 .pac-matched    {font-size:19px;font-weight:bold;color:#444;letter-spacing:-1px;}
 .pac-item       {padding:5px;font-size:19px;color:#888;font-weight:500;border:none;}
@@ -34,23 +35,23 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .pac-item:hover .pac-matched {color:#ffffff;}
 .pac-item:hover .pac-item-query {color:#fff;}
 
-#issues-container {min-height:400px;background:#60b1d1;margin-top:0px;border-radius: 0px 6px 0px 0px;}
+#issues-container {height:450px;background:transparent;margin-top:0px;border-radius: 0px 6px 0px 0px;padding-left:0px;overflow:scroll;}
+.issue {background:#fff;margin-top:10px;padding:15px;color:#444;-webkit-border-radius: 4px;border-radius: 4px;height:100px}
+.issue h1 {font-size:18px;margin-top:0px;text-align:center;font-weight:bold;}
+.issue p {text-align:center;margin-bottom:0px;font-size:16px;color:#666;}
+#no-issues-notice {background:#fff;color:#666;font-size:22px;margin-top:15px;text-align:center;padding:30px 10px;-webkit-border-radius: 4px;border-radius: 4px;}
 
 #bettertown-map-container {position:relative;min-height:450px;background:#B4D387;padding:0px 10px 10px 10px;}
 #bettertown-map {width:100%;min-height:350px;}
-.angular-google-map-container {
-    width: 100%;
-    height: 400px;
-}
 #town-options {margin-top:10px;}
 
 #options-container {height:35px;margin-top:10px;}
 #options-container h5 {color:#fff;text-transform: capitalize;}
 
 #issueModal {color:#fff;}
-#issueModal .modal-content {background:#eaeaea;border:none;-webkit-box-shadow: none;box-shadow: none;}
+#issueModal .modal-content, #signInModal .modal-content {background:#eaeaea;border:none;-webkit-box-shadow: none;box-shadow: none;}
 #issueModal .modal-header {border:none;text-align: center}
-#issueModal .modal-header h4 {margin:0px;color:#444;}
+#issueModal .modal-header h4 {margin:0px;color:#444;font-size:22px;}
 #issueModal .modal-body {padding:0px 10px 10px 10px;}
 #issueModal input[type=text], #issueModal textarea {background:#fff;-webkit-border-radius: 0 0 0 0;border-radius: 0 0 0 0;color:#444444;text-align: center;
   -webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);box-shadow: 0 1px 1px 0 rgba(0,0,0,0.1);border:none;}
@@ -63,8 +64,13 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 #issueModal #issue-map-options p {margin-top:20px;margin-bottom:10px;color:#777;text-align:center;}
 #issueModal #issue-title {margin:10px 0px;}
 #issueModal #issue-actions {margin:10px 0px;}
+#issueModal .checkbox {margin:20px auto;color:#444;max-width:300px;}
+
+#signInModal .modal-content {padding:50px 30px;background:#fff;}
+#signInModal h1 {margin-top:0px;}
+
 .modal-backdrop    {background:#60b1d1;}
-.modal-backdrop.in {background:#60b1d1;opacity:0.8;}
+.modal-backdrop.in {background:#60b1d1;opacity:1;}
 
 #issue-edit-container {background:#b4d387;min-height:200px;}
 #issue-edit-map-container {min-height:200px;}

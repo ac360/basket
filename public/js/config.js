@@ -8,7 +8,10 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('home', {
           url: "/",
           templateUrl: "views/index.html"
-
+        })
+        .state('city', {
+          url: "/city/:id",
+          templateUrl: "views/index.html"
         })
         .state('issue-create', {
           url: "/issues/new",

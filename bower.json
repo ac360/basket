@@ -2,24 +2,22 @@
   "name": "mean",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "~3.0.1",
-    "angular": "~1.0.6",
-    "angular-resource": "~1.0.6",
-    "angular-cookies": "~1.0.6",
-    "angular-ui-utils": "0.0.4",
-    "angular-bootstrap": "~0.6.0",
-    "json3": "~3.2.4",
-    "jquery": "~1.9.1",
-    "mapbox.js": "~1.4.2",
-    "angular-google-maps": "1.0.0",
-    "angular-ui-router": "0.2.0",
-    "angular-animate": "~1.2.4",
+    "bootstrap": "*",
+    "angular": "*",
+    "angular-resource": "*",
+    "angular-cookies": "*",
+    "angular-ui-utils": "*",
+    "angular-bootstrap": "*",
+    "json3": "*",
+    "jquery": "*",
+    "angular-ui-router": "*",
+    "angular-animate": "*",
     "move.js": "git://github.com/visionmedia/move.js.git#~0.3.3",
-    "animate.css": "~3.0.0",
-    "ngAnimate-animate.css": "*"
+    "animate.css": "*",
+    "ngAnimate-animate.css": "*",
+    "angularLocalStorage": "~0.1.7"
   },
   "resolutions": {
-    "angular": "1.2.4",
-    "angular-animate": "~1.2.4"
+    "angular": "1.2.4"
   }
 }

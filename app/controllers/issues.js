@@ -69,11 +69,29 @@ exports.show = function(req, res) {
     res.jsonp(req.issue);
 };
 
-/**
- * List of Issues
- */
+// All Issues For A Town
 exports.all = function(req, res) {
-    Issue.find().sort('-created').populate('user', 'name username').exec(function(err, issues) {
+    if (req.query.google_place_id) {
+        Issue.find({ google_place_id: req.query.google_place_id }).limit(20).sort('-created').exec(function(err, issues) {
+            if (err) {
+                res.render('error', {
+                    status: 500
+                });
+            } else {
+                console.log(issues);
+                res.jsonp(issues);
+            }
+        });
+    } else {
+        res.render('error', {
+            status: 500
+        }); 
+    }
+};
+
+// Search Issues
+ exports.search = function(req, res) {
+    Issue.find({'GroupName':gname}).sort('-created').populate('user', 'name username').exec(function(err, issues) {
         if (err) {
             res.render('error', {
                 status: 500
@@ -84,16 +102,15 @@ exports.all = function(req, res) {
     });
 };
 
-/**
- * Search Issues
- */
- exports.search = function(req, res) {
-    Issue.find({'GroupName':gname}).sort('-created').populate('user', 'name username').exec(function(err, issues) {
+// Issues by City
+ exports.city = function(req, res, id) {
+    Issue.find({google_place_id: id}).sort('-created').exec(function(err, issues) {
         if (err) {
             res.render('error', {
                 status: 500
             });
         } else {
+            console.log(issues);
             res.jsonp(issues);
         }
     });

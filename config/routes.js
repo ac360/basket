@@ -64,6 +64,7 @@ module.exports = function(app, passport, auth) {
     var issues = require('../app/controllers/issues');
     app.get('/issues', issues.all);
     app.post('/issues', auth.requiresLogin, issues.create);
+    app.get('/issues/city/:cityId', issues.city);
     app.get('/issues/:issueId', issues.show);
     app.put('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.update);
     app.del('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.destroy);
