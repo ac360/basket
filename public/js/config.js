@@ -5,13 +5,22 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
     $urlRouterProvider.otherwise("/");
     // Now set up the states
     $stateProvider
-        .state('home', {
-          url: "/",
-          templateUrl: "views/index.html"
-        })
+        // .state('search', {
+        //   url: "/",
+        //   views: {
+        //     "header":    { templateUrl: "views/header/search.html"         },
+        //     "dashboard": { templateUrl: "views/dashboard/search.html"   }
+        //   }
+        // })
         .state('city', {
-          url: "/city/:id",
-          templateUrl: "views/index.html"
+          url: "/",
+          views: {
+            "header":    { templateUrl: "views/header/city.html"         },
+            "dashboard": { templateUrl: "views/dashboard/city.html"   }
+          },
+          onEnter: function(){
+            console.log("State Changed Callback")
+          }
         })
         .state('issue-create', {
           url: "/issues/new",

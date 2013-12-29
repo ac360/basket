@@ -1,20 +1,33 @@
-angular.module('mean.system').controller('IndexController', ['$scope', 'Global', 'Issues', 'Users', 'storage', '$stateParams', '$location', function ($scope, Global, Issues, Users, storage, $stateParams, $location) {
-    
+angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Issues', 'Users', 'storage', '$state', '$stateParams', '$location', function ($scope, Global, Issues, Users, storage, $state, $stateParams, $location) {
+
     // Set Defaults
     $scope.global = Global;
     $scope.gPlace;
     $scope.town = false;
     $scope.town.issues = false;
     $scope.status = false;
+    $scope.user = false;
 
     // Check Local Storage
         // storage.set('status', 'one');
     switch (storage.get('status')) {
         case "registered":
-            
         break;
     };
-    console.log($stateParams.id);
+
+    // Initialization Methods At Bottom
+
+    // Get The Current User
+    $scope.getCurrentUser = function(cb) {
+        Users.get({}, function(user) {
+            console.log("Current User Fetched: ", user);
+            if (user['0']) {
+                cb(null);
+            } else {
+                cb(user);
+            }
+        });
+    };
 
     $scope.loadTown = function() {
         // Set Defaults
@@ -27,10 +40,10 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
             $scope.town.new_issue.anonymous = false;
             $scope.town.new_issue.marker = null;
             $scope.town.new_issue.map = null;
-        $('#issue-map-options').hide()
         // Get Google Place Object
         $scope.town.place_object = $scope.gPlace.getPlace();
         console.log("Town Place Object: ", $scope.town.place_object);
+        $('#issue-map-options').hide()
         // Instantiate Map
         $scope.town.map_options = {
             center: new google.maps.LatLng($scope.town.place_object.geometry.location.nb, $scope.town.place_object.geometry.location.ob),
@@ -54,25 +67,31 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
                 $scope.town.no_issues = true;
             } else {
                 $scope.town.no_issues = false;
+                // Instantiate NiceScroll
+                $("#issues-container").niceScroll({
+                    cursorcolor:"#2f85a7",
+                    cursorborder: "0px solid #fff",
+                    railalign: 'right',
+                    cursorwidth: '6px'
+                });
+                // Draw Marker SVG
+                // var SQUARE_PIN = 'M 50 -119.876 -50 -119.876 -50 -19.876 -13.232 -19.876 0.199 0 13.63 -19.876 50 -19.876 Z';
                 $scope.town.issues.forEach(function(i) {
                     var l = new google.maps.LatLng(i.location.nb, i.location.ob)
                     i.marker = new google.maps.Marker({
                         position: l,
                         map: $scope.town.map
+                        // icon: {
+                        //     path: SQUARE_PIN,
+                        //     fillColor: '#F36865',
+                        //     fillOpacity: 1,
+                        //     strokeColor: '#999',
+                        //     strokeWeight: 0,
+                        //     scale: 0.2
+                        // }
                     });
                 });
             };
-        });
-    };
-
-    $scope.getCurrentUser = function(cb) {
-        Users.get({}, function(user) {
-            console.log("Current User Fetched: ", user);
-            if (user['0']) {
-                cb(null);
-            } else {
-                cb(user);
-            }
         });
     };
 
@@ -132,5 +151,16 @@ angular.module('mean.system').controller('IndexController', ['$scope', 'Global',
 
         });
     };
+
+    // Initialization Methods
+
+        // Get Current User
+        $scope.getCurrentUser(function(user){
+            if(user){
+                $scope.user = user;
+            }
+        });
+
+        console.log("Root Scope:", $scope);
 
 }]);

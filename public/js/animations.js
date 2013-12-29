@@ -11,3 +11,9 @@ mZoomIn = function(e, cb){
 	  .duration('0.2s')
 	  .end();
 };
+
+mScaleY = function(e, cb){
+	move(e)
+	  .scaleY(2)
+	  .end();
+};

@@ -1,0 +1,121 @@
+	<div class="row">
+		<div id="main-container" class="col-md-offset-1 col-md-10">
+			<div class="row">   
+				<div id="issues-container" class="col-md-5" ng-controller="IssuesController">
+					<div data-ng-repeat="issue in town.issues">
+						<div class="issue animated bounceInUp" ng-click="showIssue(issue,$event)">
+							<div class="row">
+								<div class="col-md-8">
+								</div>
+								<div class="col-md-4">
+									<p class="issue-date pull-right">{{ issue.created | date:'mediumDate' }}</p>	
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-12">
+									<h1>{{issue.title}}</h1>
+									<p class="issue-description">{{issue.description}}</p>	
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-8">
+								</div>
+								<div class="col-md-4">
+									<div class="issue-details" ng-if="activeIssue === issue">
+										<div class="animated bounceIn" ng-show="issue.user">
+											<p class="reported-by-title">Reported By:</p>
+											<p class="reported-by-name">{{issue.user.name}}</p>
+											<img class="reported-by-image" src="http://graph.facebook.com/{{issue.user.username}}/picture?type=large">
+										</div>
+
+										<div class="animated bounceIn" ng-show="!issue.user">
+											<p class="reported-by-title">Reported By:</p>
+											<p class="reported-by-name">Anonymous</p>
+											<div class="reported-by-anon-image">?</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="no-issues-notice" class="animated bounceInUp" ng-show="town.no_issues">
+						<p class="st-centered">{{town.place_object.name}} Has No Issues!<br/>  Report One...</p>
+						<p class="st-centered"><button class="btn btn-primary btn-lg" ng-click="newIssueModal()">Report An Issue in {{town.place_object.name}}</button></p>
+					</div>
+				</div>
+				<div id="bettertown-map-container" class="col-md-7">
+					<div id="bettertown-map">
+					</div>
+					<div id="town-options" class="row">
+						<div class="col-md-12">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div><!-- #main-container -->
+	</div> <!-- row -->
+
+	<!-- Modal -->
+	<div id="signInModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      	<h1 class="st-centered">Please Sign In</h1>
+	      	<p class="st-centered">You must be signed in to report an issue</p>
+	      	<p class="st-centered"><a href="/auth/facebook" class="btn btn-primary btn-lg">Sign In with Facebook</a></p>
+	      	<p class="st-centered">You will still be able to post anonymously and we will never post anything to your Facebook account wihtout your permission.</p>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<div id="issueModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title">Report An Issue in {{town.place_object.name}}</h4>
+	        <p class="st-centered" style="margin:0px;color:#444;padding-top:5px;">Click Anywhere on the Map to add a Marker</p>
+	      </div>
+	      <div class="modal-body">
+	      	<div class="row">
+	      		<div id="issue-map-container" class="col-md-offset-2 col-md-8">
+				</div>
+	      	</div>
+	      	<div class="row">
+		        	<div id="issue-map-options" class="col-md-offset-2 col-md-8">
+		        		<p>Drag the marker to move it, or &nbsp;<button class="btn btn-primary btn-xs" ng-click="removeIssueMarker()">Remove Marker</button></p>
+		        	</div>
+	        	</div>
+	        
+	        <form class="form" data-ng-submit="createIssue()">
+	        	<div class="row">
+		        	<div class="col-md-offset-1 col-md-10">
+		        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title">
+		        	</div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-md-offset-1 col-md-10">
+		        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
+		        	</div>
+	        	</div>
+	        	<div class="row">
+		        	<div class="col-md-offset-2 col-md-8">
+		        		<div class="checkbox">
+						    <label>
+						      <input type="checkbox" data-ng-model="town.new_issue.anonymous" id="issue-anonymous" class=""> Hide My Identity and Report Anonymously
+						    </label>
+						</div>
+		        	</div>
+	        	</div>
+	        	<div class="row">
+		        	<div class="col-md-12">
+						<div id="issue-actions" class="form-group st-centered">
+							<button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>&nbsp;
+							<input type="submit" class="btn btn-primary btn-lg" value="Report Issue">
+						</div>
+					</div>
+				</div>
+			</form>
+
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->

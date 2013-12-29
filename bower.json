@@ -15,7 +15,8 @@
     "move.js": "git://github.com/visionmedia/move.js.git#~0.3.3",
     "animate.css": "*",
     "ngAnimate-animate.css": "*",
-    "angularLocalStorage": "~0.1.7"
+    "angularLocalStorage": "~0.1.7",
+    "jquery-nicescroll": "*"
   },
   "resolutions": {
     "angular": "1.2.4"

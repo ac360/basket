@@ -2,8 +2,6 @@ extends layouts/default
 
 block content
   section.content
-    section.container
-      header(data-ng-include="'views/header.html'")
-      section(ui-view)
-      script(type="text/javascript").
-        window.user = !{user};
+  section.container(ng-controller="RootController")
+    div(ui-view="header")
+    div(ui-view="dashboard")

@@ -16,12 +16,13 @@ app.directive('googleplace', function() {
                 types: ['(cities)'],
                 componentRestrictions: {}
             };
+            // Default Scope to Root
+            scope = scope.$parent;
             scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
- 
+
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                 scope.$apply(function() {
                 	scope.loadTown();
-                    console.log(element);
                     model.$setViewValue(element.val());               
                 });
             });

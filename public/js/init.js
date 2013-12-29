@@ -1,3 +1,4 @@
+// Add ng-app to the Document
 window.bootstrap = function() {
     angular.bootstrap(document, ['mean']);
 };

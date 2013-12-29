@@ -1,0 +1,49 @@
+    <div class="row">
+        <div class="col-md-offset-1 col-md-10">
+            
+            <div class="row">
+                <div id="title-tab" class="col-md-2">
+                    <h1 ng-href="/"><span style="font-weight:300;letter-spacing:-1px;">Better</span><span style="font-weight:600;letter-spacing:-1px;">Town</span></h1>
+                </div>
+                <div class="col-md-10" style="padding-right:0px;">
+                    <!-- Authenticated -->
+                    <ul id="header-menu" class="list-inline pull-right top-bar" ng-if="user">
+                        <li>
+                           {{user.name}}
+                        </li>
+                        <li>
+                            <a href="/signout">Sign Out</a>
+                        </li>
+                    </ul>
+                    <!-- UnAuthenticated -->
+                     <ul class="list-inline pull-right top-bar" ng-if="!user">
+                        <li>
+                            <a href="/auth/facebook">Sign In with Facebook</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div> <!-- row -->
+
+            <div class="row">
+                <div id="search-container" class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-5">
+                            <div class="input-group">
+                              <input type="text" class="form-control input-lg" ng-model="chosenPlace" style="-webkit-border-radius: 6px 0px 0px 6px;border-radius: 6px 0px 0px 6px;" placeholder="Enter A Town" googleplace>
+                              <span class="input-group-btn">
+                                <button class="btn btn-primary btn-lg" type="button" ng-click="loadTown()" style="border:1px solid #F36865">Go</button>
+                              </span>
+                            </div><!-- /input-group -->
+                        </div>
+                        <div class="col-md-7">
+                            <button class="btn btn-primary mZoomIn btn-lg pull-right" ng-click="newIssueModal()" style="margin-left:10px;">Report Issue in {{town.place_object.name}}</button>
+                            <button class="btn btn-default btn-lg pull-right hide" ng-click="removeIssues()" ng-show="town.issues">Clear Issues</button>
+                        </div>  
+                    </div>                              
+                </div> <!-- #search-container -->
+            </div> <!-- .row -->
+
+        </div> <!-- col-md-offset-1 col-md-10 -->
+    </div><!-- .row -->
+

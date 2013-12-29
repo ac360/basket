@@ -1,22 +1,12 @@
-angular.module('mean.system').controller('HeaderController', ['$scope', 'Global', function ($scope, Global) {
+angular.module('mean.system').controller('HeaderController', ['$scope', 'Global', 'Users', function ($scope, Global, Users) {
+    
+    // Set Defaults
     $scope.global = Global;
 
-    $scope.menu = [{
-        "title": "Articles",
-        "link": "articles"
-    }, {
-        "title": "Create New Article",
-        "link": "articles/create"
-    }, {
-        "title": "Clients",
-        "link": "clients"
-    }, {
-        "title": "Create New Client",
-        "link": "clients/create"
-    }];
+    // Methods
 
-    $scope.init = function() {
 
-    };
+    // Initialization Methods
+
     
 }]);

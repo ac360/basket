@@ -72,20 +72,22 @@ exports.show = function(req, res) {
 // All Issues For A Town
 exports.all = function(req, res) {
     if (req.query.google_place_id) {
-        Issue.find({ google_place_id: req.query.google_place_id }).limit(20).sort('-created').exec(function(err, issues) {
+        Issue.find({ google_place_id: req.query.google_place_id }).limit(20).sort('-created').populate('user', 'name username').exec(function(err, issues) {
+            // Loop Through And Remove User Info if Anonymous is true
+            issues.forEach(function(issue, index){
+                if (issue.anonymous === true) {
+                    issue.user = null;
+                };
+            });
+            // Render Results
             if (err) {
-                res.render('error', {
-                    status: 500
-                });
+                res.render('error', { status: 500 }); 
             } else {
-                console.log(issues);
                 res.jsonp(issues);
             }
         });
     } else {
-        res.render('error', {
-            status: 500
-        }); 
+        res.render('error', { status: 500 }); 
     }
 };
 

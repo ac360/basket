@@ -1,14 +1,10 @@
-/**
- * Module dependencies.
- */
+// Module dependencies.
 var mongoose = require('mongoose'),
     async = require('async'),
     City = mongoose.model('City'),
     _ = require('underscore');
 
-/**
- * Search Issues
- */
+// Search Issues
  exports.search = function(req, res, cityName) {
     City.find({ name: new RegExp('^'+req.params.cityName, "i"), country_code: 'US' }).limit(10).exec(function(err, cities) {
         if (err) {
@@ -31,9 +27,7 @@ var mongoose = require('mongoose'),
 
 };
 
-/**
- * Find issue by id
- */
+// Find issue by id
 // exports.city = function(req, res, next, id) {
 //     City.load(name, function(err, city) {
 //         if (err) return next(err);

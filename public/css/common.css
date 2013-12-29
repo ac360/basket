@@ -4,9 +4,12 @@ h1, h2, h3, h4, h5, h6, p {font-family:"proxima-nova",sans-serif;}
 input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!important;}
 .btn-primary {background:#f36865!important;border:1px solid #f36865!important;letter-spacing:0px;}
 .btn-primary:hover {background:#f57e7b!important;border:1px solid #f57e7b!important;cursor:pointer;}
-.btn-default {border: 1px solid rgba(0,0,0,0.3);background:transparent;color:rgba(0,0,0,0.3);}
+.btn-default {border: 1px solid rgba(0,0,0,0.3);background:transparent;color:#777!important;}
+.btn-default:hover, .btn-default:active {background:transparent;color:#999!important;}
 .btn-xl {padding:20px 40px;font-size:26px;-webkit-border-radius: 9px;border-radius: 9px;}
 .popover-content {padding:5px 5px;}
+.form-control {border:0px;-webkit-box-shadow:none;box-shadow:none;}
+.form-control:focus {-webkit-box-shadow:none;box-shadow:none;}
 
 .st-centered {text-align:center;}
 .st-no-margin {margin:0px;}
@@ -14,13 +17,27 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .st-capitalize {text-transform: capitalize;}
 .st-white {color:#ffffff;}
 
+.container {padding-top:20px;}
 .top-bar {padding:0px;}
-.top-bar li {padding:0px;}
-.top-bar a {color:#e9f8ff;}
+.top-bar li {padding:0px 5px;}
+.top-bar, .top-bar a {color:#e9f8ff;font-weight:bold;}
 
+/* Search View */
+#search-screen {padding-top:100px;}
+#search-screen #logo {min-width:145px;height:40px;padding-top:10px;border-radius: 4px 4px 0px 0px;background:#B4D387;}
+#search-screen #logo h1 {font-family:"proxima-nova",sans-serif;font-size:24px;margin:0px;color:#fff;text-align:center;}
+#search-screen-body {min-height:80px;padding:25px 0px;background:#B4D387;border-radius:6px 6px 6px 6px;overflow:hidden;}
+.btn-search {padding:10px 50px;font-size:22px;}
+#search-screen-body .form-control {text-align:center;}
+#search-screen-body ::-webkit-input-placeholder {color: rgba(0,0,0,0.5);text-align:center; }
+#search-screen-body :-moz-placeholder { /* Firefox 18- */ color: rgba(0,0,0,0.5);text-align:center; }
+#search-screen-body ::-moz-placeholder {  /* Firefox 19+ */ color: rgba(0,0,0,0.5);text-align:center; }
+#search-screen-body :-ms-input-placeholder {color: rgba(0,0,0,0.5);text-align:center; } 
+
+/* City Screen */
 #main-container {background:transparent;}
-#title-tab {width:200px;margin:0px;height:40px;background:#acca81;padding-top:10px;border-radius: 4px 4px 0px 0px;background:#B4D387;}
-#title-tab h1 {font-family:"proxima-nova",sans-serif;font-size:28px;margin:0px;color:#fff;text-align:center;}
+#title-tab {margin:0px;min-width:145px;height:40px;padding-top:10px;border-radius: 4px 4px 0px 0px;background:#B4D387;}
+#title-tab h1 {font-family:"proxima-nova",sans-serif;font-size:24px;margin:0px;color:#fff;text-align:center;}
 #body-container {min-height:200px;overflow:hidden;background:transparent;padding-bottom:0px;border-radius:0px 6px 6px 6px;margin-bottom:20px;}
 
 #instructions-container h3 {margin-top:30px;margin-bottom:0px;}
@@ -35,11 +52,26 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .pac-item:hover .pac-matched {color:#ffffff;}
 .pac-item:hover .pac-item-query {color:#fff;}
 
-#issues-container {height:450px;background:transparent;margin-top:0px;border-radius: 0px 6px 0px 0px;padding-left:0px;overflow:scroll;}
-.issue {background:#fff;margin-top:10px;padding:15px;color:#444;-webkit-border-radius: 4px;border-radius: 4px;height:100px}
-.issue h1 {font-size:18px;margin-top:0px;text-align:center;font-weight:bold;}
-.issue p {text-align:center;margin-bottom:0px;font-size:16px;color:#666;}
+#issues-container {height:450px;background:transparent;margin-top:0px;border-radius: 0px 6px 0px 0px;padding-left:0px;overflow:hidden;}
+.issue {background:#fff;margin-top:5px;padding:5px 15px 15px 15px;color:#444;-webkit-border-radius: 4px;border-radius: 4px;height:80px;
+  transition: height 100ms linear;
+}
+.issue:hover {cursor: pointer;background:#e7f8ff; } 
+.issue.active:hover {background:#fff!important;cursor:default;}
+.issue.active   {height: 200px;}
+.issue.inactive {height:80px;}
+.issue h1 {font-size:16px;margin-top:0px;margin-bottom:4px;text-align:center;font-weight:bold;}
+.issue-description {text-align:center;margin-bottom:0px;font-size:16px;color:#666;}
+.issue-date {color:#888;font-size:10px;margin-bottom:0px;}
 #no-issues-notice {background:#fff;color:#666;font-size:22px;margin-top:15px;text-align:center;padding:30px 10px;-webkit-border-radius: 4px;border-radius: 4px;}
+.issue-details  {padding-top:10px;}
+.reported-by-title {font-size:10px;color:#999;margin-bottom:0px;}
+.reported-by-name {font-size:13px;font-weight:bold;margin-bottom:3px;}
+.reported-by-image {max-width:70px;max-height:70px;background:#fff;padding:4px;-webkit-box-shadow: 0 1px 1px 0 #ccc;
+box-shadow: 0 1px 1px 0 #ccc;}
+.reported-by-anon-image {height:70px;width:70px;background:#eaeaea;-webkit-box-shadow: 0 1px 1px 0 #ccc;
+box-shadow: 0 1px 1px 0 #ccc;font-size: 32px;color:#fff;text-align: center;padding-top:12px;padding-left:4px;font-weight:bold;}
+
 
 #bettertown-map-container {position:relative;min-height:450px;background:#B4D387;padding:0px 10px 10px 10px;}
 #bettertown-map {width:100%;min-height:350px;}
@@ -60,11 +92,11 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 #issueModal :-moz-placeholder { /* Firefox 18- */ color: rgba(0,0,0,0.5); }
 #issueModal ::-moz-placeholder {  /* Firefox 19+ */ color: rgba(0,0,0,0.5); }
 #issueModal :-ms-input-placeholder {color: rgba(0,0,0,0.5); } 
-#issueModal #issue-map-container {height:250px;background:#ccc;overflow:hidden;-webkit-box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);box-shadow: 0 1px 1px 0 rgba(0,0,0,0.3);}
-#issueModal #issue-map-options p {margin-top:20px;margin-bottom:10px;color:#777;text-align:center;}
+#issueModal #issue-map-container {height:250px;background:#ccc;overflow:hidden;border:3px solid #aaa;}
+#issueModal #issue-map-options p {margin-top:20px;margin-bottom:10px;color:#555;text-align:center;}
 #issueModal #issue-title {margin:10px 0px;}
 #issueModal #issue-actions {margin:10px 0px;}
-#issueModal .checkbox {margin:20px auto;color:#444;max-width:300px;}
+#issueModal .checkbox {margin:20px auto 10px auto;color:#444;max-width:300px;}
 
 #signInModal .modal-content {padding:50px 30px;background:#fff;}
 #signInModal h1 {margin-top:0px;}
@@ -82,5 +114,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
   -o-transform: scale(0);
   transform: scale(0);
 }
+
+
 
 
