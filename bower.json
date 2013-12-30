@@ -2,23 +2,22 @@
   "name": "mean",
   "version": "1.0.0",
   "dependencies": {
-    "bootstrap": "*",
-    "angular": "*",
-    "angular-resource": "*",
-    "angular-cookies": "*",
-    "angular-ui-utils": "*",
-    "angular-bootstrap": "*",
-    "json3": "*",
-    "jquery": "*",
-    "angular-ui-router": "*",
-    "angular-animate": "*",
+    "bootstrap": "latest",
+    "angular": "latest",
+    "angular-resource": "latest",
+    "angular-cookies": "latest",
+    "angular-bootstrap": "latest",
+    "json3": "latest",
+    "jquery": "latest",
+    "angular-ui-router": "latest",
+    "angular-animate": "latest",
     "move.js": "git://github.com/visionmedia/move.js.git#~0.3.3",
-    "animate.css": "*",
-    "ngAnimate-animate.css": "*",
-    "angularLocalStorage": "~0.1.7",
-    "jquery-nicescroll": "*"
+    "animate.css": "latest",
+    "ngAnimate-animate.css": "latest",
+    "angularLocalStorage": "latest",
+    "jquery-nicescroll": "latest"
   },
   "resolutions": {
-    "angular": "1.2.4"
+    "angular": "1.2.6"
   }
 }
