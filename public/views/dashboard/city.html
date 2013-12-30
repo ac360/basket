@@ -17,14 +17,14 @@
 									<p class="issue-description">{{issue.description}}</p>	
 								</div>
 							</div>
-							<div class="row">
+							<div class="issue-details row" ng-if="activeIssue === issue">
 								<div class="col-md-8">
 								</div>
 								<div class="col-md-4">
-									<div class="issue-details" ng-if="activeIssue === issue">
+									<div class="issue-author">
 										<div class="animated bounceIn" ng-show="issue.user">
 											<p class="reported-by-title">Reported By:</p>
-											<p class="reported-by-name">{{issue.user.name}}</p>
+											<p class="reported-by-name"><a href="#">{{issue.user.name}}</a></p>
 											<img class="reported-by-image" src="http://graph.facebook.com/{{issue.user.username}}/picture?type=large">
 										</div>
 
