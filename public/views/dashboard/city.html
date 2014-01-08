@@ -22,10 +22,10 @@
 								</div>
 								<div class="col-md-4">
 									<div class="issue-author">
-										<div class="animated bounceIn" ng-show="issue.user">
+										<div class="animated bounceIn" ng-if="issue.user">
 											<p class="reported-by-title">Reported By:</p>
 											<p class="reported-by-name"><a href="#">{{issue.user.name}}</a></p>
-											<img class="reported-by-image" src="http://graph.facebook.com/{{issue.user.username}}/picture?type=large">
+											<img class="reported-by-image" src="http://graph.facebook.com/{{issue.user.username}}/picture?type=large" ng-if="issue.user">
 										</div>
 
 										<div class="animated bounceIn" ng-show="!issue.user">
