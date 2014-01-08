@@ -58,6 +58,12 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     }; // loadCity
 
     $scope.loadTownIssues = function() {
+        // Clear Any Existing Issues so that the Reload is Clean
+        if ($scope.town.issues) {
+            $scope.town.issues.forEach(function(i) {
+                i.marker.setMap(null)
+            });
+        };
         // Load Issues
         console.log("loading issues for: ", $scope.town.place_object.name);
         Issues.get({ google_place_id: $scope.town.place_object.id }, function(issues) {
@@ -77,7 +83,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                 // Draw Marker SVG
                 // var SQUARE_PIN = 'M 50 -119.876 -50 -119.876 -50 -19.876 -13.232 -19.876 0.199 0 13.63 -19.876 50 -19.876 Z';
                 $scope.town.issues.forEach(function(i) {
-                    var l = new google.maps.LatLng(i.location.nb, i.location.ob)
+                    var l = new google.maps.LatLng(i.location.b, i.location.d)
                     i.marker = new google.maps.Marker({
                         position: l,
                         map: $scope.town.map
@@ -148,7 +154,6 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
             console.log(response);
             self.loadTownIssues()
             $('#issueModal').modal('hide');
-
         });
     };
 
