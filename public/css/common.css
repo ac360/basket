@@ -11,7 +11,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .form-control {border:0px;-webkit-box-shadow:none;box-shadow:none;}
 .form-control:focus {-webkit-box-shadow:none;box-shadow:none;}
 
-.st-centered {text-align:center;}
+.st-centered {text-align:center!important;}
 .st-no-margin {margin:0px;}
 .st-no-padding {padding:0px;}
 .st-capitalize {text-transform: capitalize;}
