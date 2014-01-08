@@ -15,7 +15,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('city', {
           url: "/",
           views: {
-            "header":    { templateUrl: "views/header/city.html"         },
+            "header":    { templateUrl: "views/header/city.html"      },
             "dashboard": { templateUrl: "views/dashboard/city.html"   }
           },
           onEnter: function(){

@@ -46,7 +46,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         $('#issue-map-options').hide()
         // Instantiate Map
         $scope.town.map_options = {
-            center: new google.maps.LatLng($scope.town.place_object.geometry.location.nb, $scope.town.place_object.geometry.location.ob),
+            center: new google.maps.LatLng($scope.town.place_object.geometry.location.b, $scope.town.place_object.geometry.location.d),
             zoom: 12,
             panControl: false
         };
