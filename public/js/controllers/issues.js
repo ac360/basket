@@ -9,24 +9,18 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
         $scope.$parent.$parent.town.map.panTo(new google.maps.LatLng( $scope.activeIssue.location.b, $scope.activeIssue.location.d ));
         $scope.$parent.$parent.town.map.setZoom(13);
         $scope.activeIssue.marker.setAnimation(google.maps.Animation.BOUNCE);
+        console.log(issue._id)
 
-        // Update Issue View  
-        // delete $scope.activeIssue.marker;
-        // $scope.activeIssue.views = $scope.activeIssue.views + 1;
-        // $scope.activeIssue.$update(function(i) {
-        //     console.log("Updated issue:", i)
-        //     issue = $scope.activeIssue = i;
-        //     var l = new google.maps.LatLng(i.location.b, i.location.d)
-        //     issue.marker = $scope.activeIssue.marker = new google.maps.Marker({
-        //         position: l,
-        //         map: $scope.town.map,
-        //         animation: google.maps.Animation.BOUNCE
-        //     });
-        // });
+        // Update View Count
+        var tempIssue = {}
+        tempIssue.views = issue.views + 1;
+        Issues.update({issueId: issue._id}, tempIssue, function(i){
+            console.log("View count updated for:", i);
+            $scope.activeIssue.views = i.views;
+        });
     };
 
     $scope.hideIssue = function() {
-        console.log($scope.activeIssue);
         // Stop Marker Bounce Animation
         $scope.activeIssue.marker.setAnimation(null);
         $scope.activeIssue = false;

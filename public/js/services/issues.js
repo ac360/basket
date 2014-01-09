@@ -7,6 +7,9 @@ angular.module('mean.issues').factory("Issues", ['$resource', function($resource
     		method:  'GET',
     		isArray: true
     	},
+        show:    {
+            method:  'GET'
+        },
         update: {
             method:  'PUT'
         }
