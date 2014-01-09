@@ -43,13 +43,29 @@
 							<div class="issue-details row">
 								<div class="col-md-8">
 									<div class="row">
-										<div id="issue-stats" class="col-md-offset-1 col-md-10">
-											Views: {{ activeIssue.views }}
+										<div class="col-md-offset-1 col-md-3">
+											<p class="st-centered st-no-padding st-no-margin" style="color:#f36865;">Votes</p>
+										</div>
+										<div class="col-md-3">
+											<p class="st-centered st-no-padding st-no-margin">Views</p>
+										</div>
+										<div class="col-md-3">
+											<p class="st-centered st-no-padding st-no-margin">Replies</p>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-offset-1 col-md-3">
+											<p class="votes-number st-centered st-no-padding st-no-margin">{{ activeIssue.votes }}</p>
+										</div>
+										<div class="col-md-3 st-centered">
+											<p class="views-number st-no-padding st-no-margin">{{ activeIssue.views }}</p>
+										</div>
+										<div class="col-md-3 st-centered">
+											<p class="replies-number st-no-padding st-no-margin">0</p>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-4">
-									<div class="issue-author">
+								<div class="issue-author col-md-4">
 										<div class="animated bounceIn" ng-if="activeIssue.user">
 											<p class="reported-by-title">Reported By:</p>
 											<p class="reported-by-name"><a href="#">{{activeIssue.user.name}}</a></p>
@@ -61,7 +77,6 @@
 											<p class="reported-by-name">Anonymous</p>
 											<div class="reported-by-anon-image">?</div>
 										</div>
-									</div>
 								</div>
 							</div>
 						</div>
