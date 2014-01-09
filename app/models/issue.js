@@ -58,6 +58,14 @@ var IssueSchema = new Schema({
         type: Boolean,
         default: false
     },
+    views: {
+        type: Number,
+        default: 0
+    },
+    votes: {
+        type: Number,
+        default: 0
+    },
     user: {
         type: Schema.ObjectId,
         ref: 'User'

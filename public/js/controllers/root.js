@@ -86,7 +86,8 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                     var l = new google.maps.LatLng(i.location.b, i.location.d)
                     i.marker = new google.maps.Marker({
                         position: l,
-                        map: $scope.town.map
+                        map: $scope.town.map,
+                        animation: google.maps.Animation.DROP
                         // icon: {
                         //     path: SQUARE_PIN,
                         //     fillColor: '#F36865',

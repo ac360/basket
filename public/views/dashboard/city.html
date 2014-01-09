@@ -21,10 +21,8 @@
 							</div>
 						</div>
 					</div> <!-- ng-hide="activeIssue" -->
+
 					<div ng-if="activeIssue">
-						<div style="padding-top:15px;">
-							<button class="btn btn-primary" ng-click="hideIssue()">Go Back</button>
-						</div>
 						<div class="issue active">
 							<!-- Date -->
 							<div class="row">
@@ -44,6 +42,11 @@
 							<!-- Issue-Details -->
 							<div class="issue-details row">
 								<div class="col-md-8">
+									<div class="row">
+										<div class="col-md-offset-1 col-md-10">
+											Views: {{ activeIssue.views }}
+										</div>
+									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="issue-author">
@@ -61,6 +64,9 @@
 									</div>
 								</div>
 							</div>
+						</div>
+						<div>
+							<button class="btn btn-lg btn-primary" ng-click="hideIssue()">Go Back</button>
 						</div>
 					</div> <!-- ng-show="activeIssue" -->
 					<div id="no-issues-notice" class="animated bounceInUp" ng-show="town.no_issues">
