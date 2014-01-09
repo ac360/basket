@@ -52,7 +52,7 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 .pac-item:hover .pac-matched {color:#ffffff;}
 .pac-item:hover .pac-item-query {color:#fff;}
 
-#issues-container {height:450px;background:transparent;margin-top:0px;border-radius: 0px 6px 0px 0px;padding-left:0px;overflow:hidden;}
+#issues-container {height:550px;background:transparent;margin-top:0px;border-radius: 0px 6px 0px 0px;padding-left:0px;overflow:hidden;}
 .issue {background:#fff;margin-top:5px;padding:0px;color:#444;-webkit-border-radius: 4px;border-radius: 4px;height:80px;overflow:hidden;
   transition: height 100ms linear;
 }
@@ -78,13 +78,14 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 box-shadow: 0 1px 1px 0 #89b1c2;}
 .reported-by-anon-image {height:70px;width:70px;background:#fff;-webkit-box-shadow: 0 1px 1px 0 #89b1c2;
 box-shadow: 0 1px 1px 0 #89b1c2;font-size: 32px;color:#f36865;text-align: center;padding-top:12px;padding-left:4px;font-weight:bold;}
-.issue-stats {padding-top:8px;}
+.issue-stats {padding-top:20px;}
 .votes-number {font-size:35px;color:#f36865;}
+.votes-icon {font-size:30px;color:#f36865;}
 .views-number {font-size:35px;}
 .replies-number {font-size:35px;}
 
-#bettertown-map-container {position:relative;min-height:450px;background:#B4D387;padding:0px 10px 10px 10px;}
-#bettertown-map {width:100%;min-height:350px;}
+#bettertown-map-container {position:relative;min-height:550px;background:#B4D387;padding:0px 10px 10px 10px;}
+#bettertown-map {width:100%;min-height:540px;}
 #town-options {margin-top:10px;}
 
 #options-container {height:35px;margin-top:10px;}

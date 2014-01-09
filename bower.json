@@ -15,7 +15,8 @@
     "animate.css": "latest",
     "ngAnimate-animate.css": "latest",
     "angularLocalStorage": "latest",
-    "jquery-nicescroll": "latest"
+    "jquery-nicescroll": "latest",
+    "font-awesome": "~4.0.3"
   },
   "resolutions": {
     "angular": "1.2.6"
