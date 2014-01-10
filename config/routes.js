@@ -80,6 +80,10 @@ module.exports = function(app, passport, auth) {
     var votes = require('../app/controllers/votes');
     app.get('/votes/findByIssueAndUserId', votes.findByIssueAndUserId);
     app.post('/votes', votes.create);
+    app.del('/votes/:voteId', votes.destroy);
+
+    //Finish with setting up the issueId param
+    app.param('voteId', votes.vote);
 
     //Client Routes
     var clients = require('../app/controllers/clients');

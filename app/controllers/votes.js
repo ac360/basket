@@ -6,6 +6,16 @@ var mongoose = require('mongoose'),
     Vote  = mongoose.model('Vote'),
     _ = require('underscore');
 
+// Find Vote by Id
+exports.vote = function(req, res, next, id) {
+    Vote.load(id, function(err, vote) {
+        if (err) return next(err);
+        if (!vote) return next(new Error('Failed to load vote ' + id));
+        req.vote = vote;
+        next();
+    });
+};
+
 // Create Vote
 exports.create = function(req, res) {
     var vote = new Vote(req.body);
@@ -16,6 +26,21 @@ exports.create = function(req, res) {
     vote.save(function(err) {
         if (err) {
             console.log(err);
+        } else {
+            res.jsonp(vote);
+        }
+    });
+};
+
+// Delete Vote
+exports.destroy = function(req, res) {
+    var vote = req.vote;
+
+    vote.remove(function(err) {
+        if (err) {
+            res.render('error', {
+                status: 500
+            });
         } else {
             res.jsonp(vote);
         }

@@ -86,9 +86,10 @@ box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);border-top:1px solid rgba(0,0,0,0.1);borde
 box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);border-top:1px solid rgba(0,0,0,0.1);border-right:1px solid rgba(0,0,0,0.1);border-left:1px solid rgba(0,0,0,0.1);
 font-size: 32px;color:#f36865;text-align: center;padding-top:12px;padding-left:4px;font-weight:bold;}
 .issue-stats {padding-top:20px;padding-right:0px;}
-.votes-number {font-size:30px;color:#f57e7b;}
-.votes-number:hover {cursor:pointer;color:#f7a7a5;}
-.votes-icon {font-size:25px;color:#f57e7b;}
+.votes-number {font-size:30px;}
+.votes-number:hover {cursor:pointer;}
+.votes-icon {font-size:25px;}
+.has-voted {color:#f57e7b!important;}
 .views-number {font-size:30px;}
 .replies-number {font-size:30px;}
 

@@ -1,8 +1,10 @@
 angular.module('mean.issues').controller('IssuesController', ['$scope', '$location', 'Global', 'Issues', 'Votes', '$timeout', function ($scope, $location, Global, Issues, Votes, $timeout) {
-    $scope.global = Global;
-    $scope.activeIssue = false;
-    $scope.descLimit = 42;
-    $scope.voteChecking = false;
+    $scope.global         = Global;
+    $scope.activeIssue    = false;
+    $scope.descLimit      = 42;
+    $scope.voteChecking   = false;
+    $scope.vote           = false;
+    $scope.hasVoted       = false;
 
     $scope.showIssue = function(issue, $event) {
         $scope.activeIssue = issue;
@@ -19,6 +21,21 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
             console.log("View count updated for:", i);
             $scope.activeIssue.views = i.views;
         });
+
+        // Show Vote Status
+        if ($scope.$parent.$parent.user) {
+            Votes.findByIssueAndUserId({issue: $scope.activeIssue._id, user: $scope.$parent.$parent.user._id}, function(vote) {
+                // If User Has Not Voted
+                if (vote.errors && vote.errors.code == 404 ) {
+                    $('.votes-number').removeClass('has-voted');
+                    $scope.vote = false;
+                // If User Has Voted
+                } else {
+                    $('.votes-number').addClass('has-voted');
+                    $scope.vote = vote;
+                };
+            });
+        }   
     };
 
     $scope.hideIssue = function() {
@@ -34,49 +51,69 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
         // Show Vote Spinner
         $scope.voteChecking = true;
         // Check if User is Logged In
-        $scope.$parent.$parent.getCurrentUser( function(u) {
-            if (u) {
-                // Check for Existing Vote
-                Votes.findByIssueAndUserId({issue: $scope.activeIssue._id, user: u._id}, function(vote) {
-                    console.log("Vote Reponse:", vote);
-                    if (vote.errors && vote.errors.code == 404 ) {
-                        // Update Vote Count
-                        Issues.show({ issueId: $scope.activeIssue._id }, function(i) {
-                            i.votes = i.votes + 1;
-                            Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
-                                console.log("View count updated for:", i);
+        if ($scope.$parent.$parent.user) {
+            // Check for Existing Vote
+            // If User Has Voted, Remove Vote
+            if ($scope.vote) {
+                // Fetch Issue and Subtract Vote
+                Issues.show({ issueId: $scope.activeIssue._id }, function(i) {
+                    i.votes = i.votes - 1;
+                    Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
+                        console.log("Vote count subtracted:", i);
+                        // Set New Vote Total
+                        $scope.activeIssue.votes = i.votes;
+                        var vote = $scope.vote;
+                        vote.$delete(function(v) {
+                            console.log("Vote Destroyed!: ", v);
+                            $timeout(function() {
                                 $scope.voteChecking = false;
-                                $scope.activeIssue.votes = i.votes;
-                                var vote = new Votes();
-                                vote.issue = i._id
-                                vote.user  = u._id
-                                vote.$save(function(v) {
-                                  console.log("vote saved: ", v);
-                                });
-                            });
-                        });
-                    } else {
-                        console.log("User has already voted for this issue.");
-                        $('.votes-title').tooltip({
-                            animation: true,
-                            placement: 'top',
-                            title: "You've Already Voted For This",
-                            trigger: 'manual'
-                        });
-                        $('.votes-title').tooltip('show')
-                        setTimeout(function(){
-                            $('.votes-title').tooltip('hide');
-                        }, 4000);
-                        $timeout(function() {
-                            $scope.voteChecking = false;
-                        }, 500);
-                    };
+                                $scope.vote = false;
+                                $('.votes-number').removeClass('has-voted');
+                            }, 500);
+                        })
+
+                        // var vote = new Votes();
+                        // // Save Vote
+                        // vote.issue = i._id
+                        // vote.user  = $scope.$parent.$parent.user._id
+                        // vote.$save(function(v) {
+                        //     console.log("Vote Subtracted! ", v);
+                        //     $timeout(function() {
+                        //         $scope.voteChecking = false;
+                        //         $scope.vote = true;
+                        //         $('.votes-number').removeClass('has-voted');
+                        //     }, 500);
+                        // });
+                    });
                 });
+            // If User Hasn't Voted, Add Vote
             } else {
-                $('#signInModal').modal('show');
-                $scope.voteChecking = false;
+                // Fetch Issue and Add Vote
+                Issues.show({ issueId: $scope.activeIssue._id }, function(i) {
+                    i.votes = i.votes + 1;
+                    Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
+                        console.log("Vote count added: ", i);
+                        // Set New Vote Total
+                        $scope.activeIssue.votes = i.votes;
+                        // Save Vote
+                        var vote = new Votes();
+                        vote.issue = i._id
+                        vote.user  = $scope.$parent.$parent.user._id
+                        vote.$save(function(v) {
+                            console.log("Vote record created: ", v);
+                            $timeout(function() {
+                                $scope.voteChecking = false;
+                                $scope.vote = v;
+                                $('.votes-number').addClass('has-voted');
+                            }, 500);
+                        });
+                    });
+                });
             };
-        });
+        } else {
+            $('#signInModal').modal('show');
+            $scope.voteChecking = false;
+        };
     };
 
     $scope.find = function(query) {
