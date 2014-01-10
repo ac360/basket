@@ -22,7 +22,7 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
             $scope.activeIssue.views = i.views;
         });
 
-        // Show Vote Status
+        // Check & Show Vote Status
         if ($scope.$parent.$parent.user) {
             Votes.findByIssueAndUserId({issue: $scope.activeIssue._id, user: $scope.$parent.$parent.user._id}, function(vote) {
                 // If User Has Not Voted
@@ -71,19 +71,6 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                                 $scope.activeIssue.votes = i.votes;
                             }, 500);
                         })
-
-                        // var vote = new Votes();
-                        // // Save Vote
-                        // vote.issue = i._id
-                        // vote.user  = $scope.$parent.$parent.user._id
-                        // vote.$save(function(v) {
-                        //     console.log("Vote Subtracted! ", v);
-                        //     $timeout(function() {
-                        //         $scope.voteChecking = false;
-                        //         $scope.vote = true;
-                        //         $('.votes-number').removeClass('has-voted');
-                        //     }, 500);
-                        // });
                     });
                 });
             // If User Hasn't Voted, Add Vote
