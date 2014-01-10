@@ -60,8 +60,6 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                     i.votes = i.votes - 1;
                     Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
                         console.log("Vote count subtracted:", i);
-                        // Set New Vote Total
-                        $scope.activeIssue.votes = i.votes;
                         var vote = $scope.vote;
                         vote.$delete(function(v) {
                             console.log("Vote Destroyed!: ", v);
@@ -69,6 +67,8 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                                 $scope.voteChecking = false;
                                 $scope.vote = false;
                                 $('.votes-number').removeClass('has-voted');
+                                // Set New Vote Total
+                                $scope.activeIssue.votes = i.votes;
                             }, 500);
                         })
 
@@ -93,8 +93,6 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                     i.votes = i.votes + 1;
                     Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
                         console.log("Vote count added: ", i);
-                        // Set New Vote Total
-                        $scope.activeIssue.votes = i.votes;
                         // Save Vote
                         var vote = new Votes();
                         vote.issue = i._id
@@ -105,6 +103,8 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                                 $scope.voteChecking = false;
                                 $scope.vote = v;
                                 $('.votes-number').addClass('has-voted');
+                                // Set New Vote Total
+                                $scope.activeIssue.votes = i.votes;
                             }, 500);
                         });
                     });
