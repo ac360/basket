@@ -44,7 +44,7 @@
 								<div class="issue-stats col-md-8">
 									<div class="row">
 										<div class="col-md-offset-1 col-md-4">
-											<p class="st-centered st-no-padding st-no-margin" style="color:#f57e7b;">Votes</p>
+											<p class="votes-title st-centered st-no-padding st-no-margin" style="color:#f57e7b;">Votes</p>
 										</div>
 										<div class="col-md-3">
 											<p class="st-centered st-no-padding st-no-margin">Views</p>
@@ -54,10 +54,18 @@
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-md-offset-1 col-md-4">
-											<p class="votes-number st-centered st-no-padding st-no-margin"><i class="fa fa-thumbs-o-up" style="font-size:29px;padding-right:3px;"></i>{{ activeIssue.votes }}</p>
+										<div class="col-md-offset-1 col-md-4" style="padding:0px;border-right: 1px solid #e2dccf">
+											<!-- User Hasn't Clicked UpVote -->
+											<p ng-hide="voteChecking" class="votes-number st-centered st-no-padding st-no-margin" ng-click="voteIssue()">
+												<i class="fa fa-thumbs-o-up" style="font-size:29px;padding-right:3px;"></i>{{ activeIssue.votes }}
+											</p>
+											<!-- User Has Clicked UpVote and Vote is Processing... -->
+											<p ng-show="voteChecking" class="votes-number st-centered st-no-padding st-no-margin" style="opacity:0.5;">
+												<i class="fa fa-refresh fa-spin" style="font-size:27px;" ng-show="voteChecking"></i> {{ activeIssue.votes }}
+											</p>
+
 										</div>
-										<div class="col-md-3 st-centered">
+										<div class="col-md-3 st-centered" style="border-right: 1px solid #e2dccf">
 											<p class="views-number st-no-padding st-no-margin">{{ activeIssue.views }}</p>
 										</div>
 										<div class="col-md-3 st-centered">

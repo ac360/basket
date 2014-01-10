@@ -76,6 +76,11 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the issueId param
     app.param('issueId', issues.issue);
 
+    //Vote Routes
+    var votes = require('../app/controllers/votes');
+    app.get('/votes/findByIssueAndUserId', votes.findByIssueAndUserId);
+    app.post('/votes', votes.create);
+
     //Client Routes
     var clients = require('../app/controllers/clients');
     app.get('/clients', clients.all);

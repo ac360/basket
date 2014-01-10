@@ -75,7 +75,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                 $scope.town.no_issues = false;
                 // Instantiate NiceScroll
                 $("#issues-container").niceScroll({
-                    cursorcolor:"#2f85a7",
+                    cursorcolor:"#7a756c",
                     cursorborder: "0px solid #fff",
                     railalign: 'right',
                     cursorwidth: '6px'
