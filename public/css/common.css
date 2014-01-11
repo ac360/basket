@@ -123,13 +123,14 @@ box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 #issueModal textarea {height:100px;border-top:1px solid #eaeaea;border-left:1px solid #eaeaea;border-right:1px solid #eaeaea;max-width:370px;max-height:100px;resize: none;
 	-webkit-box-shadow: none;box-shadow: none;}
 #issueModal #textarea-counter {display:block;text-align:center;color:#ccc;font-size:12px;width:100%;height:20px;border-bottom:1px solid #eaeaea;border-left:1px solid #eaeaea;border-right:1px solid #eaeaea;}
+#issueModal #title-counter {display:block;margin-bottom:10px;text-align:center;color:#ccc;font-size:12px;width:100%;height:20px;border-bottom:1px solid #eaeaea;border-left:1px solid #eaeaea;border-right:1px solid #eaeaea;}
 #issueModal ::-webkit-input-placeholder {color: rgba(0,0,0,0.5);font-weight:normal;}
 #issueModal :-moz-placeholder { /* Firefox 18- */ color: rgba(0,0,0,0.5);font-weight:normal;}
 #issueModal ::-moz-placeholder {  /* Firefox 19+ */ color: rgba(0,0,0,0.5);font-weight:normal;}
 #issueModal :-ms-input-placeholder {color: rgba(0,0,0,0.5);font-weight:normal;} 
 #issueModal #issue-map-container {height:250px;background:#ccc;overflow:hidden;border:1px solid #aaa;}
 #issueModal #issue-map-options p {margin-top:20px;margin-bottom:10px;color:#555;text-align:center;}
-#issueModal #issue-title {margin:10px 0px;border:1px solid #eaeaea;-webkit-box-shadow: none;box-shadow: none;font-weight:bold;}
+#issueModal #issue-title {margin:10px 0px 0px 0px;border-top:1px solid #eaeaea;border-left:1px solid #eaeaea;border-right:1px solid #eaeaea;-webkit-box-shadow: none;box-shadow: none;font-weight:bold;}
 #issueModal #issue-actions {margin:10px 0px;}
 #issueModal .checkbox {margin:20px auto 10px auto;color:#444;max-width:300px;}
 

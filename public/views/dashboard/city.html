@@ -135,22 +135,23 @@
 				</div>
 	      	</div>
 	      	<div class="row">
-		        	<div id="issue-map-options" class="col-md-offset-2 col-md-8">
-		        		<p>Drag the marker to move it, or &nbsp;<button class="btn btn-primary btn-xs" ng-click="removeIssueMarker()">Remove Marker</button></p>
-		        	</div>
+	        	<div id="issue-map-options" class="col-md-offset-2 col-md-8">
+	        		<p>Drag the marker to move it, or &nbsp;<button class="btn btn-primary btn-xs" ng-click="removeIssueMarker()">Remove Marker</button></p>
 	        	</div>
+        	</div>
 	        
 	        <form class="form" data-ng-submit="createIssue()">
 	        	<div id="issue-container">
 	        		<div class="row">
 			        	<div class="col-md-offset-1 col-md-10">
 			        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title" maxlength="50">
+			        		<div id="title-counter">{{ town.new_issue.title.length || 0 }}/50</div>
 			        	</div>
 			        </div>
 			        <div class="row">
 			        	<div class="col-md-offset-1 col-md-10">
 			        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description" maxlength="140"></textarea>
-			        		<div id="textarea-counter">122/140</div>
+			        		<div id="textarea-counter">{{ town.new_issue.description.length || 0 }}/140</div>
 			        	</div>
 		        	</div>
 	        	</div>
