@@ -9,7 +9,7 @@
                     <!-- Authenticated -->
                     <ul id="header-menu" class="list-inline pull-right top-bar" ng-if="user">
                         <li>
-                           {{user.name}}
+                           <img class="header-image img-circle" draggable="false" src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user"> {{user.name}}
                         </li>
                         <li>
                             <a href="/signout">Sign Out</a>
@@ -18,7 +18,7 @@
                     <!-- UnAuthenticated -->
                      <ul class="list-inline pull-right top-bar" ng-if="!user">
                         <li>
-                            <a href="/auth/facebook">Sign In with Facebook</a>
+                            <a href="/auth/facebook">Sign In With Facebook</a>
                         </li>
                     </ul>
                 </div>

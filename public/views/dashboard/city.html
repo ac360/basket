@@ -116,7 +116,7 @@
 	    <div class="modal-content">
 	      	<h1 class="st-centered">Please Sign In</h1>
 	      	<p class="st-centered">You must be signed in to report an issue</p>
-	      	<p class="st-centered"><a href="/auth/facebook" class="btn btn-primary btn-lg">Sign In with Facebook</a></p>
+	      	<p class="st-centered"><a href="/auth/facebook" class="btn btn-primary btn-lg">Sign In With Facebook</a></p>
 	      	<p class="st-centered">You will still be able to post anonymously and we will never post anything to your Facebook account wihtout your permission.</p>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->
@@ -141,14 +141,16 @@
 	        	</div>
 	        
 	        <form class="form" data-ng-submit="createIssue()">
-	        	<div class="row">
-		        	<div class="col-md-offset-1 col-md-10">
-		        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title">
-		        	</div>
-		        </div>
-		        <div class="row">
-		        	<div class="col-md-offset-1 col-md-10">
-		        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
+	        	<div id="issue-container">
+	        		<div class="row">
+			        	<div class="col-md-offset-1 col-md-10">
+			        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title">
+			        	</div>
+			        </div>
+			        <div class="row">
+			        	<div class="col-md-offset-1 col-md-10">
+			        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
+			        	</div>
 		        	</div>
 	        	</div>
 	        	<div class="row">
