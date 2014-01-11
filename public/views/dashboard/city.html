@@ -144,12 +144,13 @@
 	        	<div id="issue-container">
 	        		<div class="row">
 			        	<div class="col-md-offset-1 col-md-10">
-			        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title">
+			        		<input type="text" class="form-control" data-ng-model="town.new_issue.title" id="issue-title" placeholder="Issue Title" maxlength="50">
 			        	</div>
 			        </div>
 			        <div class="row">
 			        	<div class="col-md-offset-1 col-md-10">
-			        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description"></textarea>
+			        		<textarea data-ng-model="town.new_issue.description" class="form-control" id="issue-description" cols="30" rows="10" placeholder="Issue Description" maxlength="140"></textarea>
+			        		<div id="textarea-counter">122/140</div>
 			        	</div>
 		        	</div>
 	        	</div>
