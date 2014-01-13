@@ -15,9 +15,7 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
         console.log(issue._id)
 
         // Update View Count
-        var tempIssue = {}
-        tempIssue.views = issue.views + 1;
-        Issues.update({issueId: issue._id}, tempIssue, function(i){
+        Issues.updateViewCount({ issueId: issue._id }, function(i) {
             console.log("View count updated for:", i);
             $scope.activeIssue.views = i.views;
         });

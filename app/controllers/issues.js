@@ -45,6 +45,17 @@ exports.update = function(req, res) {
     });
 };
 
+// Update View Count
+exports.updateViewCount = function(req, res) {
+    var issue = req.issue;
+
+    issue.views = issue.views + 1;
+
+    issue.save(function(err) {
+        res.jsonp(issue);
+    });
+};
+
 /**
  * Delete an issue
  */

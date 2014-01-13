@@ -12,6 +12,11 @@ angular.module('mean.issues').factory("Issues", ['$resource', function($resource
         },
         update: {
             method:  'PUT'
+        },
+        updateViewCount: {
+            method:  'GET',
+            params: { issueId: '@_id' },
+            url:     'issues/:issueId/updateviewcount'
         }
     });
 }]);

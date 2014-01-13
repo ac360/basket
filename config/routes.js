@@ -64,6 +64,7 @@ module.exports = function(app, passport, auth) {
     app.get('/issues/:issueId', issues.show);
     app.put('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.update);
     app.del('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.destroy);
+    app.get('/issues/:issueId/updateviewcount', issues.updateViewCount);
 
     //Issue Routes
     var cities = require('../app/controllers/cities');

@@ -51,7 +51,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                         $scope.user = user;
                         // If Sign In Modal is open, close it!
                         if ( $('#signInModal').hasClass('in') ) {
-                            self.reportIssue();
+                            $('#signInModal').modal('hide');
                         };
                     });
                   } else {
@@ -79,7 +79,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                                 $scope.user = user;
                                 // If Sign In Modal is open, close it!
                                 if ( $('#signInModal').hasClass('in') ) {
-                                    self.reportIssue();
+                                    $('#signInModal').modal('hide');
                                 };
                                 if (cb) {cb()};
                            });
@@ -237,7 +237,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         window.fbAsyncInit = function() {
             // init the FB JS SDK
             FB.init({
-              appId      : '197277687128309',                    // App ID from the app dashboard
+              appId      : '490819701015510',                    // App ID from the app dashboard
               status     : true,                                 // Check Facebook Login status
               xfbml      : true                                  // Look for social plugins on the page
             });
