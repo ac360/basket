@@ -4,6 +4,10 @@ angular.module('mean.users').factory("Users", ['$resource', function($resource) 
     }, {
         update: {
             method: 'PUT'
+        },
+        signin: {
+        	method: 'POST',
+        	url:    'users/signin'
         }
     });
 }]);

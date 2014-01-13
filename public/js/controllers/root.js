@@ -1,5 +1,7 @@
 angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Issues', 'Users', 'storage', '$state', '$stateParams', '$location', function ($scope, Global, Issues, Users, storage, $state, $stateParams, $location) {
 
+    // Initialization Methods At Bottom
+
     // Set Defaults
     $scope.global = Global;
     $scope.gPlace;
@@ -15,8 +17,6 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         break;
     };
 
-    // Initialization Methods At Bottom
-
     // Get The Current User
     $scope.getCurrentUser = function(cb) {
         Users.get({}, function(user) {
@@ -24,9 +24,73 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
             if (user['0']) {
                 cb(null);
             } else {
-                cb(user);
-            }
+                $scope.user = user;
+                if (cb) { cb(user) }; 
+            };
         });
+    };
+
+    // Get The Current User
+    $scope.loginFacebook = function(e, cb) {
+        var self = this;
+        e.preventDefault();
+        if (!$scope.user) {
+            FB.getLoginStatus(function(response) {
+                  if (response.status === 'connected') {
+                    // TODO:  UPDATE USER EMAIL ADDRESS ON LOGIN!
+                    // the user is logged in and has authenticated your
+                    // app, and response.authResponse supplies
+                    // the user's ID, a valid access token, a signed
+                    // request, and the time the access token 
+                    // and signed request each expire
+                    // var uid = response.authResponse.userID;
+                    // var accessToken = response.authResponse.accessToken;
+                    console.log('User is already logged into Facebook: ', response);
+                    Users.signin(response.authResponse, function(user) {
+                        console.log('Successfully logged in user: ', user);
+                        $scope.user = user;
+                        // If Sign In Modal is open, close it!
+                        if ( $('#signInModal').hasClass('in') ) {
+                            self.reportIssue();
+                        };
+                    });
+                  } else {
+                    // the user is logged in to Facebook, 
+                    // but has not authenticated your app
+                    FB.login(function(response) {
+                       if (response.authResponse) {
+                         console.log('Successfully Authenticated: ', response);
+                         FB.api('/me', function(response) {
+                           console.log('Successfully Retrieved User Information: ', response);
+                           var newUser = new Users({
+                                email:      response.email,
+                                username:   response.username,
+                                name:       response.name,
+                                first_name: response.first_name,
+                                last_name:  response.last_name,
+                                gender:     response.gender,
+                                locale:     response.locale,
+                                timezone:   response.timezone,
+                                fb_id:      response.id,
+                                provider:   'facebook'
+                           });
+                           newUser.$save(function(user){
+                                console.log("Successfully saved new user to database and signed in: ", user);
+                                $scope.user = user;
+                                // If Sign In Modal is open, close it!
+                                if ( $('#signInModal').hasClass('in') ) {
+                                    self.reportIssue();
+                                };
+                                if (cb) {cb()};
+                           });
+                         });
+                       } else {
+                         console.log('User cancelled login or did not fully authorize.');
+                       }
+                    }, {scope: 'email,user_likes'});
+                  };
+            });
+        };
     };
 
     $scope.loadTown = function() {
@@ -102,9 +166,11 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         });
     };
 
-    $scope.newIssueModal = function() {
+    $scope.reportIssue = function() {
         this.getCurrentUser(function(user){
-            if (user) {
+            if ($scope.user) {
+                // Hide Sign In Modal if it is shown
+                $('#signInModal').modal('hide');
                 $('#issueModal').modal('show');
                 $('#issueModal').on('shown.bs.modal', function (e) {
                     // Instantiate Second Map for Adding Issue
@@ -167,6 +233,35 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
             }
         });
 
-        console.log("Root Scope:", $scope);
+        // Initialize Facebook SDK
+        window.fbAsyncInit = function() {
+            // init the FB JS SDK
+            FB.init({
+              appId      : '197277687128309',                    // App ID from the app dashboard
+              status     : true,                                 // Check Facebook Login status
+              xfbml      : true                                  // Look for social plugins on the page
+            });
+
+            // Additional initialization code such as adding Event Listeners goes here
+          };
+
+          // Load the SDK asynchronously
+          (function(){
+             // If we've already installed the SDK, we're done
+             if (document.getElementById('facebook-jssdk')) {return;}
+
+             // Get the first script element, which we'll use to find the parent node
+             var firstScriptElement = document.getElementsByTagName('script')[0];
+
+             // Create a new script element and set its id
+             var facebookJS = document.createElement('script'); 
+             facebookJS.id = 'facebook-jssdk';
+
+             // Set the new script's source to the source of the Facebook JS SDK
+             facebookJS.src = '//connect.facebook.net/en_US/all.js';
+
+             // Insert the Facebook JS SDK into the DOM
+             firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
+        }());
 
 }]);

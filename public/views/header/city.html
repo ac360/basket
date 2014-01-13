@@ -18,7 +18,7 @@
                     <!-- UnAuthenticated -->
                      <ul class="list-inline pull-right top-bar" ng-if="!user">
                         <li>
-                            <a href="/auth/facebook">Sign In With Facebook</a>
+                            <a id="facebook-login-link" href="#" ng-click="loginFacebook($event)">Sign In With Facebook</a>
                         </li>
                     </ul>
                 </div>
@@ -32,7 +32,7 @@
                               <input type="text" class="form-control input-lg" ng-model="chosenPlace" placeholder="Enter A Town" googleplace>
                         </div>
                         <div class="col-md-7">
-                            <button class="btn btn-primary mZoomIn btn-lg pull-right" ng-click="newIssueModal()" style="margin-left:10px;"><i class="fa fa-exclamation-circle" style="padding-right:4px;"></i> Report Issue in {{town.place_object.name}}</button>
+                            <button class="btn btn-primary mZoomIn btn-lg pull-right" ng-click="reportIssue()" style="margin-left:10px;"><i class="fa fa-exclamation-circle" style="padding-right:4px;"></i> Report Issue in {{town.place_object.name}}</button>
                             <button class="btn btn-default btn-lg pull-right hide" ng-click="removeIssues()" ng-show="town.issues">Clear Issues</button>
                         </div>  
                     </div>                              

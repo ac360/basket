@@ -95,7 +95,7 @@
 					</div> <!-- ng-show="activeIssue" -->
 					<div id="no-issues-notice" class="animated bounceInUp" ng-show="town.no_issues">
 						<p class="st-centered">{{town.place_object.name}} Has No Issues!<br/>  Report One...</p>
-						<p class="st-centered"><button class="btn btn-primary btn-lg" ng-click="newIssueModal()">Report An Issue in {{town.place_object.name}}</button></p>
+						<p class="st-centered"><button class="btn btn-primary btn-lg" ng-click="reportIssue()">Report An Issue in {{town.place_object.name}}</button></p>
 					</div>
 				</div>
 				<div id="bettertown-map-container" class="col-md-7">
@@ -116,7 +116,7 @@
 	    <div class="modal-content">
 	      	<h1 class="st-centered">Please Sign In</h1>
 	      	<p class="st-centered">You must be signed in to report an issue</p>
-	      	<p class="st-centered"><a href="/auth/facebook" class="btn btn-primary btn-lg">Sign In With Facebook</a></p>
+	      	<p class="st-centered"><a href="#" ng-click="loginFacebook( $event )" class="btn btn-primary btn-lg">Sign In With Facebook</a></p>
 	      	<p class="st-centered">You will still be able to post anonymously and we will never post anything to your Facebook account wihtout your permission.</p>
 	    </div><!-- /.modal-content -->
 	  </div><!-- /.modal-dialog -->

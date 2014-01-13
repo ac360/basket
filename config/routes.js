@@ -3,17 +3,13 @@ var async = require('async');
 module.exports = function(app, passport, auth) {
     //User Routes
     var users = require('../app/controllers/users');
-    app.get('/signin', users.signin);
-    app.get('/signup', users.signup);
     app.get('/signout', users.signout);
 
     // Users API - Internal
     app.post('/users/signup', users.create);
-    app.post('/users/session', passport.authenticate('local', {
-        failureRedirect: '/signin',
-        failureFlash: 'Invalid email or password.'
-    }), users.session);
+    app.post('/users/signin', users.signin);
     app.get('/users/me', users.me);
+    app.post('/users/me', users.create);
     app.get('/users/:userId', users.show);
 
     //Setting the facebook oauth routes
