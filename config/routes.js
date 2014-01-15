@@ -13,23 +13,14 @@ module.exports = function(app, passport, auth) {
     app.get('/users/:userId', users.show);
 
     //Setting the facebook oauth routes
-    app.get('/auth/facebook', passport.authenticate('facebook', {
-        scope: ['email', 'user_about_me'],
-        failureRedirect: '/signin'
-    }), users.signin);
+    // app.get('/auth/facebook', passport.authenticate('facebook', {
+    //     scope: ['email', 'user_about_me'],
+    //     failureRedirect: '/signin'
+    // }), users.signin);
 
-    app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
-
-    //Setting the github oauth routes
-    app.get('/auth/github', passport.authenticate('github', {
-        failureRedirect: '/signin'
-    }), users.signin);
-
-    app.get('/auth/github/callback', passport.authenticate('github', {
-        failureRedirect: '/signin'
-    }), users.authCallback);
+    // app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+    //     failureRedirect: '/signin'
+    // }), users.authCallback);
 
     //Setting the twitter oauth routes
     app.get('/auth/twitter', passport.authenticate('twitter', {
@@ -56,30 +47,30 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the userId param
     app.param('userId', users.user);
 
-    //Issue Routes
-    var issues = require('../app/controllers/issues');
-    app.get('/issues', issues.all);
-    app.post('/issues', auth.requiresLogin, issues.create);
-    app.get('/issues/city/:cityId', issues.city);
-    app.get('/issues/:issueId', issues.show);
-    app.put('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.update);
-    app.del('/issues/:issueId', auth.requiresLogin, auth.issue.hasAuthorization, issues.destroy);
-    app.get('/issues/:issueId/updateviewcount', issues.updateViewCount);
+    // Retailer Routes
+    var retailers = require('../app/controllers/retailers');
+    app.get('/retailers/search', retailers.search);
 
-    //Issue Routes
-    var cities = require('../app/controllers/cities');
-    app.get('/cities/:cityName', cities.search);
+    //medley Routes
+    var medleys = require('../app/controllers/medleys');
+    app.get('/medleys', medleys.all);
+    app.post('/medleys', auth.requiresLogin, medleys.create);
+    app.get('/medleys/:shortId', medleys.show);
+    app.put('/medleys/:shortId', auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
+    app.del('/medleys/:shortId', auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
+    app.get('/medleys/:shortId/updateviewcount', medleys.updateViewCount);
+    app.get('/medleys/:shortId/updatevotecount', auth.requiresLogin, medleys.updateVoteCount);
 
-    //Finish with setting up the issueId param
-    app.param('issueId', issues.issue);
+    //Finish with setting up the shortId param
+    app.param('shortId', medleys.medley);
 
-    //Vote Routes
+    //Vote Routess
     var votes = require('../app/controllers/votes');
-    app.get('/votes/findByIssueAndUserId', votes.findByIssueAndUserId);
-    app.post('/votes', votes.create);
-    app.del('/votes/:voteId', votes.destroy);
+    app.get('/votes/findByMedleyAndUserId', votes.findByMedleyAndUserId);
+    app.post('/votes',                      auth.requiresLogin, votes.create);
+    app.del('/votes/:voteId',               votes.destroy);
 
-    //Finish with setting up the issueId param
+    //Finish with setting up the voteId param
     app.param('voteId', votes.vote);
 
     //Client Routes
@@ -100,10 +91,11 @@ module.exports = function(app, passport, auth) {
     app.param('clientId', clients.client);
 
     // External API V1 Endpoints
-    app.get('/api/v1/issues', passport.authenticate('bearer', { session: false }), issues.all);
+    app.get('/api/v1/medleys', passport.authenticate('bearer', { session: false }), medleys.all);
 
     //Home route
     var index = require('../app/controllers/index');
-    app.get('/', index.render);
+    app.get('/:shortId', index.show_redirect);
+    app.get('/'        , index.render);
 
 };

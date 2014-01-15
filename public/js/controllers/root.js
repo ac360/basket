@@ -1,14 +1,25 @@
-angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Issues', 'Users', 'storage', '$state', '$stateParams', '$location', function ($scope, Global, Issues, Users, storage, $state, $stateParams, $location) {
+angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout) {
 
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.global = Global;
-    $scope.gPlace;
-    $scope.town = false;
-    $scope.town.issues = false;
-    $scope.status = false;
-    $scope.user = false;
+    $scope.global           = Global;
+    $scope.status           = false;
+    $scope.user             = false;
+    $scope.basket           = {};
+    $scope.basket.hashtags  = [];
+    $scope.basket.items     = [];
+    $scope.basket_status    = 'Your Basket:';
+    $scope.basket_publish   = false;
+    $scope.retailer         = 'All Retailers';
+    $scope.search_keywords  = '';
+    $scope.search_results   = false;
+    $scope.product_preview  = false;
+    $scope.status           = {};
+    $scope.status.icon      = '';
+    $scope.status.message   = '';
+    $scope.status.status    = false;
+    $scope.share            = false;
 
     // Check Local Storage
         // storage.set('status', 'one');
@@ -28,6 +39,73 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                 if (cb) { cb(user) }; 
             };
         });
+    };
+
+    $scope.setRetailer = function(retailer) {
+      $scope.retailer = retailer;
+    };
+
+    $scope.searchRetailers = function(keywords, items, cb) {
+        if ($state.current.name != "search") {
+          $state.go('search', {}, {});
+        };
+        $scope.search_keywords      = keywords;
+        $scope.status.icon          = "refresh"
+        $scope.status.message       = 'Searching for ' + $scope.search_keywords + ' on ' + $scope.retailer.toLowerCase();
+        $scope.status.status        = true;
+        console.log("Search keywords: ", $scope.search_keywords)
+        Retailers.search({ q: $scope.search_keywords }, function(response) {
+          $scope.search_results     = response.items;
+          $scope.status.status      = false;
+          console.log("Search results for " + $scope.search_keywords, $scope.search_results);
+        });
+    };
+
+    $scope.setBasketStatus = function() {
+      if ( $scope.basket.items.length == 1 ) { 
+        $scope.basket_status = "Add 1 more item...";
+        $scope.basket_publish = false;
+      } else if ( $scope.basket.items.length > 1 ) { 
+        $scope.basket_status = "Ready to publish!";
+        $scope.basket_publish = true;
+      } else {
+        $scope.basket_status = "Your Basket:";
+        $scope.basket_publish = false;
+      };
+    };
+
+    $scope.addBasketItem = function(item, $event) {
+        // Set Gridster Defaults
+        item.row = item.col = item.size_x = item.size_y = 1;
+        $scope.basket.items.push(item);
+        console.log("Basket: ", $scope.basket);
+        this.removeArrayItem(item.$$hashKey, $scope.search_results);
+        $scope.basket_full = true;
+        this.setBasketStatus();
+    };
+
+    $scope.removeArrayItem = function(hashKey, sourceArray) {
+        var self = this;
+        angular.forEach(sourceArray, function(obj, index){
+          // sourceArray is a reference to the original array passed to ng-repeat, 
+          // rather than the filtered version. 
+          // 1. compare the target object's hashKey to the current member of the iterable:
+          if (obj.$$hashKey === hashKey) {
+            // remove the matching item from the array
+            sourceArray.splice(index, 1);
+            // and exit the loop right away
+            self.setBasketStatus();
+            return;
+          };
+        });
+    };
+
+    $scope.showProductPreview = function(item) {
+      $scope.product_preview = item;
+    };
+
+    $scope.hideProductPreview = function(item) {
+      $scope.product_preview = false;
     };
 
     // Get The Current User
@@ -87,141 +165,71 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                        } else {
                          console.log('User cancelled login or did not fully authorize.');
                        }
-                    }, {scope: 'email,user_likes'});
+                    }, { scope: 'email,user_likes' });
                   };
             });
         };
     };
 
-    $scope.loadTown = function() {
-        // Set Defaults
-        $scope.town = {}
-        $scope.town.issues = null;
-        $scope.town.no_issues = false;
-        $scope.town.new_issue = {};
-            $scope.town.new_issue.title = null;
-            $scope.town.new_issue.description = null;
-            $scope.town.new_issue.anonymous = false;
-            $scope.town.new_issue.marker = null;
-            $scope.town.new_issue.map = null;
-        // Get Google Place Object
-        $scope.town.place_object = $scope.gPlace.getPlace();
-        console.log("Town Place Object: ", $scope.town.place_object);
-        $('#issue-map-options').hide()
-        // Instantiate Map
-        $scope.town.map_options = {
-            center: new google.maps.LatLng($scope.town.place_object.geometry.location.b, $scope.town.place_object.geometry.location.d),
-            zoom: 12,
-            panControl: false
-        };
-        $scope.town.map = new google.maps.Map(document.getElementById("bettertown-map"), $scope.town.map_options);
-        // Load Issues
-        this.loadTownIssues();
-        // Animated Elements
-        mZoomIn('.mZoomIn');
-    }; // loadCity
+    $scope.validateHashtags = function() {
+        // Limit Number of Characters
+        var content_id = 'hashtags-input';  
+        var max = 140;
+        //binding keyup/down events on the contenteditable div
+        $('#'+content_id).keyup(function(e){ check_charcount(content_id, max, e); });
+        $('#'+content_id).keydown(function(e){ check_charcount(content_id, max, e); });
+        function check_charcount(content_id, max, e) {   
+            if(e.which != 8 && $('#'+content_id).text().length > max) {
+                e.preventDefault();
+            }
+        }
+        // Style hashtag text
+        $('#hashtags-input').text().replace(/(^|\W)(#[a-z\d][\w-]*)/ig, '$1<span>$2</span>');
 
-    $scope.loadTownIssues = function() {
-        // Clear Any Existing Issues so that the Reload is Clean
-        if ($scope.town.issues) {
-            $scope.town.issues.forEach(function(i) {
-                i.marker.setMap(null)
+        // console.log(words);
+        // var tagslistarr = words.split(' ');
+        // var arr=[];
+        // $.each(tagslistarr,function(i,val){
+        //     if(tagslistarr[i].indexOf('#') == 0){
+                 
+        //     }
+        // });
+    };
+
+    $scope.publishBasket = function($event) {
+        $event.preventDefault();
+        // Save to array of hashtags
+        var words = $('#hashtags-input').text();
+        var tagslistarr = words.split(' ');
+        var arr=[];
+        $.each(tagslistarr,function(i,val){
+            if(tagslistarr[i].indexOf('#') == 0){
+              $scope.basket.hashtags.push(tagslistarr[i]);  
+            }
+        });
+        if ($scope.basket.hashtags.length > 0) {
+            console.log("Basket to be published: ", $scope.basket);
+            var basket = new Medleys($scope.basket);
+            basket.$save(function(response){
+              console.log(response);
+              $scope.basket           = {};
+              $scope.basket.hashtags  = [];
+              $scope.basket.items     = [];
+              $('#create-stage ul').html('');
+              $('#hashtagModal').modal('hide');
+              $('#hashtagModal').on('hidden.bs.modal', function () {
+                $timeout(function(){
+                    $state.go('show', { basketId: response.short_id });
+                    $scope.share = true;
+                }, 500);
+              });
             });
-        };
-        // Load Issues
-        console.log("loading issues for: ", $scope.town.place_object.name);
-        Issues.get({ google_place_id: $scope.town.place_object.id }, function(issues) {
-            console.log(issues);
-            $scope.town.issues = issues;
-            if ($scope.town.issues.length < 1) {
-                $scope.town.no_issues = true;
-            } else {
-                $scope.town.no_issues = false;
-                // Instantiate NiceScroll
-                $("#issues-container").niceScroll({
-                    cursorcolor:"#7a756c",
-                    cursorborder: "0px solid #fff",
-                    railalign: 'right',
-                    cursorwidth: '6px'
-                });
-                // Draw Marker SVG
-                // var SQUARE_PIN = 'M 50 -119.876 -50 -119.876 -50 -19.876 -13.232 -19.876 0.199 0 13.63 -19.876 50 -19.876 Z';
-                $scope.town.issues.forEach(function(i) {
-                    var l = new google.maps.LatLng(i.location.b, i.location.d)
-                    i.marker = new google.maps.Marker({
-                        position: l,
-                        map: $scope.town.map,
-                        animation: google.maps.Animation.DROP
-                        // icon: {
-                        //     path: SQUARE_PIN,
-                        //     fillColor: '#F36865',
-                        //     fillOpacity: 1,
-                        //     strokeColor: '#999',
-                        //     strokeWeight: 0,
-                        //     scale: 0.2
-                        // }
-                    });
-                });
-            };
-        });
-    };
-
-    $scope.reportIssue = function() {
-        this.getCurrentUser(function(user){
-            if ($scope.user) {
-                // Hide Sign In Modal if it is shown
-                $('#signInModal').modal('hide');
-                $('#issueModal').modal('show');
-                $('#issueModal').on('shown.bs.modal', function (e) {
-                    // Instantiate Second Map for Adding Issue
-                    if (!$scope.town.new_issue.map) {
-                        var viewport = $scope.town.map.getBounds()
-                        $scope.town.new_issue.map = new google.maps.Map(document.getElementById("issue-map-container"), $scope.town.map_options);
-                    };
-                    // Event Listeners
-                    google.maps.event.addListener($scope.town.new_issue.map, 'click', function(event) {
-                        if (!$scope.town.new_issue.marker) {
-                            $scope.town.new_issue.marker = new google.maps.Marker({
-                                position: event.latLng,
-                                map: $scope.town.new_issue.map,
-                                draggable: true
-                            });
-                            $('#issue-map-options').slideDown('fast');
-                            console.log("Marker Object: ", $scope.town.new_issue.marker);
-                            console.log("Marker getPosition Result: ", $scope.town.new_issue.marker.getPosition());
-                            // google.maps.event.addListener($scope.new_issue.marker, 'dragend', function(event) {});
-                        }
-                    });
-                });
-            } else {
-                $('#signInModal').modal('show');
-            };
-        })
-    };
-    $scope.removeIssueMarker = function() {
-        if ($scope.town.new_issue.marker) {
-            $scope.town.new_issue.marker.setMap(null)
-            $scope.town.new_issue.marker = null;
-            $('#issue-map-options').slideUp('fast');
-        };
-    };
-    $scope.createIssue = function() {
-        var self = this;
-        var issue = new Issues({
-            title:                               $scope.town.new_issue.title,
-            description:                         $scope.town.new_issue.description,
-            anonymous:                           $scope.town.new_issue.anonymous,
-            location:                            $scope.town.new_issue.marker.position,
-            google_place_name:                   $scope.town.place_object.name,
-            google_place_formatted_address:      $scope.town.place_object.formatted_address,
-            google_place_id:                     $scope.town.place_object.id,
-            google_place_reference:              $scope.town.place_object.reference
-        });
-        issue.$save(function(response) {
-            console.log(response);
-            self.loadTownIssues()
-            $('#issueModal').modal('hide');
-        });
+        } else {
+           $scope.hashtag_error = 'Please enter at least one hashtag';
+           $timeout(function(){
+              $scope.hashtag_error = false;
+           }, 5000);
+        }
     };
 
     // Initialization Methods
@@ -237,7 +245,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         window.fbAsyncInit = function() {
             // init the FB JS SDK
             FB.init({
-              appId      : '197277687128309',                    // App ID from the app dashboard
+              appId      : '736751053015158',                    // App ID from the app dashboard
               status     : true,                                 // Check Facebook Login status
               xfbml      : true                                  // Look for social plugins on the page
             });

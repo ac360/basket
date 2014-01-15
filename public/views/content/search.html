@@ -1,0 +1,61 @@
+<div class="row">
+	<div class="results-container col-md-7">
+		<div ng-repeat="item in search_results">
+			<div class="row result animated" ng-mouseleave="hideProductPreview()">
+				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)">
+					<img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" class="result-image" draggable="false">
+					<div class="no-image-box" ng-hide="item.images.medium">No Image</div>
+				</div>
+				<div class="col-md-8 result-title-container" ng-mouseover="showProductPreview(item)">
+					<h4>{{ item.title }}</h4>
+					<h5>{{ item.category }}</h5>
+					<h6>{{ item.price_new }}</h6>
+					<h6>{{ item.price_used }}</h6>
+					<h6>{{ item.retailer }}</h6>
+				</div>
+				<div class="col-md-1 add-btn" ng-click="addBasketItem(item, $event)" ng-mouseover="hideProductPreview(item)">
+					<i class="fa fa-plus"></i>
+				</div>
+			</div> <!-- .row -->
+		</div> <!-- ng-repeat -->
+	</div><!-- .results-container -->
+	
+	<div class="col-md-5">
+		<!-- basket box -->
+		<div class="row" ng-hide="product_preview">
+			<div class="col-md-4">
+			</div>
+			<div class="new-basket-box col-md-8 animated bounceInRight">
+				<div id="publish-notice">
+					{{ basket_status }} <button class="btn btn-blue pull-right disabled" ng-hide="basket_publish"><i class="fa fa-check"></i> Publish</button>
+					<a ui-sref="create" class="btn btn-blue pull-right" ng-show="basket_publish"><i class="fa fa-check"></i> Publish</a>
+				</div>
+				<div ng-repeat="item in basket.items">
+					<div class="new-basket-item animated bounceIn">
+						<div class="new-basket-item-image"><img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" draggable="false"><p ng-hide="item.images.medium" style="padding-top:16px;margin:0px;font-size:12px;color:#aaa">No Image</p></div>
+						<div class="new-basket-item-title">{{ item.title | limitTo:35 }}</div>
+						<div class="new-basket-item-options"><i class="fa fa-times" ng-click="removeArrayItem(item.$$hashKey, basket.items)"></i></div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- product preview -->
+		<div class="row" ng-show="product_preview">
+			<div id="product-preview" class="col-md-offset-1 col-md-11 st-shadow">
+				<div class="row">
+					<div class="col-md-12 st-centered">
+						<img class="product-preview-image" ng-src="{{ product_preview.images.large }}" ng-show="product_preview.images.large" draggable="false">
+						<p ng-hide="product_preview.images.large">No Image Available</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12 product-preview-details">
+						<h4>{{ product_preview.title}}</h4>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
+</div> <!-- row -->

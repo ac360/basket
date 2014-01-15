@@ -1,0 +1,63 @@
+<div ng-controller="ShowController">
+	<div id="show-container" class="row animated fadeInUp">
+		<div class="col-md-12">
+			
+			<div class="row">
+				<div id="show-profile" class="col-md-6">
+					<div id="show-profile-image-container" ng-show="show_basket">
+						<img id="show-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{show_basket.user.username}}/picture?type=large">
+					</div>
+					<div id="show-profile-info-container" ng-show="show_basket">
+						<div id="author-container">
+							<a class="author" href="#">{{show_basket.user.name}}</a>
+						</div>
+						<div id="info-container">
+							<div id="show-options-views">
+								<i class="fa fa-eye"></i><span class="show-views">{{show_basket.views}}</span>
+							</div>
+							<div id="show-options-votes" ng-click="voteBasket()">
+								<i class="fa fa-heart-o" ng-if="!vote" ng-hide="voteChecking"></i><i class="fa fa-heart" ng-if="vote" ng-hide="voteChecking"></i><i class="fa fa-refresh fa-spin" ng-show="voteChecking"></i><span class="show-votes">{{show_basket.votes}}</span>
+							</div>
+							<div id="show-options-share">
+								<span id="facebook-share-link" ng-click="shareFacebook()"><i class="fa fa-facebook-square"></i> Share</span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-12"> 
+
+						<div id="show-options-hashtags" ng-show="show_basket">
+							<a class="hashtag" href="#" ng-repeat="hashtag in show_basket.hashtags">{{ hashtag }}</a>
+						</div>
+						<div id="show-stage" class="gridster" ng-show="show_basket">
+							<ul dynamic>
+							</ul>
+						</div>
+
+
+						<h3 class="st-centered" ng-hide="show_basket" style="margin-top:60px;color:#777">
+							Sorry, this basket does not exist
+						</h3>
+				</div>
+			</div><!-- row -->
+
+		</div><!-- col-md-12 -->
+	</div><!-- row -->
+
+	<!-- Local Modals -->
+
+	<div id="publishedShareModal" class="modal fade">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	        <h1 class="st-centered">Share Your New Basket</h1>
+	        <h5 class="st-centered">Your Basket was successfully published, now show the world!</h5>
+	        <p class="st-centered" style="padding:0px;margin:15px 0px;"><button class="btn btn-blue btn-lg" ng-click="shareFacebook()"><i class="fa fa-facebook-square" style="margin-right:3px"></i> Share On Facebook</button></p>
+	        <p class="st-centered"><a href="#" data-dismiss="modal">Cancel</a></p>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+</div><!-- ShowController -->

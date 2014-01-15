@@ -1,7 +1,7 @@
 {
-    "db": "mongodb://localhost/bettertown-dev",
+    "db": "mongodb://localhost/medley-dev",
     "app": {
-        "name": "BetterTown - Development"
+        "name": "Medley - Development"
     },
     "facebook": {
         "clientID": "490819701015510",

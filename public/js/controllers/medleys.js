@@ -1,28 +1,28 @@
-angular.module('mean.issues').controller('IssuesController', ['$scope', '$location', 'Global', 'Issues', 'Votes', '$timeout', function ($scope, $location, Global, Issues, Votes, $timeout) {
+angular.module('mean.medleys').controller('MedleysController', ['$scope', '$location', 'Global', 'medleys', 'Votes', '$timeout', function ($scope, $location, Global, medleys, Votes, $timeout) {
     $scope.global         = Global;
-    $scope.activeIssue    = false;
+    $scope.activeMedley    = false;
     $scope.descLimit      = 42;
     $scope.voteChecking   = false;
     $scope.vote           = false;
     $scope.hasVoted       = false;
 
-    $scope.showIssue = function(issue, $event) {
-        $scope.activeIssue = issue;
-        // Pan & Zoom to issue on map
-        $scope.$parent.$parent.town.map.panTo(new google.maps.LatLng( $scope.activeIssue.location.b, $scope.activeIssue.location.d ));
+    $scope.showMedley = function(medley, $event) {
+        $scope.activeMedley = medley;
+        // Pan & Zoom to medley on map
+        $scope.$parent.$parent.town.map.panTo(new google.maps.LatLng( $scope.activeMedley.location.b, $scope.activeMedley.location.d ));
         $scope.$parent.$parent.town.map.setZoom(13);
-        $scope.activeIssue.marker.setAnimation(google.maps.Animation.BOUNCE);
-        console.log(issue._id)
+        $scope.activeMedley.marker.setAnimation(google.maps.Animation.BOUNCE);
+        console.log(medley._id)
 
         // Update View Count
-        Issues.updateViewCount({ issueId: issue._id }, function(i) {
+        Medleys.updateViewCount({ medleyId: medley._id }, function(i) {
             console.log("View count updated for:", i);
-            $scope.activeIssue.views = i.views;
+            $scope.activeMedley.views = i.views;
         });
 
         // Check & Show Vote Status
         if ($scope.$parent.$parent.user) {
-            Votes.findByIssueAndUserId({issue: $scope.activeIssue._id, user: $scope.$parent.$parent.user._id}, function(vote) {
+            Votes.findByMedleyAndUserId({medley: $scope.activeMedley._id, user: $scope.$parent.$parent.user._id}, function(vote) {
                 // If User Has Not Voted
                 if (vote.errors && vote.errors.code == 404 ) {
                     $('.votes-number').removeClass('has-voted');
@@ -36,16 +36,16 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
         }   
     };
 
-    $scope.hideIssue = function() {
+    $scope.hideMedley = function() {
         // Stop Marker Bounce Animation
-        $scope.activeIssue.marker.setAnimation(null);
-        $scope.activeIssue = false;
+        $scope.activeMedley.marker.setAnimation(null);
+        $scope.activeMedley = false;
         // Pan Zoom back to Town
         $scope.$parent.$parent.town.map.panTo(new google.maps.LatLng($scope.$parent.$parent.town.place_object.geometry.location.b, $scope.$parent.$parent.town.place_object.geometry.location.d));
         $scope.$parent.$parent.town.map.setZoom(12)
     };
 
-    $scope.voteIssue = function() {
+    $scope.voteMedley = function() {
         // Show Vote Spinner
         $scope.voteChecking = true;
         // Check if User is Logged In
@@ -53,10 +53,10 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
             // Check for Existing Vote
             // If User Has Voted, Remove Vote
             if ($scope.vote) {
-                // Fetch Issue and Subtract Vote
-                Issues.show({ issueId: $scope.activeIssue._id }, function(i) {
+                // Fetch Medley and Subtract Vote
+                Medleys.show({ medleyId: $scope.activeMedley._id }, function(i) {
                     i.votes = i.votes - 1;
-                    Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
+                    Medleys.update({medleyId: $scope.activeMedley._id}, i, function(i) {
                         console.log("Vote count subtracted:", i);
                         var vote = $scope.vote;
                         vote.$delete(function(v) {
@@ -66,21 +66,21 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                                 $scope.vote = false;
                                 $('.votes-number').removeClass('has-voted');
                                 // Set New Vote Total
-                                $scope.activeIssue.votes = i.votes;
+                                $scope.activeMedley.votes = i.votes;
                             }, 500);
                         })
                     });
                 });
             // If User Hasn't Voted, Add Vote
             } else {
-                // Fetch Issue and Add Vote
-                Issues.show({ issueId: $scope.activeIssue._id }, function(i) {
+                // Fetch Medley and Add Vote
+                medleys.show({ medleyId: $scope.activeMedley._id }, function(i) {
                     i.votes = i.votes + 1;
-                    Issues.update({issueId: $scope.activeIssue._id}, i, function(i) {
+                    medleys.update({medleyId: $scope.activeMedley._id}, i, function(i) {
                         console.log("Vote count added: ", i);
                         // Save Vote
                         var vote = new Votes();
-                        vote.issue = i._id
+                        vote.medley = i._id
                         vote.user  = $scope.$parent.$parent.user._id
                         vote.$save(function(v) {
                             console.log("Vote record created: ", v);
@@ -89,7 +89,7 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
                                 $scope.vote = v;
                                 $('.votes-number').addClass('has-voted');
                                 // Set New Vote Total
-                                $scope.activeIssue.votes = i.votes;
+                                $scope.activeMedley.votes = i.votes;
                             }, 500);
                         });
                     });
@@ -102,16 +102,16 @@ angular.module('mean.issues').controller('IssuesController', ['$scope', '$locati
     };
 
     $scope.find = function(query) {
-        Issues.query(query, function(issues) {
-            $scope.issues = issues;
+        Medleys.query(query, function(medleys) {
+            $scope.medleys = medleys;
         });
     };
 
     $scope.findOne = function() {
-        Issues.get({
-            issueId: $routeParams.issueId
-        }, function(issue) {
-            $scope.issue = issue;
+        Medleys.get({
+            medleyId: $routeParams.medleyId
+        }, function(medley) {
+            $scope.medley = medley;
         });
     };
 }]);

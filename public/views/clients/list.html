@@ -1,9 +1,0 @@
-<section data-ng-controller="ClientsController" data-ng-init="find()">
-  <ul class="clients unstyled">
-    <li data-ng-repeat="client in clients">
-      <span>{{client.created | date:'medium'}}</span>
-      <h2><a data-ng-href="#!/clients/{{client._id}}">{{client.name}}</a></h2>
-    </li>
-  </ul>
-  <h1 data-ng-hide="!clients || clients.length">No clients yet. <br> Why don't you <a href="/#!/clients/create">Create One</a>?</h1>
-</section>

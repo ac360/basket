@@ -14,9 +14,9 @@ var VoteSchema = new Schema({
         type: Schema.ObjectId,
         ref: 'User'
     },
-    issue: {
+    medley: {
         type: Schema.ObjectId,
-        ref: 'Issue'
+        ref: 'Medley'
     }
 });
 

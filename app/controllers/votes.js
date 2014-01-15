@@ -1,7 +1,7 @@
 // Module dependencies
 var mongoose = require('mongoose'),
     async = require('async'),
-    Issue = mongoose.model('Issue'),
+    Medley = mongoose.model('Medley'),
     User  = mongoose.model('User'),
     Vote  = mongoose.model('Vote'),
     _ = require('underscore');
@@ -18,14 +18,13 @@ exports.vote = function(req, res, next, id) {
 
 // Create Vote
 exports.create = function(req, res) {
-    var vote = new Vote(req.body);
-    console.log(req.body);
-    vote.user  = req.user;
-    vote.issue = req.body.issue;
+    var vote     = new Vote();
+    vote.user    = req.user;
+    vote.medley  = req.body.medley;
 
     vote.save(function(err) {
         if (err) {
-            console.log(err);
+            console.log("Error: ", err);
         } else {
             res.jsonp(vote);
         }
@@ -48,16 +47,14 @@ exports.destroy = function(req, res) {
 };
 
 // Find Vote
-exports.findByIssueAndUserId = function(req, res, id) {
+exports.findByMedleyAndUserId = function(req, res, id) {
 	console.log(req.query);
 
-    Vote.find({ issue: req.query.issue, user: req.query.user }).exec(function(err, vote) {
+    Vote.find({ medley: req.query.medley_id, user: req.query.user }).exec(function(err, vote) {
+        // console.log("Vote Search Result: ", vote);
         if (err) {
-            res.render('error', {
-                status: 500
-            });
+            console.log(err);
         } else {
-            console.log(vote);
             if (vote.length < 1) {
                 errors        = {};
                 errors.errors = {};

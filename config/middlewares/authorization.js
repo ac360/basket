@@ -21,11 +21,11 @@ exports.user = {
 };
 
 /**
- * Issue authorizations routing middleware
+ * Medley authorizations routing middleware
  */
-exports.issue = {
+exports.medley = {
     hasAuthorization: function(req, res, next) {
-        if (req.issue.user.id != req.user.id) {
+        if (req.medley.user.id != req.user.id) {
             return res.send(401, 'User is not authorized');
         }
         next();

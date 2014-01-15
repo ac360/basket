@@ -1,12 +1,56 @@
-    <div id="search-screen" class="row">
-        <div class="col-md-offset-1 col-md-10">
+    <div class="row">
+        <div class="col-md-12">
             
-            <div class="row">
-                <div id="logo" class="col-md-offset-5 col-md-2">
-                    <h1 ng-href="/"><span style="font-weight:300;letter-spacing:-1px;">Better</span><span style="font-weight:600;letter-spacing:-1px;">Town</span></h1>
+            <!-- Logo & Profile Container -->
+            <div id="header-row" class="row">
+                <div id="header-container" class="col-md-12">
+                    <a id="logo" ui-sref="home">basket</a>
+                    <!-- Authenticated -->
+                    <ul id="header-menu" class="list-inline pull-right top-bar" ng-if="user">
+                        <li>
+                           <img id="header-profile-image" class="img-circle" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user"> {{user.name}}
+                        </li>
+                        <li>
+                            <a href="/signout">Sign Out</a>
+                        </li>
+                    </ul>
+                    <!-- UnAuthenticated -->
+                     <ul class="list-inline pull-right top-bar" ng-if="!user">
+                        <li>
+                            <a id="facebook-login-link" href="#" ng-click="loginFacebook($event)">Sign In With Facebook</a>
+                        </li>
+                    </ul>
                 </div>
-            </div>
+            </div> <!-- row -->
 
+            <!-- Search Container -->
+            <div class="row" ng-if="status.status">
+              <div class="status col-md-6">
+                 <p><i class="fa fa-refresh fa-spin" ng-if=" status.icon == 'refresh' "></i><i class="fa fa-refresh fa-spin" ng-if=" status.icon == 'error' "></i><span>{{ status.message }}</span> </p>
+              </div>
+            </div>
+            <div class="row">
+                <div id="search-container" class="col-md-7">
+                  <form>
+                    <div class="input-group">
+                        <div class="input-group-btn">
+                            <button type="button" class="btn btn-blue btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
+                            <ul class="dropdown-menu">
+                              <li><a href="#" ng-click="setRetailer('All Retailers')">All Retailers</a></li>
+                              <li class="divider"></li>
+                              <li><a href="#" ng-click="setRetailer('Amazon')">Amazon</a></li>
+                              <li><a href="#" ng-click="setRetailer('Etsy')">Etsy</a></li>
+                            </ul>
+                        </div><!-- /btn-group -->
+                      <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_keywords" placeholder="Enter A Product"> 
+                      <span class="input-group-btn">
+                        <button class="btn btn-blue btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
+                      </span>
+                    </div><!-- /input-group -->
+                    <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+                  </form>
+                </div>
+            </div> <!-- .row -->
 
         </div> <!-- col-md-offset-1 col-md-10 -->
     </div><!-- .row -->

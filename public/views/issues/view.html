@@ -1,6 +1,0 @@
-<section data-ng-controller="IssuesController" data-ng-init="findOne()">
-	<span>{{issue.created | date:'medium'}}</span> /
-	<span>{{issue.user.name}}</span>
-	<h2>{{issue.title}} <a data-ng-show="global.user._id == issue.user._id" href="/#!/issues/{{issue._id}}/edit">edit</a></h2>
-	<div>{{issue.content}}</div>
-</section>

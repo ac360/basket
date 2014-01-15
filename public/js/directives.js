@@ -6,26 +6,16 @@ app.directive('ngBlur', function() {
     });
   };
 });
-
-// Google Places AutoComplete
-app.directive('googleplace', function() {
-    return {
-        require: 'ngModel',
-        link: function(scope, element, attrs, model) {
-            var options = {
-                types: ['(cities)'],
-                componentRestrictions: {}
-            };
-            // Default Scope to Root
-            scope = scope.$parent;
-            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
-
-            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-                scope.$apply(function() {
-                	scope.loadTown();
-                    model.$setViewValue(element.val());               
-                });
-            });
-        }
-    };
+// Dynamic HTML Directive for Elements Containing Dynamic HTML
+app.directive('dynamic', function ($compile) {
+  return {
+    restrict: 'A',
+    replace: true,
+    link: function (scope, ele, attrs) {
+      scope.$watch(attrs.dynamic, function(html) {
+        ele.html(html);
+        $compile(ele.contents())(scope);
+      });
+    }
+  };
 });

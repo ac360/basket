@@ -1,12 +1,12 @@
 {
     "db": "mongodb://heroku:9c37fd539f53539a1637d7c724e69f0e@paulo.mongohq.com:10005/app19512142",
     "app": {
-        "name": "BetterTown"
+        "name": "Medley"
     },
     "facebook": {
         "clientID": "197277687128309",
         "clientSecret": "1959ec94248783265a6d02495d7bf6f1",
-        "callbackURL": "http://bettertown.herokuapp.com/auth/facebook/callback"
+        "callbackURL": "http://medley.herokuapp.com/auth/facebook/callback"
     },
     "twitter": {
         "clientID": "CONSUMER_KEY",

@@ -1,0 +1,16 @@
+<div class="row">
+	<div class="col-md-12 st-no-padding" ng-controller="CreateController">
+		<div id="create-container">
+			<div id="create-stage" class="gridster">
+				<ul dynamic>
+				</ul>
+			</div>
+			<div id="create-options">
+				<button class="btn btn-blue btn-lg" ng-click="showPublishModal()" ng-show="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+				<button class="btn btn-blue btn-lg disabled" ng-hide="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Local Modals -->
