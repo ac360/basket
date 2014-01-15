@@ -1,7 +1,7 @@
 {
     "db": "mongodb://localhost/medley-dev",
     "app": {
-        "name": "Medley - Development"
+        "name": "Basket - Development"
     },
     "facebook": {
         "clientID": "490819701015510",
