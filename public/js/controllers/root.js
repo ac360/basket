@@ -3,23 +3,25 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.global           = Global;
-    $scope.status           = false;
-    $scope.user             = false;
-    $scope.basket           = {};
-    $scope.basket.hashtags  = [];
-    $scope.basket.items     = [];
-    $scope.basket_status    = 'Your Basket:';
-    $scope.basket_publish   = false;
-    $scope.retailer         = 'All Retailers';
-    $scope.search_keywords  = '';
-    $scope.search_results   = false;
-    $scope.product_preview  = false;
-    $scope.status           = {};
-    $scope.status.icon      = '';
-    $scope.status.message   = '';
-    $scope.status.status    = false;
-    $scope.share            = false;
+    $scope.global               = Global;
+    $scope.status               = false;
+    $scope.user                 = false;
+    $scope.basket               = {};
+    $scope.basket.hashtags      = [];
+    $scope.basket.items         = [];
+    $scope.basket_status        = 'Your Basket:';
+    $scope.basket_publish       = false;
+    $scope.retailer             = 'All Retailers';
+    $scope.search_keywords      = '';
+    $scope.search_results       = false;
+    $scope.search_amazon_meta   = false;
+    $scope.search_etsy_meta     = false;
+    $scope.product_preview      = false;
+    $scope.status               = {};
+    $scope.status.icon          = '';
+    $scope.status.message       = '';
+    $scope.status.status        = false;
+    $scope.share                = false;
 
     // Check Local Storage
         // storage.set('status', 'one');
@@ -46,6 +48,11 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     };
 
     $scope.searchRetailers = function(keywords, items, cb) {
+        // Clear Results
+        $scope.search_results       = false;
+        $scope.search_amazon_meta   = false;
+        $scope.search_etsy_meta     = false;
+        // Check state to navigate back to search page
         if ($state.current.name != "search") {
           $state.go('search', {}, {});
         };
@@ -55,6 +62,8 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         $scope.status.status        = true;
         console.log("Search keywords: ", $scope.search_keywords)
         Retailers.search({ q: $scope.search_keywords }, function(response) {
+          $scope.search_etsy_meta   = response.etsy_meta;
+          $scope.search_amazon_meta = response.amazon_meta;
           $scope.search_results     = response.items;
           $scope.status.status      = false;
           console.log("Search results for " + $scope.search_keywords, $scope.search_results);
@@ -260,7 +269,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         window.fbAsyncInit = function() {
             // init the FB JS SDK
             FB.init({
-              appId      : '736751053015158',                    // Dev: 252087231617494 Pro: 736751053015158
+              appId      : '252087231617494',                    // Dev: 252087231617494 Pro: 736751053015158
               status     : true,                                 // Check Facebook Login status
               xfbml      : true                                  // Look for social plugins on the page
             });
