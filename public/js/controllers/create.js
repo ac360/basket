@@ -27,15 +27,18 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
       this.updateBasketFromGrid();
     };
 
-    $scope.removeBasketItem = function($event) { // TODO - THERE IS A BUG HERE.  WHEN DELETING ELEMENT, OTHERS MOVE AROUND IT AND THERE POSITIONS ARE NOT SAVED!  ONLY THE DELTED ELEMENT IS SAVED!
+    $scope.removeBasketItem = function($event) {
+        var self = this;
         var r = confirm("Are you sure you want to remove this item?");
-        if (r == true) {
+        if  (r == true) {
             var hashkey = $($event.currentTarget.parentElement).data('hashkey');
             angular.forEach($scope.basket.items, function(bItem, bIndex){
-              // Find matching basket item
+              // Find matching basket item and delete it from basket
               if (bItem.$$hashKey == hashkey) {
                 $scope.basket.items.splice(bIndex, 1);
-                $scope.gridster.remove_widget( $($event.currentTarget.parentElement) );
+                $scope.gridster.remove_widget( $($event.currentTarget.parentElement), function(){
+                    self.updateBasketFromGrid();
+                });
               };
             });   
         };
@@ -45,7 +48,6 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
       // Serialize Grid to get new data
       var serialized = $scope.gridster.serialize();
       // Save Data to Basket
-      var hashKey = $(event.target.parentElement).data("hashkey");
       angular.forEach(serialized, function(sItem, sIndex){
           angular.forEach($scope.basket.items, function(bItem, bIndex){
               if (bItem.$$hashKey === sItem.$$hashKey) {
