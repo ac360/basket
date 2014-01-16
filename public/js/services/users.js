@@ -7,7 +7,7 @@ angular.module('mean.users').factory("Users", ['$resource', function($resource) 
         },
         signin: {
         	method: 'POST',
-        	url:    'users/signin'
+        	url:    'users/me'
         }
     });
 }]);

@@ -124,51 +124,66 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                     // var uid = response.authResponse.userID;
                     // var accessToken = response.authResponse.accessToken;
                     console.log('User is already logged into Facebook: ', response);
-                    Users.signin(response.authResponse, function(user) {
-                        console.log('Successfully logged in user: ', user);
-                        $scope.user = user;
-                        // If Sign In Modal is open, close it!
-                        if ( $('#signInModal').hasClass('in') ) {
-                            $('#signInModal').modal('hide');
-                        };
+                    FB.api('/me', function(response) {
+                        console.log('Successfully Retrieved User Information: ', response);
+                        var newUser = new Users({
+                              email:      response.email,
+                              username:   response.username,
+                              name:       response.name,
+                              first_name: response.first_name,
+                              last_name:  response.last_name,
+                              gender:     response.gender,
+                              locale:     response.locale,
+                              timezone:   response.timezone,
+                              fb_id:      response.id,
+                              provider:   'facebook'
+                         });
+                         newUser.$save(function(user){
+                              console.log("Successfully saved new user to database and signed in: ", user);
+                              $scope.user = user;
+                              // If Sign In Modal is open, close it!
+                              if ( $('#signInModal').hasClass('in') ) {
+                                  $('#signInModal').modal('hide');
+                              };
+                              if (cb) {cb()};
+                         });
                     });
                   } else {
-                    // the user is logged in to Facebook, 
-                    // but has not authenticated your app
+                    // the user is logged in to Facebook, but has not authenticated your app
                     FB.login(function(response) {
-                       if (response.authResponse) {
-                         console.log('Successfully Authenticated: ', response);
-                         FB.api('/me', function(response) {
-                           console.log('Successfully Retrieved User Information: ', response);
-                           var newUser = new Users({
-                                email:      response.email,
-                                username:   response.username,
-                                name:       response.name,
-                                first_name: response.first_name,
-                                last_name:  response.last_name,
-                                gender:     response.gender,
-                                locale:     response.locale,
-                                timezone:   response.timezone,
-                                fb_id:      response.id,
-                                provider:   'facebook'
+                        if (response.authResponse) {
+                           console.log('Successfully Authenticated: ', response);
+                           FB.api('/me', function(response) {
+                             console.log('Successfully Retrieved User Information: ', response);
+                             var newUser = new Users({
+                                  email:      response.email,
+                                  username:   response.username,
+                                  name:       response.name,
+                                  first_name: response.first_name,
+                                  last_name:  response.last_name,
+                                  gender:     response.gender,
+                                  locale:     response.locale,
+                                  timezone:   response.timezone,
+                                  fb_id:      response.id,
+                                  provider:   'facebook'
+                             });
+                             newUser.$save(function(user){
+                                  console.log("Successfully saved new user to database and signed in: ", user);
+                                  $scope.user = user;
+                                  // If Sign In Modal is open, close it!
+                                  if ( $('#signInModal').hasClass('in') ) {
+                                      $('#signInModal').modal('hide');
+                                  };
+                                  if (cb) {cb()};
+                             });
                            });
-                           newUser.$save(function(user){
-                                console.log("Successfully saved new user to database and signed in: ", user);
-                                $scope.user = user;
-                                // If Sign In Modal is open, close it!
-                                if ( $('#signInModal').hasClass('in') ) {
-                                    $('#signInModal').modal('hide');
-                                };
-                                if (cb) {cb()};
-                           });
-                         });
-                       } else {
-                         console.log('User cancelled login or did not fully authorize.');
-                       }
-                    }, { scope: 'email,user_likes' });
-                  };
-            });
-        };
+                        } else {
+                          console.log('User cancelled login or did not fully authorize.');
+                        }
+                    },{ scope: 'email,user_likes' });
+                  }; // if response = "connected"
+            }); // FB.getLoginStatus
+        }; // !$scope.user
     };
 
     $scope.validateHashtags = function() {
@@ -245,7 +260,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         window.fbAsyncInit = function() {
             // init the FB JS SDK
             FB.init({
-              appId      : '736751053015158',                    // App ID from the app dashboard
+              appId      : '252087231617494',                    // Dev: 252087231617494 Pro: 736751053015158
               status     : true,                                 // Check Facebook Login status
               xfbml      : true                                  // Look for social plugins on the page
             });

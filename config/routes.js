@@ -6,10 +6,8 @@ module.exports = function(app, passport, auth) {
     app.get('/signout', users.signout);
 
     // Users API - Internal
-    app.post('/users/signup', users.create);
-    app.post('/users/signin', users.signin);
     app.get('/users/me', users.me);
-    app.post('/users/me', users.create);
+    app.post('/users/me', users.session);
     app.get('/users/:userId', users.show);
 
     //Setting the facebook oauth routes

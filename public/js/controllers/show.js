@@ -69,7 +69,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
         FB.ui({
           method: 'feed',
           link: 'http://basket.herokuapp.com/'+$scope.show_basket.short_id,
-          caption: "A Basket is a collection of awesome, hand-picked products..." ,
+          caption: "This Basket is a collection of awesome, hand-picked products created by " + $scope.show_basket.user.name,
           display: 'iframe',
           name: 'Basket - ' + $scope.show_basket.hashtags.join(" ")
         }, function(response){
@@ -119,7 +119,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                     if ($scope.share === true) {
                       $timeout(function() {
                           self.publishedShare();
-                      },2000)
+                      },4000)
                     };
                     // Check & Show Vote Status
                     if ($scope.user) {
