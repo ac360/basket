@@ -5,13 +5,13 @@
 				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)">
 					<img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" class="result-image" draggable="false">
 					<div class="no-image-box" ng-hide="item.images.medium">No Image</div>
+					<h6><img class="result-retailer-logo" ng-src="img/{{ item.retailer | lowercase }}_logo.png"></h6>
 				</div>
 				<div class="col-md-8 result-title-container" ng-mouseover="showProductPreview(item)">
-					<h4>{{ item.title }}</h4>
+					<h4 class="result-title">{{ item.title | limitTo:80 }}</h4>
 					<h5>{{ item.category }}</h5>
 					<h6>{{ item.price_new }}</h6>
 					<h6>{{ item.price_used }}</h6>
-					<h6>{{ item.retailer }}</h6>
 				</div>
 				<div class="col-md-1 add-btn" ng-click="addBasketItem(item, $event)" ng-mouseover="hideProductPreview(item)">
 					<i class="fa fa-plus"></i>
@@ -41,9 +41,9 @@
 		</div>
 		<!-- product preview -->
 		<div class="row" ng-show="product_preview">
-			<div id="product-preview" class="col-md-offset-1 col-md-11 st-shadow">
+			<div id="product-preview" class="col-md-offset-1 col-md-11">
 				<div class="row">
-					<div class="col-md-12 st-centered">
+					<div class="col-md-12 st-centered product-preview-image-container">
 						<img class="product-preview-image" ng-src="{{ product_preview.images.large }}" ng-show="product_preview.images.large" draggable="false">
 						<div class="product-preview-no-image" ng-hide="product_preview.images.large">
 							<h4 class="st-centered">No Image Available</h4>
@@ -51,9 +51,17 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-md-12 product-preview-details">
-						<h4>{{ product_preview.title }}</h4>
-						<p ng-show="product_preview.description">{{ product_preview.description }}</p>
+					<div class="col-md-12">
+						<h4 class="product-preview-title">{{ product_preview.title }}</h4>
+						<div class="row product-preview-details">
+							<div class="col-md-4">
+								<h3 class="product-preview-price">${{ product_preview.price_new }}</h3>
+								<h4>{{ product_preview.retailer }}</h4>
+							</div>
+							<div class="col-md-8">
+								<p class="product-preview-description" ng-show="product_preview.description">{{ product_preview.description | limitTo:200 }}...</p>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
