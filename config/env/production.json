@@ -1,5 +1,5 @@
 {
-    "db": "mongodb://basketAdmin:basket%76@dharma.mongohq.com:10034/app21283133",
+    "db": "mongodb://heroku:5c6872c6878ffd411573ada227cd30e3@paulo.mongohq.com:10038/app21287341",
     "app": {
         "name": "Basket"
     },
