@@ -45,12 +45,15 @@
 				<div class="row">
 					<div class="col-md-12 st-centered">
 						<img class="product-preview-image" ng-src="{{ product_preview.images.large }}" ng-show="product_preview.images.large" draggable="false">
-						<p ng-hide="product_preview.images.large">No Image Available</p>
+						<div class="product-preview-no-image" ng-hide="product_preview.images.large">
+							<h4 class="st-centered">No Image Available</h4>
+						</div>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-md-12 product-preview-details">
-						<h4>{{ product_preview.title}}</h4>
+						<h4>{{ product_preview.title }}</h4>
+						<p ng-show="product_preview.description">{{ product_preview.description }}</p>
 					</div>
 				</div>
 			</div>

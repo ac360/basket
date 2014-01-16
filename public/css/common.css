@@ -73,6 +73,8 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 
 #product-preview {min-height:400px;overflow:auto;width:30%;margin-top:20px;position: fixed;right:10%;background:#fff;}
 .product-preview-image {max-width:90%;max-height:400px;margin-top:20px;}
+.product-preview-no-image {width:80%;height:200px;margin:15px auto 0px auto;border: 2px dashed #eaeaea;}
+.product-preview-no-image h4 {margin-top:80px;color:#999;}
 .product-preview-details {}
 
 /* Create Page */
