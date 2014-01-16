@@ -10,6 +10,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     $scope.voteChecking     = false;
     $scope.vote             = false;
     $scope.hasVoted         = false;
+    $scope.load_error       = false;
 
     $scope.publishedShare = function() {
       $('#publishedShareModal').modal('show');
@@ -79,6 +80,16 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
         });
     };
 
+    $scope.addItems = function(){
+        // Add Items
+        angular.forEach($scope.show_basket.items, function(item, index){
+            $timeout(function(){
+                var html = '<li class="show-basket-item animated bounceIn"><img src="'+ item.images.large +'" draggable="false"></li>';
+                $scope.show_gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
+            }, 1000);
+        });
+    };
+
     // Initialize
 
     $scope.initializeShow = function() {
@@ -103,10 +114,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                                                 max_rows: 5
                                             }).data("gridster").disable();
                     // Add Items
-                    angular.forEach($scope.show_basket.items, function(item, index){
-                        var html = '<li class="show-basket-item"><img src="'+ item.images.large +'" draggable="false"></li>';
-                        $scope.show_gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
-                    });
+                    self.addItems();
                     // Check Share Option
                     if ($scope.share === true) {
                       $timeout(function() {
@@ -132,6 +140,11 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                         console.log("View count updated for:", b);
                         $scope.show_basket.views = b.views;
                     }); 
+            } else {
+                // Basket Could Not Be Found
+                $timeout(function(){ 
+                    $scope.load_error = true;
+                },1000);
             };
         }); // Medley.show({})
     };
