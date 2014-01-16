@@ -42,7 +42,7 @@ module.exports = function(app, passport) {
         app.use(express.bodyParser());
         app.use(express.methodOverride());
 
-        //express/mongo session storage
+        // express/mongo session storage
         app.use(express.session({
             secret: 'MEAN',
             store: new mongoStore({
