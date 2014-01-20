@@ -32,7 +32,7 @@ box-shadow: 0 2px 0 0 #608fc5;color:#fff!important;}
 .top-bar li {padding:0px 5px;min-height:40px;}
 .top-bar, .top-bar a {color:#999;font-weight:100;}
 
-.status {color:#666;font-size:16px;margin-bottom:8px;}
+.status {color:#666;font-size:16px;margin:3px 0px 8px 0px;}
 .status .fa-refresh       {color:#7bb4f5;font-size:18px;margin-right:4px;}
 .status .fa-times-circle  {color:#F57E7B;font-size:18px;margin-right:4px;}
 .status span {padding-left:5px;}
