@@ -53,7 +53,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 .embed-medley-details  {display:block;float:left;width:100%;min-height:30px;height:auto;padding:15px 0px 0px 0px;text-align: center;}
 .embed-medley-votes    {display:block;float:left;width:auto;height:30px;padding:0px 10px 0px 0px;text-align: left;}
 .embed-medley-views    {display:block;float:left;width:auto;height:30px;padding:0px 5px 0px 0px;text-align: left;}
-.embed-medley-hashtags {display:block;float:left;width:400px;min-height:30px;padding:3px 0px 0px 10px;text-align:left;}
+.embed-medley-hashtags {display:block;float:left;width:400px;min-height:30px;padding:2px 0px 0px 10px;text-align:left;}
 .home-col-left {display:block;float:left;width:545px;height:auto;margin-right:25px;}
 .home-col-right {display:block;float:left;width:545px;height:auto;}
 
