@@ -38,7 +38,7 @@ box-shadow: 0 2px 0 0 #608fc5;color:#fff!important;}
 
 #header-row {height:60px;}
 #header-container {}
-#logo {margin:0px;font-weight:100!important;letter-spacing:-1px;font-size:45px;}
+#logo {margin:0px;font-weight:100!important;letter-spacing:-1px;font-size:45px;letter-spacing: -3px;}
 #header-profile-image {height:35px;width:35px;background:#fff;-webkit-box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);
 box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);border-top:1px solid rgba(0,0,0,0.1);border-right:1px solid rgba(0,0,0,0.1);border-left:1px solid rgba(0,0,0,0.1);
 font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
@@ -48,7 +48,13 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 
 /* Home Page */
 #home-container {margin-top:20px;}
-.home-basket {display:block;float:left;min-height:150px;width:18%;margin-left:15px;background:#fff;}
+.embed-medley {display:block;float:left;margin:0px 5px 0px 0px;background:rgba(0,0,0,0.05);position: relative !important;
+	 width:545px !important; min-height: 280px !important;}
+.embed-medley-details  {display:block;float:left;width:100%;min-height:30px;height:auto;padding:8px 0px;text-align: center;}
+.embed-medley-votes    {display:block;float:left;width:10%;height:30px;padding:0px 10px 0px 0px;}
+.embed-medley-hashtags {display:block;float:left;width:90%;height:30px;padding:0px 10px 0px 0px;}
+.home-col-left {display:block;float:left;width:545px;height:auto;margin-right:5px;}
+.home-col-right {display:block;float:left;width:545px;height:auto;}
 
 /* Search Page */
 .results-container {margin-top:20px;min-height:550px;}
@@ -59,7 +65,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 .result-image {text-align:center;max-height:90px;max-width:100px;background:#fff;padding:4px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);}
 .result-title-container {height:150px;background:rgba(0,0,0,0.04);overflow:hidden;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);}
 .result-retailer-logo {max-width:70px;max-height:50px;}
-.no-image-box {display:block;height:70px;width:100px;color:#888;font-size:14px;margin:10px auto 0px auto;border:2px dashed rgba(0,0,0,0.05);padding:25px 5px;}
+.no-image-box {display:block;height:70px;width:100px;color:#888;font-size:14px;margin:10px auto 0px auto;border:2px dashed rgba(0,0,0,0.05);padding:22px 5px;}
 .add-btn {height:150px;background:#7bb4f5;color:#fff;padding-top:8%;font-size:25px;text-align:center;-webkit-box-shadow: 0 2px 0 0 #5499e8;box-shadow: 0 2px 0 0 #5499e8;-webkit-border-radius:0px 6px 6px 0px;border-radius:0px 6px 6px 0px;}
 .add-btn i {padding-left:4px;}
 .add-btn:hover {cursor:pointer;background:#93c4fc;}
@@ -139,14 +145,15 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 #facebook-share-link:hover {cursor:pointer;opacity:0.7;}
 #show-options-share i {font-size:19px;}
 #show-options-hashtags {display:block;width:646px;height:auto;margin:0px auto;text-align: center;padding-bottom:8px;}
-.hashtag {margin-right:10px;font-size:18px;}
+.hashtag {margin-right:10px;font-size:18px;color:#7bb4f5;}
+.votes {font-size: 20px;color:#F57E7B;}
 #hashtags-container {}
 #show-stage {display:block;width:646px;min-height:450px;margin:0px auto;background: rgba(0,0,0,0.05);
 	padding:5px;-webkit-border-radius: 6px;border-radius: 6px; }
 #show-stage ul {list-style-type: none;}
 .show-basket-item {background:#fff;text-align: center;-webkit-border-radius: 6px;border-radius: 6px;
 	-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.15);box-shadow: 0 2px 0 0 rgba(0,0,0,0.15);}
-.show-basket-item img {position: absolute;z-index: 1;max-width:90%;max-height: 90%;
+.show-basket-item img, .embed-item img {position: absolute;z-index: 1;max-width:90%;max-height: 90%;
 	margin-left: auto;
     margin-right: auto;
     margin-top: auto;
@@ -182,6 +189,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 		-webkit-box-shadow: none!important;box-shadow:none!important;}
 	#publishedShareModal .modal-content h1 {font-weight:200!important;color:#666;}
 	#publishedShareModal .modal-content h5 {font-weight:200!important;color:#888;margin-bottom:20px;}
+
 
 
 

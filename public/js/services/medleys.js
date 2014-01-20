@@ -7,6 +7,21 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
     		method:  'GET',
     		isArray: true
     	},
+        getMostVoted:    {
+            method:  'GET',
+            isArray: true,
+            url:     'medleys_most_voted'
+        },
+        getMostViewed:    {
+            method:  'GET',
+            isArray: true,
+            url:     'medleys_most_viewed'
+        },
+        getNewest:    {
+            method:  'GET',
+            isArray: true,
+            url:     'medleys_most_recent'
+        },
         show:    {
             method:  'GET'
         },

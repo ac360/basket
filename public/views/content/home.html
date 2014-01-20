@@ -1,37 +1,53 @@
 <div class="row">
-	<div id="home-container" class="col-md-12">
+	<div id="home-container" class="col-md-12" ng-controller="HomeController">
 		<div class="row">
 			<div class="col-md-12">
-				<h3>Best Baskets</h3>
-			</div>
-		</div>
-		<div class="row">
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
+				<h3>Most loved medleys</h3>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<h3>New Baskets</h3>
+				
+				<div class="home-col-left">
+					<div ng-repeat="medley in homeMedleys.most_voted.left_column">
+						<div class="vote-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
+							<div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block; text-align: center; background:#ffffff; text-align:center; -webkit-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);" ng-repeat="item in medley.items">
+								<img ng-src="{{item.images.medium}}" draggable="false">
+							</div>
+						</div>
+						<div class="embed-medley-details">
+							<div class="embed-medley-votes votes">
+								<i class="fa fa-heart"></i> {{medley.votes}}
+							</div>
+							<div class="embed-medley-hashtags">
+								<a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="home-col-right">
+					<div ng-repeat="medley in homeMedleys.most_voted.right_column">
+						<div class="vote-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
+							<div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block; text-align: center; background:#ffffff; text-align:center; -webkit-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);" ng-repeat="item in medley.items">
+								<img ng-src="{{item.images.medium}}" draggable="false">
+							</div>
+						</div>
+						<div class="embed-medley-details">
+							<div class="embed-medley-votes votes">
+								<i class="fa fa-heart"></i> {{medley.votes}}
+							</div>
+							<div class="embed-medley-hashtags">
+								<a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+							</div>
+						</div>
+					</div>
+				</div>
+
 			</div>
 		</div>
 		<div class="row">
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
-			</div>
-			<div class="home-basket st-shadow">
+			<div class="col-md-12">
+				<h3>New medleys</h3>
 			</div>
 		</div>
 	</div><!-- #main-container -->

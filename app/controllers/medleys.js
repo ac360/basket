@@ -1,6 +1,4 @@
-/**
- * Module dependencies.
- */
+// Module dependencies.
 var mongoose = require('mongoose'),
     async = require('async'),
     Medley = mongoose.model('Medley'),
@@ -39,9 +37,7 @@ exports.create = function(req, res) {
     });
 };
 
-/**
- * Update a Medley
- */
+// Update a Medley
 exports.update = function(req, res) {
     var medley = req.medley;
 
@@ -77,9 +73,7 @@ exports.updateVoteCount = function(req, res) {
     });
 };
 
-/**
- * Delete an Medley
- */
+// Delete A Medley
 exports.destroy = function(req, res) {
     var medley = req.medley;
 
@@ -94,44 +88,34 @@ exports.destroy = function(req, res) {
     });
 };
 
-/**
- * Show an Medley
- */
+// Show A Medley
 exports.show = function(req, res) {
     res.jsonp(req.medley);
 };
 
-// All Medleys For A Town
-exports.all = function(req, res) {
-    if (req.query.google_place_id) {
-        Medley.find({ google_place_id: req.query.google_place_id }).limit(20).sort('-created').populate('user', 'name username').exec(function(err, medleys) {
-            // Loop Through And Remove User Info if Anonymous is true
-            medleys.forEach(function(medley, index){
-                if (medley.anonymous === true) {
-                    medley.user = null;
-                };
-            });
-            // Render Results
-            if (err) {
-                res.render('error', { status: 500 }); 
-            } else {
-                res.jsonp(medleys);
-            }
-        });
-    } else {
-        res.render('error', { status: 500 }); 
-    }
-};
-
-// Search Medleys
- exports.search = function(req, res) {
-    Medley.find({'GroupName':gname}).sort('-created').populate('user', 'name username').exec(function(err, medleys) {
-        if (err) {
-            res.render('error', {
-                status: 500
-            });
-        } else {
-            res.jsonp(medleys);
-        }
+// Show Newest Medleys
+exports.most_recent = function(req, res) {
+    Medley.find().sort('-date').limit(6).populate('user', 'name username').exec(function(err, medleys) {
+        console.log("Found medleys :", medleys.length);
+        res.jsonp(medleys);
     });
 };
+
+// Show Most Voted Medleys
+exports.most_voted = function(req, res) {
+    Medley.find().sort({votes: -1}).limit(6).populate('user', 'name username').exec(function(err, medleys) {
+        console.log("Found medleys :", medleys.length);
+        res.jsonp(medleys);
+    });
+};
+
+// Show Most Viewed Medleys
+exports.most_viewed = function(req, res) {
+    Medley.find().sort({views: -1}).limit(6).populate('user', 'name username').exec(function(err, medleys) {
+        console.log("Found medleys :", medleys.length);
+        res.jsonp(medleys);
+    });
+};
+
+
+

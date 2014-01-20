@@ -51,13 +51,15 @@ module.exports = function(app, passport, auth) {
 
     //medley Routes
     var medleys = require('../app/controllers/medleys');
-    app.get('/medleys', medleys.all);
-    app.post('/medleys', auth.requiresLogin, medleys.create);
-    app.get('/medleys/:shortId', medleys.show);
-    app.put('/medleys/:shortId', auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
-    app.del('/medleys/:shortId', auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
+    app.post('/medleys',                         auth.requiresLogin, medleys.create);
+    app.get('/medleys/:shortId',                 medleys.show);
+    app.put('/medleys/:shortId',                 auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
+    app.del('/medleys/:shortId',                 auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
     app.get('/medleys/:shortId/updateviewcount', medleys.updateViewCount);
     app.get('/medleys/:shortId/updatevotecount', auth.requiresLogin, medleys.updateVoteCount);
+    app.get('/medleys_most_recent',              medleys.most_recent);
+    app.get('/medleys_most_voted',               medleys.most_voted);
+    app.get('/medleys_most_viewed',              medleys.most_viewed);
 
     //Finish with setting up the shortId param
     app.param('shortId', medleys.medley);
@@ -89,7 +91,6 @@ module.exports = function(app, passport, auth) {
     app.param('clientId', clients.client);
 
     // External API V1 Endpoints
-    app.get('/api/v1/medleys', passport.authenticate('bearer', { session: false }), medleys.all);
 
     //Home route
     var index = require('../app/controllers/index');

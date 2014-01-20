@@ -110,8 +110,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                                                 widget_base_dimensions: [100, 100],
                                                 avoid_overlapped_widgets: true,
                                                 max_cols: 6,
-                                                min_rows: 6,
-                                                max_rows: 5
+                                                min_rows: 6
                                             }).data("gridster").disable();
                     // Add Items
                     self.addItems();
