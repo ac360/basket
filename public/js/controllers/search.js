@@ -57,17 +57,18 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         if ($state.current.name != "search") {
           $state.go('search', {}, {});
         };
+        console.log("keywords:", keywords);
         $scope.search_keywords      = keywords;
         // Check if there are keywords
-        if(!$scope.search_keywords) {
-          $scope.status.icon          = 'error';
+        if($scope.search_keywords == '') {
+          $scope.status.icon          = "refresh"
           $scope.status.message       = "Please enter something to search for...";
           $scope.status.status        = true;
           return false;
         };
         $scope.etsy_store_id        = $('#etsy-store-id-field').val();
         $scope.status.icon          = "refresh"
-        $scope.status.message       = 'Searching for ' + $scope.search_keywords + ' on ' + $scope.retailer.toLowerCase() + '...';
+        $scope.status.message       = 'Searching for ' + $scope.search_keywords + ' on ' + $scope.retailer.toLowerCase();
         $scope.status.status        = true;
         console.log( "Search keywords: " + $scope.search_keywords + "Etsy Store Id" + $scope.etsy_store_id );
         Retailers.search({ q: $scope.search_keywords, retailer: $scope.retailer, etsy_store_id: $scope.etsy_store_id  }, function(response) {

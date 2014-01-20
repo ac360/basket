@@ -69,10 +69,10 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
         FB.ui({
           method: 'feed',
           link: 'http://basket.herokuapp.com/'+$scope.show_basket.short_id,
-          caption: "This Basket is a collection of awesome, hand-picked products created by " + $scope.show_basket.user.name,
+          caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.show_basket.user.name,
           display: 'iframe',
           picture: $scope.show_basket.items[0].images.medium,
-          name: 'Basket - ' + $scope.show_basket.hashtags.join(" ")
+          name: 'Medley - ' + $scope.show_basket.hashtags.join(" ")
         }, function(response){
             console.log(response);
             if ($('#publishedShareModal').hasClass('in')) {

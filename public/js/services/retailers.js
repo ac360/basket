@@ -4,7 +4,7 @@ angular.module('mean.retailers').factory("Retailers", ['$resource', function($re
     }, {
     	search:    {
     		method:  'GET',
-            params:  { q: '@q' },
+            params:  { q: '@q', retailer: '@retailer', etsy_store_id: '@etsy_store_id' },
     		isArray: false
     	}
     });

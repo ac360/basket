@@ -26,31 +26,36 @@
             <!-- Search Container -->
             <div class="row" ng-if="status.status">
               <div class="status col-md-6">
-                 <p><i class="fa fa-refresh fa-spin" ng-if=" status.icon == 'refresh' "></i><i class="fa fa-refresh fa-spin" ng-if=" status.icon == 'error' "></i><span>{{ status.message }}</span> </p>
+                 <p><i class="fa fa-refresh fa-spin" ng-show=" status.icon == 'refresh' "></i><i class="fa fa-times-circle" ng-show=" status.icon == 'error' "></i><span>{{ status.message }}</span> </p>
               </div>
             </div>
-            <div class="row">
-                <div id="search-container" class="col-md-7">
-                  <form>
-                    <div class="input-group">
-                        <div class="input-group-btn">
-                            <button type="button" class="btn btn-blue btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
-                            <ul class="dropdown-menu">
-                              <li><a href="#" ng-click="setRetailer('All Retailers')">All Retailers</a></li>
-                              <li class="divider"></li>
-                              <li><a href="#" ng-click="setRetailer('Amazon')">Amazon</a></li>
-                              <li><a href="#" ng-click="setRetailer('Etsy')">Etsy</a></li>
-                            </ul>
-                        </div><!-- /btn-group -->
-                      <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_keywords" placeholder="Enter A Product"> 
-                      <span class="input-group-btn">
-                        <button class="btn btn-blue btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
-                      </span>
-                    </div><!-- /input-group -->
-                    <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
-                  </form>
+            <form>
+                <div class="row">
+                    <div id="search-container" class="col-md-7">
+                        <div class="input-group">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-blue btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
+                                <ul class="dropdown-menu">
+                                  <li><a ng-click="setRetailer('All Retailers')">All Retailers</a></li>
+                                  <li class="divider"></li>
+                                  <li><a ng-click="setRetailer('Amazon')">Amazon</a></li>
+                                  <li><a ng-click="setRetailer('Etsy')">Etsy</a></li>
+                                </ul>
+                            </div><!-- /btn-group -->
+                          <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_keywords" placeholder="Enter A Product"> 
+                          <span class="input-group-btn">
+                            <button class="btn btn-blue btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
+                          </span>
+                        </div><!-- /input-group -->
+                    </div>
+                </div> <!-- .row -->
+                <div class="row" ng-if=" retailer == 'Etsy' ">
+                    <div id="etsy-store-container" class="col-md-4">
+                      <input id="etsy-store-id-field" type="text" class="form-control input-lg st-shadow" name="etsy_store_id" ng-model="etsy_store_id" placeholder="Etsy Store Name (Optional)"> 
+                    </div>
                 </div>
-            </div> <!-- .row -->
+              <input type="submit" style="position: absolute; left: -9999px; width: 1px; height: 1px;"/>
+            </form>
 
         </div> <!-- col-md-offset-1 col-md-10 -->
     </div><!-- .row -->

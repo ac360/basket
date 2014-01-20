@@ -13,29 +13,52 @@ var aClient = new AmazonClient({
     assocId:   'medley01-20'
 });
 
-// Search Amazon
 exports.search = function(req, res) {
 	// Variables
+	var self                = this;
 	var keywords 	 		= req.query.q;
 	var page     	 		= req.query.p;
+	var retailer     	 	= req.query.retailer;
+	if ( req.query.etsy_store_id ) { var etsyStoreId = req.query.etsy_store_id };
 	var allResults   		= {};
 	allResults.items 		= [];
 	allResults.amazon_meta  = {};
 	allResults.etsy_meta    = {};
 	allResults.errors       = {};
-	
+	// Log Variables
+	console.log("Search parameters: ", req.query);
+	// Run search depending on retailer
+	if (retailer == 'All Retailers') {
+		searchAmazon(allResults, keywords, function(allResults){
+			searchEtsy(allResults, keywords, etsyStoreId, function(allResults){
+				// Return
+    			res.jsonp(allResults);
+			});
+		});
+	} else if (retailer == 'Amazon') {
+		searchAmazon(allResults, keywords, function(allResults){
+			// Return
+    		res.jsonp(allResults);
+		});
+	} else if (retailer == 'Etsy') {
+		searchEtsy(allResults, keywords, etsyStoreId, function(allResults){
+			// Return
+			res.jsonp(allResults);
+		});
+	};
+}; // search
+
+searchAmazon = function(allResults, keywords, cb) {
+
 	// Amazon Search
 	aResults 		 = {};
 	aExcludedItems   = [];
 
-    aClient.execute('ItemSearch', {
+	aClient.execute('ItemSearch', {
 	  'SearchIndex': 	'All',
 	  'Keywords': 		 keywords,
 	  'ResponseGroup':  'ItemAttributes,Offers,Images'
 	}, function(results) { // you can add a second parameter here to examine the raw xml response
-		// Log Search Stats
-		console.log("IsValid: " + results.ItemSearchResponse.Items[0].Request[0].IsValid[0]);
-		console.log("Amazon Total Items: " + results.ItemSearchResponse.Items[0].TotalResults[0]);
 		// Format All Results
 		if (results.ItemSearchResponse.Items[0].Request[0].IsValid[0] === "True") {
 			    
@@ -77,22 +100,37 @@ exports.search = function(req, res) {
 			    		aExcludedItems.push(new_i)
 			    	};
 			    });
-				console.log("Items Returned From Amazon Count: " + results.ItemSearchResponse.Items[0].Item.length);
+				// Log Search Stats
+				console.log("Amazon Search IsValid: " + results.ItemSearchResponse.Items[0].Request[0].IsValid[0]);
+				console.log("Amazon Total Items Found: " + results.ItemSearchResponse.Items[0].TotalResults[0]);
 				console.log("Items Excluded From Basket Count: ",  aExcludedItems.length);
 				// Return
-				// res.jsonp(aResults);
+				console.log("Amazon Search Done");
+				cb(allResults);
 		} else {
-				var amazonError            = {}
-				amazonError.amazon_error   = "Amazon search returned invalid"
+				var amazonError            = {};
+				amazonError.amazon_error   = "Amazon search returned invalid";
 				allResults.errors.push(amazonError); 
 				// Return
-				// res.jsonp(aResults);
+				console.log("Amazon Search Done");
+				cb(allResults);
 		}; // If Amazon search is Valid
+	}); // aClient.execute / Amazon Search Callback
 
-		// Etsy Search 
-		var etsyExcludedItems   = [];
-		var etsyPath 	        = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=20&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u"
+}; // searchAmazon
+
+searchEtsy = function(allResults, keywords, etsyStoreId, cb) {
+		// Etsy Search
+		if (etsyStoreId) {
+			console.log("Etsy store ID detected...");
+			var etsyPath 	        = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?keywords=" + keywords + "&limit=20&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+		} else {
+			console.log("No Etsy store ID detected...");
+			var etsyPath 	        = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=20&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+		};
 		var etsyIndex           = 1;
+		var etsyExcludedItems   = [];
+
 		requestify.get(etsyPath).then(function(response) {
 			console.log("Etsy Search Done!");
 			// Format Results
@@ -130,12 +168,14 @@ exports.search = function(req, res) {
 		    allResults.etsy_meta.next_page		         = etsyRawResults.pagination.next_page;
 		    allResults.etsy_meta.this_offset             = etsyRawResults.pagination.this_offset;
 		    allResults.etsy_meta.next_offset             = etsyRawResults.pagination.next_offset;
-		    
 
-		    // Return
-		    res.jsonp(allResults);
-
+		    console.log("Etsy Search Finished...")
+		    // Callback
+		    cb(allResults);
 
 		}); // Etsy Search Callback
-	}); // aClient.execute / Amazon Search Callback
-};
+
+}; // searchEtsy
+
+
+
