@@ -78,15 +78,15 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
       });
       // Resize Container
       $.each(rowHeightsObj, function(key, value) {
-        previousRow = rowHeightsObj[key - 1]
-        if (previousRow == 2) {
-          rowHeightsObj[key] = 0
-        }
+          previousRow = rowHeightsObj[key - 1]
+          if (previousRow == 2) {
+            rowHeightsObj[key] = 0
+          }
       });
-      // ITERATE THROUGH OBJECT AN PULL VALUES!
+        // Iteate through objet and pull values
       rowHeightsTotal = 0
       $.each(rowHeightsObj, function(key, value) { 
-        rowHeightsTotal = rowHeightsTotal + value 
+          rowHeightsTotal = rowHeightsTotal + value 
       });
       medley.height = rowHeightsTotal * 90 + 8;
       return medley;
@@ -97,7 +97,7 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
         var self = this;
         this.getMostVotedMedleys(function(){
           self.getMostViewedMedleys(function(){
-            console.log("DONE LOADING")
+            // Callback
           });
         });
     };
