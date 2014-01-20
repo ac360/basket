@@ -6,53 +6,53 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
     $scope.global                   = Global;
     $scope.homeMedleys              = {};
     $scope.homeMedleys.most_voted   = {};
-    $scope.homeMedleys.most_viewed  = [];
-    $scope.homeMedleys.most_recent  = [];
+    $scope.homeMedleys.most_viewed  = {};
+    $scope.homeMedleys.most_recent  = {};
 
 
     $scope.getMostVotedMedleys = function(cb){
         var self = this;
-        Medleys.getMostVoted({}, function(b) {
-          // Split Medleys into two arrays
-          self.prepareMedleys(b);
-          // console.log("Most Voted Medleys", $scope.homeMedleys.most_voted);
-          // Add Items
-          // var homeMedley = 1;
-          // Old method of jquery dynamic html injection
-          // angular.forEach($scope.homeMedleys.most_voted, function(medley, index){
-          //       console.log(medley);
-          //       // Instantiate Gridster
-          //       var elem = ".vote-medley"+homeMedley;
-          //       angular.forEach(medley.items, function(item) {
-          //           var iCSS = self.sizeMedleyItemsSmall(item, function(iCSS){
-          //             var itemHtml = "<div class='' style='position:absolute;width:"+iCSS.width+"px;height:"+iCSS.height+"px;top:"+iCSS.top+"px;left:"+iCSS.left+"px;display:block; text-align: center; background:#ffffff; text-align:center; -webkit-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);' data-itemid='" + item.retailer_id + "'></div>"
-          //             $(elem).append(itemHtml);
-          //           });
-          //       });
-          //       homeMedley = homeMedley + 1;
-          // });
-          //Callback
-          if(cb){cb()};
-        });
+        Medleys.getMostVoted({}, function(medleys) {
+            $scope.homeMedleys.most_voted.left_column  = [];
+            $scope.homeMedleys.most_voted.right_column = [];
+            for (var i=0;i<medleys.length;i++){
+                // Set Medley Size
+                angular.forEach(medleys[i].items, function(item) {
+                    medleys[i] = self.sizeMedleySmall(medleys[i]);
+                });
+                if ((i+2)%2==0) {
+                    $scope.homeMedleys.most_voted.left_column.push(medleys[i]);
+                }
+                else {
+                    $scope.homeMedleys.most_voted.right_column.push(medleys[i]);
+                };
+            }; // for
+            // Callback
+            if(cb){cb()};
+        }); // Medleys.getMostVoted
     };
 
-    $scope.prepareMedleys = function(medleys) {
+    $scope.getMostViewedMedleys = function(cb){
         var self = this;
-        $scope.homeMedleys.most_voted.left_column  = [];
-        $scope.homeMedleys.most_voted.right_column = [];
-        for (var i=0;i<medleys.length;i++){
-            // Set Medley Size
-            angular.forEach(medleys[i].items, function(item) {
-                medleys[i] = self.sizeMedleySmall(medleys[i]);
-            });
-            if ((i+2)%2==0) {
-                $scope.homeMedleys.most_voted.left_column.push(medleys[i]);
-            }
-            else {
-                $scope.homeMedleys.most_voted.right_column.push(medleys[i]);
-            };
-        }
-        console.log($scope.homeMedleys.most_voted.right_column, $scope.homeMedleys.most_voted.left_column);
+        Medleys.getMostViewed({}, function(medleys) {
+            $scope.homeMedleys.most_viewed.left_column  = [];
+            $scope.homeMedleys.most_viewed.right_column = [];
+            for (var i=0;i<medleys.length;i++){
+                // Set Medley Size
+                angular.forEach(medleys[i].items, function(item) {
+                    medleys[i] = self.sizeMedleySmall(medleys[i]);
+                });
+                if ((i+2)%2==0) {
+                    $scope.homeMedleys.most_viewed.left_column.push(medleys[i]);
+                }
+                else {
+                    $scope.homeMedleys.most_viewed.right_column.push(medleys[i]);
+                };
+            }; // for
+            // Callback
+            if(cb){cb()};
+            console.log($scope.homeMedleys.most_viewed.left_column, $scope.homeMedleys.most_viewed.right_column)
+        }); // Medleys.getMostViewed
     };
 
      // Medley Sizes
@@ -96,7 +96,9 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
     $scope.initializeHome = function() {
         var self = this;
         this.getMostVotedMedleys(function(){
-          // get most viewed...
+          self.getMostViewedMedleys(function(){
+            console.log("DONE LOADING")
+          });
         });
     };
 
