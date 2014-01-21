@@ -43,7 +43,8 @@
     "grunt": "latest",
     "grunt-cli": "latest",
     "apac": "0.0.13",
-    "requestify": "~0.1.16"
+    "requestify": "~0.1.16",
+    "short-mongo-id": "~0.1.1"
   },
   "devDependencies": {
     "supertest": "latest",

@@ -345,7 +345,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
 
         // Initialize Facebook SDK
         window.fbAsyncInit = function() {
-            // init the FB JS SDK
+            // init the FB JS SDK for use
             FB.init({
               appId      : '736751053015158',                    // Dev: 252087231617494 Pro: 736751053015158
               status     : true,                                 // Check Facebook Login status
