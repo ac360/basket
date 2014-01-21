@@ -39,7 +39,7 @@ box-shadow: 0 2px 0 0 #608fc5;color:#fff!important;}
 
 #header-row {height:60px;}
 #header-container {}
-#logo {margin:0px;font-weight:100!important;font-size:45px;letter-spacing: -3px;}
+#logo {margin:0px;font-weight:300!important;font-size:45px;letter-spacing: -3px;}
 #header-profile-image {height:35px;width:35px;background:#fff;-webkit-box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);
 box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);border-top:1px solid rgba(0,0,0,0.1);border-right:1px solid rgba(0,0,0,0.1);border-left:1px solid rgba(0,0,0,0.1);
 font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
