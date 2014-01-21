@@ -1,8 +1,9 @@
 // Module dependencies.
-var mongoose = require('mongoose'),
-    async = require('async'),
-    Medley = mongoose.model('Medley'),
-    _ = require('underscore');
+var mongoose        = require('mongoose'),
+    async           = require('async'),
+    shortId         = require('short-mongo-id'),
+    Medley          = mongoose.model('Medley'),
+    _               = require('underscore');
 
 
 // Find Medley by id
@@ -22,18 +23,16 @@ exports.medley = function(req, res, next, id) {
 // Create a Medley
 exports.create = function(req, res) {
     var medley = new Medley(req.body);
-    console.log("Creating: ", req.body);
+    console.log("Creating: ", medley);
     medley.user = req.user;
-    Medley.count(function(err, c) {
-        console.log('Short ID is ' + c);
-        medley.short_id = c + 1;
-        medley.save(function(err) {
-            if (err) {
-                console.log(err);
-            } else {
-                res.jsonp(medley);
-            }
-        });
+    medley.short_id = shortId(medley._id);
+    console.log("Medley short id created: ", medley.short_id);
+    medley.save(function(err) {
+        if (err) {
+            console.log(err);
+        } else {
+            res.jsonp(medley);
+        }
     });
 };
 

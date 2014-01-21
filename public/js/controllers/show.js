@@ -99,7 +99,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
         console.log("Basket Short ID: ", $stateParams.basketId);
         // Fetch Basket
         Medleys.show({ medleyId: $stateParams.basketId }, function(basket) {
-            if (basket.short_id == parseInt($stateParams.basketId)) {
+            if (basket.short_id == $stateParams.basketId) {
                     $scope.show_basket    = basket;
                     // Update Page Title
                     var pageTitle = "Basket - " + $scope.show_basket.hashtags.join(" ");

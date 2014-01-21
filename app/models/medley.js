@@ -9,7 +9,7 @@ var mongoose = require('mongoose'),
 // Medley Schema
 var MedleySchema = new Schema({
     short_id: {
-        type: Number,
+        type: String,
         required: true,
         unique: true
     },
