@@ -13,6 +13,13 @@ var aClient = new AmazonClient({
     assocId:   'medley01-20'
 });
 
+// Set Etsy API Key
+if (process && process.env.NODE_ENV == 'production') { 
+	var etsyAPI = 'ckw5997nrdcuxxesk7pmpzy7' 
+} else { 
+	var etsyAPI = 'fidmluour59jmlqcxfvq5k7u' 
+};
+
 exports.search = function(req, res) {
 	// Variables
 	var self                = this;
@@ -140,13 +147,13 @@ searchEtsy = function(allResults, keywords, etsyStoreId, etsyOffset, cb) {
 		console.log("Keywords!", keywords)
 		if (etsyStoreId && keywords) {
 			console.log("Etsy store ID detected with keywords...");
-			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=" + etsyAPI;
 		} else if (etsyStoreId && keywords === null) {
 			console.log("Etsy store ID detected without keywords...")
-			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=" + etsyAPI;
 		} else {
 			console.log("No Etsy store ID detected...");
-			var etsyPath 	    = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+			var etsyPath 	    = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=" + etsyAPI;
 		};
 		var etsyIndex           = 1;
 		var etsyExcludedItems   = [];
