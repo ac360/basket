@@ -102,7 +102,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
             if (basket.short_id == $stateParams.basketId) {
                     $scope.show_basket    = basket;
                     // Update Page Title
-                    var pageTitle = "Basket - " + $scope.show_basket.hashtags.join(" ");
+                    var pageTitle = "Medley - " + $scope.show_basket.hashtags.join(" ");
                     console.log("Set new page title: ", pageTitle);
                     $(document).attr('title', pageTitle);
                     console.log("Basket Found: ", $scope.show_basket);
