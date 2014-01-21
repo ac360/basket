@@ -53,7 +53,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 /* Home Page */
 #home-container {margin-top:20px;}
 .embed-medley {display:block;float:left;margin:0px 5px 0px 0px;background:rgba(0,0,0,0.05);position: relative !important;
-	 width:545px !important; min-height: 280px !important;}
+	 width:545px !important; min-height: 280px !important;-webkit-border-radius: 6px;border-radius: 6px;}
 .embed-medley-details  {display:block;float:left;width:100%;min-height:30px;height:auto;padding:15px 0px 0px 0px;text-align: center;}
 .embed-medley-votes    {display:block;float:left;width:auto;height:30px;padding:0px 10px 0px 0px;text-align: left;}
 .embed-medley-views    {display:block;float:left;width:auto;height:30px;padding:0px 5px 0px 0px;text-align: left;}
@@ -75,6 +75,8 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 .add-btn i {padding-left:4px;}
 .add-btn:hover {cursor:pointer;background:#93c4fc;}
 #publish-notice {display:block;height:40px;width:100%;line-height:40px;color:#999;}
+#scroll-search-searching {color:#7bb4f5;font-size:20px;padding-top:15px;padding-bottom:20px;}
+#scroll-search-empty     {color:#F57E7B;font-size:20px;padding-top:8px;padding-bottom:20px;}
 
 .new-basket-box 		   {position: fixed;right:15%;overflow:auto;-webkit-border-radius: 6px;border-radius: 6px;max-height:500px;padding-top:10px;padding-bottom:10px;margin-top:20px;margin-left:100px;min-height:50px;width:250px;background:rgba(0,0,0,0.05);}
 .new-basket-item 		   {display:block;width:100%;-webkit-border-radius: 6px;border-radius: 6px;overflow:hidden;height:60px;margin:7px auto;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);}
@@ -93,6 +95,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 .product-preview-details {padding:0px 15px;margin-bottom:20px;}
 .product-preview-description {margin-bottom:15px;color:#666;overflow:hidden;}
 .product-preview-price {font-size:24px;color:#444;font-weight:bold;margin-top:0px;}
+
 
 /* Create Page */
 #create-container {display:block;width:800px;min-height:450px;margin:50px auto 50px auto;}

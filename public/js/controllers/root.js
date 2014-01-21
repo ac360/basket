@@ -3,26 +3,28 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.global               = Global;
-    $scope.status               = false;
-    $scope.user                 = false;
-    $scope.basket               = {};
-    $scope.basket.hashtags      = [];
-    $scope.basket.items         = [];
-    $scope.basket_status        = 'Your Basket:';
-    $scope.basket_publish       = false;
-    $scope.retailer             = 'All Retailers';
-    $scope.etsy_store_id        = '';
-    $scope.search_keywords      = '';
-    $scope.search_results       = false;
-    $scope.search_amazon_meta   = false;
-    $scope.search_etsy_meta     = false;
-    $scope.product_preview      = false;
-    $scope.status               = {};
-    $scope.status.icon          = '';
-    $scope.status.message       = '';
-    $scope.status.status        = false;
-    $scope.share                = false;
+    $scope.global                     = Global;
+    $scope.status                     = false;
+    $scope.user                       = false;
+    $scope.basket                     = {};
+    $scope.basket.hashtags            = [];
+    $scope.basket.items               = [];
+    $scope.basket_status              = 'Your Basket:';
+    $scope.basket_publish             = false;
+    $scope.retailer                   = 'All Retailers';
+    $scope.etsy_store_id              = '';
+    $scope.search_keywords            = '';
+    $scope.search_results             = false;
+    $scope.search_amazon_meta         = false;
+    $scope.search_etsy_meta           = false;
+    $scope.scrollsearch_in_progress   = false;
+    $scope.scrollsearch_empty         = false; 
+    $scope.product_preview            = false;
+    $scope.status                     = {};
+    $scope.status.icon                = '';
+    $scope.status.message             = '';
+    $scope.status.status              = false;
+    $scope.share                      = false;
 
     // Check Local Storage
         // storage.set('status', 'one');
@@ -53,31 +55,86 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         $scope.search_results       = false;
         $scope.search_amazon_meta   = false;
         $scope.search_etsy_meta     = false;
+        $scope.scrollsearch_empty   = false;
         // Check state to navigate back to search page
         if ($state.current.name != "search") {
           $state.go('search', {}, {});
         };
         $scope.search_keywords      = keywords;
+        if ($scope.retailer == 'Etsy') { $scope.etsy_store_id = $('#etsy-store-id-field').val() } else { $scope.etsy_store_id = '' };
         // Check if there are keywords
-        if(!$scope.search_keywords) {
+        if( ($scope.retailer == 'All Retailers' && !$scope.search_keywords) || ($scope.retailer == 'Amazon' && !$scope.search_keywords) || ($scope.retailer == 'Etsy' && !$scope.etsy_store_id && !$scope.search_keywords) ) {
           $scope.status.icon          = 'error';
           $scope.status.message       = "Please enter something to search for...";
           $scope.status.status        = true;
           return false;
         };
-        $scope.etsy_store_id        = $('#etsy-store-id-field').val();
         $scope.status.icon          = "refresh"
         $scope.status.message       = 'Searching for ' + $scope.search_keywords + ' on ' + $scope.retailer.toLowerCase() + '...';
         $scope.status.status        = true;
-        console.log( "Search keywords: " + $scope.search_keywords + "Etsy Store Id" + $scope.etsy_store_id );
-        Retailers.search({ q: $scope.search_keywords, retailer: $scope.retailer, etsy_store_id: $scope.etsy_store_id  }, function(response) {
-            $scope.search_etsy_meta   = response.etsy_meta;
-            $scope.search_amazon_meta = response.amazon_meta;
-            $scope.search_results     = response.items;
-            $scope.status.status      = false;
+        Retailers.search({ q: $scope.search_keywords, retailer: $scope.retailer, etsy_store_id: $scope.etsy_store_id, amazon_page: '1', etsy_offset: '0'  }, function(response) {
+            console.log("search response raw: ", response);
+            // Check if any results were returned
+            if (response.items.length == 0) {
+                $scope.status.icon          = 'error';
+                $scope.status.message       = "Sorry, we couldn't find any products that matched your search for "+ $scope.search_keywords;
+                $scope.status.status        = true; 
+            } else {
+                $scope.search_etsy_meta     = response.etsy_meta;
+                $scope.search_amazon_meta   = response.amazon_meta;
+                $scope.search_results       = response.items;
+                $scope.status.status        = false;
+                if (response.items.length < 10) { $scope.scrollsearch_empty = true };
+            };
             console.log("Search results for " + $scope.search_keywords, $scope.search_results);
         });
     };
+
+    $scope.scrollSearch = function() {
+        $scope.scrollsearch_in_progress = true;
+        // If All Retailers still have more listings...
+        if ($scope.retailer == 'All Retailers' && $scope.search_amazon_meta.more_listings == true && $scope.search_etsy_meta.more_listings == true) {
+            Retailers.search({ q: $scope.search_keywords, retailer: 'All Retailers', etsy_store_id: $scope.etsy_store_id, amazon_page: $scope.search_amazon_meta.next_page, etsy_offset: $scope.search_etsy_meta.next_offset }, function(response) {
+                console.log("Infinite search completed with All Retailers results: ", response);
+                $scope.search_etsy_meta     = response.etsy_meta;
+                $scope.search_amazon_meta   = response.amazon_meta;
+                angular.forEach(response.items, function(item) {
+                    $scope.search_results.push(item);
+                });
+                $scope.scrollsearch_in_progress = false;
+                if(response.items.length == 0){ $scope.scrollsearch_empty = true };
+            });
+        // If Amazon still has more listings...
+        } else if ( ($scope.retailer == 'Amazon' && $scope.search_amazon_meta.more_listings == true) || ($scope.search_amazon_meta.more_listings == true && $scope.search_etsy_meta.more_listings == false) ) {
+            Retailers.search({ q: $scope.search_keywords, retailer: 'Amazon', amazon_page: $scope.search_amazon_meta.next_page }, function(response) {
+                console.log("Infinite search completed with only Amazon results: ", response);
+                $scope.search_amazon_meta   = response.amazon_meta;
+                angular.forEach(response.items, function(item) {
+                    $scope.search_results.push(item);
+                });
+                $scope.scrollsearch_in_progress = false;
+                if(response.items.length == 0){ $scope.scrollsearch_empty = true };
+            });
+        // If Etsy still has more listings...
+        } else if ( ($scope.retailer == 'Etsy' && $scope.search_etsy_meta.more_listings == true) || ($scope.search_amazon_meta.more_listings == false && $scope.search_etsy_meta.more_listings == true) ) {
+            Retailers.search({ q: $scope.search_keywords, retailer: 'Etsy', etsy_store_id: $scope.etsy_store_id, etsy_offset: $scope.search_etsy_meta.next_offset }, function(response) {
+                console.log("Infinite search completed with only Etsy results: ", response);
+                $scope.search_etsy_meta     = response.etsy_meta;
+                angular.forEach(response.items, function(item) {
+                    $scope.search_results.push(item);
+                });
+                $scope.scrollsearch_in_progress = false;
+                if(response.items.length == 0){ $scope.scrollsearch_empty = true };
+            });
+        } else if ($scope.search_amazon_meta.more_listings == false && $scope.search_etsy_meta.more_listings == false) {
+            $scope.scrollsearch_empty         = true;
+            $scope.scrollsearch_in_progress   = false;
+        } else {
+          $timeout(function(){
+              $scope.scrollsearch_in_progress = false;
+          }, 2000);
+        }; // if statment
+    }; // infiniteSearch()
 
     $scope.setBasketStatus = function() {
       if ( $scope.basket.items.length == 1 ) { 
@@ -274,11 +331,23 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
             }
         });
 
+        // Infinite Scroll
+        $(window).scroll(function() {
+            if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
+              // Make Sure you have listings...
+              if ($scope.search_results.length > 9) {
+                  if ($scope.scrollsearch_in_progress === false) {
+                      $scope.scrollSearch();
+                  };
+              };
+            };
+        });
+
         // Initialize Facebook SDK
         window.fbAsyncInit = function() {
             // init the FB JS SDK
             FB.init({
-              appId      : '736751053015158',                    // Dev: 252087231617494 Pro: 736751053015158
+              appId      : '252087231617494',                    // Dev: 252087231617494 Pro: 736751053015158
               status     : true,                                 // Check Facebook Login status
               xfbml      : true                                  // Look for social plugins on the page
             });

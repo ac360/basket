@@ -16,9 +16,11 @@ var aClient = new AmazonClient({
 exports.search = function(req, res) {
 	// Variables
 	var self                = this;
-	var keywords 	 		= req.query.q;
+	if ( req.query.q )             { var keywords = req.query.q } else { var keywords = null };
 	var page     	 		= req.query.p;
 	var retailer     	 	= req.query.retailer;
+	if ( req.query.amazon_page )   { var amazonPage  = req.query.amazon_page   } else { var amazonPage = '1' };
+	if ( req.query.etsy_offset )   { var etsyOffset  = req.query.etsy_offset   } else { var etsyOffset = '0' };
 	if ( req.query.etsy_store_id ) { var etsyStoreId = req.query.etsy_store_id };
 	var allResults   		= {};
 	allResults.items 		= [];
@@ -29,26 +31,26 @@ exports.search = function(req, res) {
 	console.log("Search parameters: ", req.query);
 	// Run search depending on retailer
 	if (retailer == 'All Retailers') {
-		searchAmazon(allResults, keywords, function(allResults){
-			searchEtsy(allResults, keywords, etsyStoreId, function(allResults){
+		searchAmazon(allResults, keywords, amazonPage, function(allResults){
+			searchEtsy(allResults, keywords, etsyStoreId, etsyOffset, function(allResults){
 				// Return
     			res.jsonp(allResults);
 			});
 		});
 	} else if (retailer == 'Amazon') {
-		searchAmazon(allResults, keywords, function(allResults){
+		searchAmazon(allResults, keywords, amazonPage, function(allResults){
 			// Return
     		res.jsonp(allResults);
 		});
 	} else if (retailer == 'Etsy') {
-		searchEtsy(allResults, keywords, etsyStoreId, function(allResults){
+		searchEtsy(allResults, keywords, etsyStoreId, etsyOffset, function(allResults){
 			// Return
 			res.jsonp(allResults);
 		});
 	};
 }; // search
 
-searchAmazon = function(allResults, keywords, cb) {
+searchAmazon = function(allResults, keywords, amazonPage, cb) {
 
 	// Amazon Search
 	aResults 		 = {};
@@ -57,7 +59,8 @@ searchAmazon = function(allResults, keywords, cb) {
 	aClient.execute('ItemSearch', {
 	  'SearchIndex': 	'All',
 	  'Keywords': 		 keywords,
-	  'ResponseGroup':  'ItemAttributes,Offers,Images'
+	  'ResponseGroup':  'ItemAttributes,Offers,Images',
+	  'ItemPage':        amazonPage
 	}, function(results) { // you can add a second parameter here to examine the raw xml response
 		// Format All Results
 		if (results.ItemSearchResponse.Items[0].Request[0].IsValid[0] === "True") {
@@ -65,74 +68,93 @@ searchAmazon = function(allResults, keywords, cb) {
 			    // Add Meta Details
 			    allResults.amazon_meta.searched_keywords     = results.ItemSearchResponse.Items[0].Request[0].ItemSearchRequest[0].Keywords[0];
 			    allResults.amazon_meta.searched_category     = results.ItemSearchResponse.Items[0].Request[0].ItemSearchRequest[0].SearchIndex[0];
-			    allResults.amazon_meta.total_results  		 = results.ItemSearchResponse.Items[0].TotalResults[0];
-			    allResults.amazon_meta.total_pages 		     = results.ItemSearchResponse.Items[0].TotalPages[0];
+			    allResults.amazon_meta.total_pages 		     = parseInt(results.ItemSearchResponse.Items[0].TotalPages[0]);
+			    allResults.amazon_meta.this_page		     = parseInt(results.ItemSearchResponse.Items[0].Request[0].ItemSearchRequest[0].ItemPage[0])
+			    allResults.amazon_meta.next_page		     = parseInt(results.ItemSearchResponse.Items[0].Request[0].ItemSearchRequest[0].ItemPage[0]) + 1;
+			    allResults.amazon_meta.total_results  		 = parseInt(results.ItemSearchResponse.Items[0].TotalResults[0]);
+			    allResults.amazon_meta.remaing_results 		 = allResults.amazon_meta.total_results - (allResults.amazon_meta.this_page * 10);
+			    allResults.amazon_meta.more_listings         = true;
+			    if ( allResults.amazon_meta.remaing_results > 0 ) { 
+			    	allResults.amazon_meta.more_listings = true 
+			    } else { 
+			    	allResults.amazon_meta.more_listings = false
+			    };
 
 			    // Add Search Details
-			    results.ItemSearchResponse.Items[0].Item.forEach( function(i) {
-			    	var new_i = {}
-			    	new_i.title                     = i.ItemAttributes[0].Title[0];
-					new_i.description               = null;
-					new_i.votes                     = null;
-			    	new_i.category                  = i.ItemAttributes[0].ProductGroup[0];
-			    	new_i.link                      = i.DetailPageURL[0];
-			    	// Check for Offers then show					
-			    	if ( i.OfferSummary && parseInt(i.OfferSummary[0].TotalNew[0]  ) > 0 && i.OfferSummary[0].LowestNewPrice[0].Amount ) {
-			    		new_i.price_new             = parseFloat(i.OfferSummary[0].LowestNewPrice[0].Amount[0]) / 100;
-			    	} else { 
-			    		new_i.price_new             = null;
-			    	}
-			    	if ( i.OfferSummary && parseInt(i.OfferSummary[0].TotalUsed[0] ) > 0 && i.OfferSummary[0].LowestUsedPrice[0].Amount  ) {
-			    		new_i.price_used            = parseFloat(i.OfferSummary[0].LowestUsedPrice[0].Amount[0]) / 100;
-			    	} else { 
-			    		new_i.price_used            = null;
-			    	}
-			    	new_i.images                    = {};
-			    	if (i.SmallImage)  {  new_i.images.small  = i.SmallImage[0].URL[0]; }  else { new_i.images.small = null}
-			    	if (i.MediumImage) { new_i.images.medium = i.MediumImage[0].URL[0]; }  else { new_i.images.medium = null}
-			    	if (i.LargeImage)  {  new_i.images.large  = i.LargeImage[0].URL[0]; }  else { new_i.images.large = null}
-			    	new_i.retailer 					= 'Amazon';
-			    	new_i.retailer_id 				= i.ASIN[0];
-					// Remove Useless Categories before Adding Item to Array
-			    	if (new_i.category != 'eBooks' && new_i.category != 'Mobile Application' && new_i.category != 'Digital Music Track') {
-			    		allResults.items.push(new_i);
-			    	} else {
-			    		aExcludedItems.push(new_i)
-			    	};
-			    });
+			    if ( results.ItemSearchResponse.Items[0].Item ) {
+			    	results.ItemSearchResponse.Items[0].Item.forEach( function(i) {
+				    	var new_i = {}
+				    	new_i.title                     = i.ItemAttributes[0].Title[0];
+						new_i.description               = null;
+						new_i.votes                     = null;
+				    	new_i.category                  = i.ItemAttributes[0].ProductGroup[0];
+				    	new_i.link                      = i.DetailPageURL[0];
+				    	// Check for Offers then show					
+				    	if ( i.OfferSummary && parseInt(i.OfferSummary[0].TotalNew[0]  ) > 0 && i.OfferSummary[0].LowestNewPrice[0].Amount ) {
+				    		new_i.price_new             = parseFloat(i.OfferSummary[0].LowestNewPrice[0].Amount[0]) / 100;
+				    	} else { 
+				    		new_i.price_new             = null;
+				    	}
+				    	if ( i.OfferSummary && parseInt(i.OfferSummary[0].TotalUsed[0] ) > 0 && i.OfferSummary[0].LowestUsedPrice[0].Amount  ) {
+				    		new_i.price_used            = parseFloat(i.OfferSummary[0].LowestUsedPrice[0].Amount[0]) / 100;
+				    	} else { 
+				    		new_i.price_used            = null;
+				    	}
+				    	new_i.images                    = {};
+				    	if (i.SmallImage)  {  new_i.images.small  = i.SmallImage[0].URL[0]; }  else { new_i.images.small = null}
+				    	if (i.MediumImage) { new_i.images.medium = i.MediumImage[0].URL[0]; }  else { new_i.images.medium = null}
+				    	if (i.LargeImage)  {  new_i.images.large  = i.LargeImage[0].URL[0]; }  else { new_i.images.large = null}
+				    	new_i.retailer 					= 'Amazon';
+				    	new_i.retailer_id 				= i.ASIN[0];
+						// Remove Itesm with Useless Categories
+				    	if (new_i.category != 'eBooks' && new_i.category != 'Mobile Application' && new_i.category != 'Digital Music Track') {
+				    		allResults.items.push(new_i);
+				    	} else {
+				    		aExcludedItems.push(new_i)
+				    	};
+				    });
+			    };
+			    
 				// Log Search Stats
 				console.log("Amazon Search IsValid: " + results.ItemSearchResponse.Items[0].Request[0].IsValid[0]);
 				console.log("Amazon Total Items Found: " + results.ItemSearchResponse.Items[0].TotalResults[0]);
 				console.log("Items Excluded From Basket Count: ",  aExcludedItems.length);
+				console.log("Amazon Page Searched: ", results.ItemSearchResponse.Items[0].Request[0].ItemSearchRequest[0].ItemPage[0]);
 				// Return
 				console.log("Amazon Search Done");
 				cb(allResults);
 		} else {
-				var amazonError            = {};
-				amazonError.amazon_error   = "Amazon search returned invalid";
-				allResults.errors.push(amazonError); 
+				allResults.errors.amazon = "Amazon search returned invalid";
+				// Add Only Relevant Meta
+				allResults.amazon_meta.more_listings = false;
 				// Return
-				console.log("Amazon Search Done");
+				console.log("Amazon Search Error: ", results.ItemSearchResponse.Items[0].Request[0].Errors[0].Error);
 				cb(allResults);
 		}; // If Amazon search is Valid
 	}); // aClient.execute / Amazon Search Callback
 
 }; // searchAmazon
 
-searchEtsy = function(allResults, keywords, etsyStoreId, cb) {
+searchEtsy = function(allResults, keywords, etsyStoreId, etsyOffset, cb) {
 		// Etsy Search
-		if (etsyStoreId) {
-			console.log("Etsy store ID detected...");
-			var etsyPath 	        = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?keywords=" + keywords + "&limit=20&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+		console.log("Keywords!", keywords)
+		if (etsyStoreId && keywords) {
+			console.log("Etsy store ID detected with keywords...");
+			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+		} else if (etsyStoreId && keywords === null) {
+			console.log("Etsy store ID detected without keywords...")
+			var etsyPath 	    = "https://openapi.etsy.com/v2/shops/" + etsyStoreId + "/listings/active.json?limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
 		} else {
 			console.log("No Etsy store ID detected...");
-			var etsyPath 	        = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=20&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
+			var etsyPath 	    = "https://openapi.etsy.com/v2/listings/active.json?keywords=" + keywords + "&limit=10&offset=" + etsyOffset + "&includes=Images:1&api_key=fidmluour59jmlqcxfvq5k7u";
 		};
 		var etsyIndex           = 1;
 		var etsyExcludedItems   = [];
 
 		requestify.get(etsyPath).then(function(response) {
 			console.log("Etsy Search Done!");
+			// Get Headers to check for errors
+
 			// Format Results
 			etsyRawResults 	= response.getBody();
 			etsyRawResults.results.forEach( function(i) {
@@ -164,10 +186,13 @@ searchEtsy = function(allResults, keywords, etsyStoreId, cb) {
 			allResults.etsy_meta.searched_keywords       = keywords;
 		    //newItem.meta.searched_category             = category;
 		    allResults.etsy_meta.total_results  	   	 = etsyRawResults.count;
-		    allResults.etsy_meta.this_page		         = etsyRawResults.pagination.effective_page;
-		    allResults.etsy_meta.next_page		         = etsyRawResults.pagination.next_page;
-		    allResults.etsy_meta.this_offset             = etsyRawResults.pagination.this_offset;
 		    allResults.etsy_meta.next_offset             = etsyRawResults.pagination.next_offset;
+		    allResults.etsy_meta.remaining_results  	 = allResults.etsy_meta.total_results - (allResults.etsy_meta.next_offset + 10);
+		    if ( allResults.etsy_meta.remaining_results > 0 ) { 
+		    	allResults.etsy_meta.more_listings = true 
+		    } else {
+		    	allResults.etsy_meta.more_listings = false
+		    };
 
 		    console.log("Etsy Search Finished...")
 		    // Callback

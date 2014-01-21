@@ -18,7 +18,8 @@
     "jquery-nicescroll": "latest",
     "font-awesome": "~4.0.3",
     "gridster": "~0.2.1",
-    "angular-gridster": "~0.9.2"
+    "angular-gridster": "~0.9.2",
+    "jquery.jscroll": "~2.2.4"
   },
   "resolutions": {
     "angular": "1.2.6"
