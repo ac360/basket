@@ -30,3 +30,17 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+<div id="productModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      
+        <h1 class="st-centered">Add Hashtags</h1>
+        <h5 class="st-centered">Separate them with spaces. At least one is required.</h5>
+        <p class="alert alert-danger st-centered" ng-show="hashtag_error">{{ hashtag_error }}</p>
+        <div contenteditable="true" id="hashtags-input" class="form-control" ng-keyup="validateHashtags()" maxlength="200"/>
+        <p class="st-centered" style="margin-bottom:20px;"><a href="#" class="btn btn-blue btn-lg" ng-click="publishBasket($event)"><i class="fa fa-check"></i> Publish</a></p>
+        <p class="st-centered"><a href="#" data-dismiss="modal">Cancel</a></p>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+

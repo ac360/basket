@@ -28,9 +28,6 @@ box-shadow: 0 2px 0 0 #608fc5;color:#fff!important;}
 .st-shadow {-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);}
 
 .container {padding:10px 0px 10px 0px;}
-.top-bar {padding:0px;margin:0px;}
-.top-bar li {padding:0px 5px;min-height:40px;}
-.top-bar, .top-bar a {color:#999;font-weight:100;}
 
 .status {color:#666;font-size:16px;margin:3px 0px 8px 0px;}
 .status .fa-refresh       {color:#7bb4f5;font-size:18px;margin-right:4px;}
@@ -44,6 +41,9 @@ box-shadow: 0 2px 0 0 #608fc5;color:#fff!important;}
 box-shadow: 0 1px 0 0 rgba(0,0,0,0.2);border-top:1px solid rgba(0,0,0,0.1);border-right:1px solid rgba(0,0,0,0.1);border-left:1px solid rgba(0,0,0,0.1);
 font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 #header-menu {padding-top:20px;}
+.top-bar {padding:0px;margin:0px;}
+.top-bar li {padding:0px 5px;min-height:40px;color:#999;font-weight:500;}
+.top-bar, .top-bar a {color:#999;font-weight:500;}
 #search-container {}
 #search-container input {height:45px!important;text-align:center;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 #etsy-store-container {padding-top:10px;}
