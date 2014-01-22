@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-md-6">
-		<img class="product-modal-image" ng-src="{{product.images.large}}" draggable="false">
+		<img class="product-modal-image" ng-src="{{product.images.large}}" ng-show="{{product.images.large}}"draggable="false">
+		<p class="product-modal-no-image" ng-show="{{!product.images.large}}">No Image Available</p>
 		<hr>
 		<p class="button-container"><a href="{{ product.link }}" class="btn btn-lg btn-blue" target="_blank">Buy</a></p>
 		<p class="button-container" ng-click="hideProductPopup()"><button class="btn btn-lg btn-primary">Close</button></p>
