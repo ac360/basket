@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout) {
+angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', '$modal', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, $modal) {
 
     // Initialization Methods At Bottom
 
@@ -20,6 +20,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     $scope.scrollsearch_in_progress   = false;
     $scope.scrollsearch_empty         = false; 
     $scope.product_preview            = false;
+    $scope.product                    = false;
     $scope.status                     = {};
     $scope.status.icon                = '';
     $scope.status.message             = '';
@@ -117,6 +118,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
             });
         // If Etsy still has more listings...
         } else if ( ($scope.retailer == 'Etsy' && $scope.search_etsy_meta.more_listings == true) || ($scope.search_amazon_meta.more_listings == false && $scope.search_etsy_meta.more_listings == true) ) {
+            console.log("Infinite search fired for Etsy...")
             Retailers.search({ q: $scope.search_keywords, retailer: 'Etsy', etsy_store_id: $scope.etsy_store_id, etsy_offset: $scope.search_etsy_meta.next_offset }, function(response) {
                 console.log("Infinite search completed with only Etsy results: ", response);
                 $scope.search_etsy_meta     = response.etsy_meta;
@@ -181,6 +183,20 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
 
     $scope.hideProductPreview = function(item) {
       $scope.product_preview = false;
+    };
+
+    $scope.showProductPopup = function(item) {
+      $scope.product = item;
+      console.log($scope.product)
+      $scope.product_popup = $modal.open({
+        templateUrl: 'views/modals/product_modal.html',
+        scope: $scope,
+        windowClass: 'product-modal'
+      });
+    };
+
+    $scope.hideProductPopup = function(item) {
+      $scope.product_popup.close();
     };
 
     // Get The Current User
@@ -341,6 +357,12 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
                   };
               };
             };
+        });
+
+        // Angular Directive Event Listeners
+        $scope.$on('openProductModal', function(e, item) {
+            $scope.showProductPopup(item)
+            console.log("Broadcast received: ", item);
         });
 
         // Initialize Facebook SDK

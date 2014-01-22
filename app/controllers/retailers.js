@@ -52,6 +52,7 @@ exports.search = function(req, res) {
 	} else if (retailer == 'Etsy') {
 		searchEtsy(allResults, keywords, etsyStoreId, etsyOffset, function(allResults){
 			// Return
+			console.log("res.jsonp: ", allResults)
 			res.jsonp(allResults);
 		});
 	};
@@ -201,7 +202,7 @@ searchEtsy = function(allResults, keywords, etsyStoreId, etsyOffset, cb) {
 		    	allResults.etsy_meta.more_listings = false
 		    };
 
-		    console.log("Etsy Search Finished...")
+		    console.log("Etsy Search Finished...");
 		    // Callback
 		    cb(allResults);
 

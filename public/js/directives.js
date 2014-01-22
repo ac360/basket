@@ -19,4 +19,17 @@ app.directive('dynamic', function ($compile) {
     }
   };
 });
+// Load Product Window
+app.directive("medleyItem", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope){
+            $element.click(function() {
+                console.log("clicked!", $attrs, $scope);
+                $rootScope.$broadcast('openProductModal', $scope.item);
+            })
+        }
+    };
+});
 

@@ -2,12 +2,12 @@
 	<div class="results-container col-md-7">
 		<div ng-repeat="item in search_results">
 			<div class="row result animated" ng-mouseleave="hideProductPreview()">
-				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)">
+				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)" medley-item>
 					<img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" class="result-image" draggable="false">
 					<div class="no-image-box" ng-hide="item.images.medium">No Image</div>
 					<h6><img class="result-retailer-logo" ng-src="img/{{ item.retailer | lowercase }}_logo.png"></h6>
 				</div>
-				<div class="col-md-8 result-title-container" ng-mouseover="showProductPreview(item)">
+				<div class="col-md-8 result-title-container" ng-mouseover="showProductPreview(item)" medley-item>
 					<h4 class="result-title">{{ item.title | limitTo:80 }}</h4>
 					<h5>{{ item.category }}</h5>
 					<h6>{{ item.price_new }}</h6>
