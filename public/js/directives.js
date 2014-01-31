@@ -19,17 +19,30 @@ app.directive('dynamic', function ($compile) {
     }
   };
 });
-// Load Product Window
+
+// Directive - Load Product Window
 app.directive("medleyItem", function() {  
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope){
+        controller: function($scope, $element, $attrs, $rootScope, Modals){
             $element.click(function() {
-                console.log("clicked!", $attrs, $scope);
-                $rootScope.$broadcast('openProductModal', $scope.item);
+                Modals.product($scope.item);
             })
         }
     };
 });
 
+// Directive - Facebook Sign In
+app.directive("facebookSignInLink", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Global, Users){
+            $element.click(function() {
+                // Check if user is logged in
+                Global.authenticateUser();
+            }) // element.click()
+        } // controller
+    }; //return
+});

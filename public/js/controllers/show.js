@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout) {
+angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Initialization Methods At Bottom
 
@@ -60,7 +60,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 });
             };
         } else {
-            $('#signInModal').modal('show');
+            Modals.signIn();
             $scope.voteChecking = false;
         };
     };

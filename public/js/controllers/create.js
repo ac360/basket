@@ -1,10 +1,9 @@
-angular.module('mean.system').controller('CreateController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout) {
+angular.module('mean.system').controller('CreateController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Initialization Methods At Bottom
 
     // Set Defaults
     $scope.global           = Global;
-    $scope.basket;
     $scope.hashtag_error    = false;
 
     $scope.resizeItem = function($event) {
@@ -51,27 +50,29 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
       angular.forEach(serialized, function(sItem, sIndex){
           angular.forEach($scope.basket.items, function(bItem, bIndex){
               if (bItem.$$hashKey === sItem.$$hashKey) {
-                  bItem.col = sItem.col;
-                  bItem.row = sItem.row;
+                  bItem.col    = sItem.col;
+                  bItem.row    = sItem.row;
                   bItem.size_x = sItem.size_x;
                   bItem.size_y = sItem.size_y;
                   $scope.basket.items.splice(bIndex, 1);
                   $scope.basket.items.push(bItem);
               };
           });
-          console.log("Serialized Data:", serialized);
-          console.log("Updated Basket:", $scope.basket);
+          // console.log("Serialized Data:", serialized);
+          // console.log("Updated Basket:", $scope.basket);
+      });
+      Global.setMedleyProperty("items", $scope.basket.items, function(medley) {
+        $scope.basket = medley;
+        console.log("From Global: ", $scope.basket)
       });
     };
 
     $scope.showPublishModal = function(){
-      this.getCurrentUser(function(user){
-          if ($scope.user) {
-              $('#hashtagModal').modal('show');
-          } else {
-              $('#signInModal').modal('show');
-          };
-      });
+        if (Global.getCurrentUser()) {
+            Modals.hashtag()
+        } else {
+            Modals.signIn();
+        };
     };
 
     // Initialize

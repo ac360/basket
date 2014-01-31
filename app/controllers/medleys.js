@@ -26,11 +26,11 @@ exports.create = function(req, res) {
     console.log("Creating: ", medley);
     medley.user = req.user;
     medley.short_id = shortId(medley._id);
-    console.log("Medley short id created: ", medley.short_id);
-    medley.save(function(err) {
+    medley.save(function(err, medley) {
         if (err) {
             console.log(err);
         } else {
+            console.log("Medley Successfully Saved: ", medley);
             res.jsonp(medley);
         }
     });

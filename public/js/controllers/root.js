@@ -9,7 +9,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     $scope.basket                     = {};
     $scope.basket.hashtags            = [];
     $scope.basket.items               = [];
-    $scope.basket_status              = 'Your Basket:';
+    $scope.basket_status              = 'Your Medley:';
     $scope.basket_publish             = false;
     $scope.retailer                   = 'All Retailers';
     $scope.etsy_store_id              = '';
@@ -26,26 +26,6 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     $scope.status.message             = '';
     $scope.status.status              = false;
     $scope.share                      = false;
-
-    // Check Local Storage
-        // storage.set('status', 'one');
-    switch (storage.get('status')) {
-        case "registered":
-        break;
-    };
-
-    // Get The Current User
-    $scope.getCurrentUser = function(cb) {
-        Users.get({}, function(user) {
-            console.log("Current User Fetched: ", user);
-            if (user['0']) {
-                cb(null);
-            } else {
-                $scope.user = user;
-                if (cb) { cb(user) }; 
-            };
-        });
-    };
 
     $scope.setRetailer = function(retailer) {
       $scope.retailer = retailer;
@@ -146,7 +126,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         $scope.basket_status = "Ready to publish!";
         $scope.basket_publish = true;
       } else {
-        $scope.basket_status = "Your Basket:";
+        $scope.basket_status = "Your Medley:";
         $scope.basket_publish = false;
       };
     };
@@ -155,7 +135,10 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         // Set Gridster Defaults
         item.row = item.col = item.size_x = item.size_y = 1;
         $scope.basket.items.push(item);
-        console.log("Basket: ", $scope.basket);
+        // Update Global Data
+        Global.setMedleyProperty("items", $scope.basket.items, function(medley) {
+          $scope.basket = medley;
+        });
         this.removeArrayItem(item.$$hashKey, $scope.search_results);
         $scope.basket_full = true;
         this.setBasketStatus();
@@ -164,16 +147,14 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     $scope.removeArrayItem = function(hashKey, sourceArray) {
         var self = this;
         angular.forEach(sourceArray, function(obj, index){
-          // sourceArray is a reference to the original array passed to ng-repeat, 
-          // rather than the filtered version. 
-          // 1. compare the target object's hashKey to the current member of the iterable:
           if (obj.$$hashKey === hashKey) {
-            // remove the matching item from the array
             sourceArray.splice(index, 1);
-            // and exit the loop right away
             self.setBasketStatus();
             return;
           };
+        });
+        Global.setMedleyProperty("items", $scope.basket.items, function(medley) {
+          $scope.basket = medley;
         });
     };
 
@@ -197,110 +178,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
 
     $scope.hideProductPopup = function(item) {
       $scope.product_popup.close();
-    };
-
-    // Get The Current User
-    $scope.loginFacebook = function(e, cb) {
-        var self = this;
-        e.preventDefault();
-        if (!$scope.user) {
-            FB.getLoginStatus(function(response) {
-                  if (response.status === 'connected') {
-                    // TODO:  UPDATE USER EMAIL ADDRESS ON LOGIN!
-                    // the user is logged in and has authenticated your
-                    // app, and response.authResponse supplies
-                    // the user's ID, a valid access token, a signed
-                    // request, and the time the access token 
-                    // and signed request each expire
-                    // var uid = response.authResponse.userID;
-                    // var accessToken = response.authResponse.accessToken;
-                    console.log('User is already logged into Facebook: ', response);
-                    FB.api('/me', function(response) {
-                        console.log('Successfully Retrieved User Information: ', response);
-                        var newUser = new Users({
-                              email:      response.email,
-                              username:   response.username,
-                              name:       response.name,
-                              first_name: response.first_name,
-                              last_name:  response.last_name,
-                              gender:     response.gender,
-                              locale:     response.locale,
-                              timezone:   response.timezone,
-                              fb_id:      response.id,
-                              provider:   'facebook'
-                         });
-                         newUser.$save(function(user){
-                              console.log("Successfully saved new user to database and signed in: ", user);
-                              $scope.user = user;
-                              // If Sign In Modal is open, close it!
-                              if ( $('#signInModal').hasClass('in') ) {
-                                  $('#signInModal').modal('hide');
-                              };
-                              if (cb) {cb()};
-                         });
-                    });
-                  } else {
-                    // the user is logged in to Facebook, but has not authenticated your app
-                    FB.login(function(response) {
-                        if (response.authResponse) {
-                           console.log('Successfully Authenticated: ', response);
-                           FB.api('/me', function(response) {
-                             console.log('Successfully Retrieved User Information: ', response);
-                             var newUser = new Users({
-                                  email:      response.email,
-                                  username:   response.username,
-                                  name:       response.name,
-                                  first_name: response.first_name,
-                                  last_name:  response.last_name,
-                                  gender:     response.gender,
-                                  locale:     response.locale,
-                                  timezone:   response.timezone,
-                                  fb_id:      response.id,
-                                  provider:   'facebook'
-                             });
-                             newUser.$save(function(user){
-                                  console.log("Successfully saved new user to database and signed in: ", user);
-                                  $scope.user = user;
-                                  // If Sign In Modal is open, close it!
-                                  if ( $('#signInModal').hasClass('in') ) {
-                                      $('#signInModal').modal('hide');
-                                  };
-                                  if (cb) {cb()};
-                             });
-                           });
-                        } else {
-                          console.log('User cancelled login or did not fully authorize.');
-                        }
-                    },{ scope: 'email,user_likes' });
-                  }; // if response = "connected"
-            }); // FB.getLoginStatus
-        }; // !$scope.user
-    };
-
-    $scope.validateHashtags = function() {
-        // Limit Number of Characters
-        var content_id = 'hashtags-input';  
-        var max = 140;
-        //binding keyup/down events on the contenteditable div
-        $('#'+content_id).keyup(function(e){ check_charcount(content_id, max, e); });
-        $('#'+content_id).keydown(function(e){ check_charcount(content_id, max, e); });
-        function check_charcount(content_id, max, e) {   
-            if(e.which != 8 && $('#'+content_id).text().length > max) {
-                e.preventDefault();
-            }
-        }
-        // Style hashtag text
-        $('#hashtags-input').text().replace(/(^|\W)(#[a-z\d][\w-]*)/ig, '$1<span>$2</span>');
-
-        // console.log(words);
-        // var tagslistarr = words.split(' ');
-        // var arr=[];
-        // $.each(tagslistarr,function(i,val){
-        //     if(tagslistarr[i].indexOf('#') == 0){
-                 
-        //     }
-        // });
-    };
+    }
 
     $scope.publishBasket = function($event) {
         $event.preventDefault();
@@ -340,14 +218,21 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
 
     // Initialization Methods
 
-        // Get Current User
-        $scope.getCurrentUser(function(user){
-            if(user){
-                $scope.user = user;
-            }
+        // Get Current User Or Try To Log Them In Via Facebook
+        Global.autoSignIn();
+
+        // Listener - Authetication
+        $scope.$on('SignedInViaFacebook', function(e, user){
+          console.log("User Signed In: ", user);
+          $scope.user = user;
+        });
+        // Listener - Medley Published
+        $scope.$on('MedleyPublished', function(e, medley) {
+          Global.resetMedley();
+          $scope.basket = Global.getMedley();
         });
 
-        // Infinite Scroll
+        // Listener - Infinite Scroll 
         $(window).scroll(function() {
             if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
               // Make Sure you have listings...
@@ -358,41 +243,4 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
               };
             };
         });
-
-        // Angular Directive Event Listeners
-        $scope.$on('openProductModal', function(e, item) {
-            $scope.showProductPopup(item)
-            console.log("Broadcast received: ", item);
-        });
-
-        // Initialize Facebook SDK
-        window.fbAsyncInit = function() {
-            // init the FB JS SDK for use
-            FB.init({
-              appId      : '736751053015158',                    // Dev: 252087231617494 Pro: 736751053015158
-              status     : true,                                 // Check Facebook Login status
-              xfbml      : true                                  // Look for social plugins on the page
-            });
-            // Additional initialization code such as adding Event Listeners goes here
-          };
-
-          // Load the SDK asynchronously
-          (function(){
-             // If we've already installed the SDK, we're done
-             if (document.getElementById('facebook-jssdk')) {return;}
-
-             // Get the first script element, which we'll use to find the parent node
-             var firstScriptElement = document.getElementsByTagName('script')[0];
-
-             // Create a new script element and set its id
-             var facebookJS = document.createElement('script'); 
-             facebookJS.id = 'facebook-jssdk';
-
-             // Set the new script's source to the source of the Facebook JS SDK
-             facebookJS.src = '//connect.facebook.net/en_US/all.js';
-
-             // Insert the Facebook JS SDK into the DOM
-             firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
-        }());
-
 }]);

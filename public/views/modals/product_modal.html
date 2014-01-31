@@ -1,15 +1,17 @@
-<div class="row">
+<p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
+<div class="row product-container">
 	<div class="col-md-6">
-		<img class="product-modal-image" ng-src="{{product.images.large}}" ng-show="{{product.images.large}}"draggable="false">
+		<a ng-href="{{ product.link }}" target="_blank">
+			<img class="product-modal-image" ng-src="{{product.images.large}}" ng-show="{{product.images.large}}" draggable="false">
+		</a>
 		<p class="product-modal-no-image" ng-show="{{!product.images.large}}">No Image Available</p>
 		<hr>
-		<p class="button-container"><a href="{{ product.link }}" class="btn btn-lg btn-blue" target="_blank">Buy</a></p>
-		<p class="button-container" ng-click="hideProductPopup()"><button class="btn btn-lg btn-primary">Close</button></p>
+		<p class="button-container"><a ng-href="{{ product.link }}" class="btn btn-lg btn-primary" target="_blank">Buy</a></p>
 	</div>
 	<div class="col-md-6">
 		 <h1 class="product-modal-title">{{ product.title | limitTo:120 }}</h1>
 		 <hr>
-		 	<span class="product-modal-price">${{ product.price_new }}</span><img class="product-modal-retailer pull-right" src="img/{{ product.retailer | lowercase }}_logo.png" draggable="false"></h3>
+		 	<a ng-href="{{ product.link }}" class="product-modal-price" target="_blank">${{ product.price_new }}</a><a ng-href="{{ product.link }}" class="pull-right" target="_blank"><img class="product-modal-retailer pull-right" src="img/{{ product.retailer | lowercase }}_logo.png" draggable="false"></a></h3>
 		 <hr>
 		 <p class="product-modal-description" ng-show="product.description">
 		 	{{ product.description }}
