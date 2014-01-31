@@ -1,6 +1,6 @@
 angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal', '$state', '$stateParams', "Users", "Modals", "Medleys", function($http, $rootScope, $modal, $state, $stateParams, Users, Modals, Medleys) {
     
-	var mData = { user: null, medley: {} };
+	var mData = { user: null, medley: { items: [] } };
 
     return {
     		setMedleyProperty: function(propertyName, property, callback ) {
@@ -20,7 +20,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	            });
     		},
     		resetMedley: function() {
-    			mData.medley = {};
+    			mData.medley: { items: [] }
     		},
     		showProductModal: function(product, callback) {
     			Modals.product(product);
