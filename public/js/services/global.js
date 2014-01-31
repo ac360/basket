@@ -20,7 +20,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	            });
     		},
     		resetMedley: function() {
-    			mData.medley: { items: [] }
+    			mData.medley = { items: [] };
     		},
     		showProductModal: function(product, callback) {
     			Modals.product(product);
