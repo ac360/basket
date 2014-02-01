@@ -166,54 +166,8 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
       $scope.product_preview = false;
     };
 
-    $scope.showProductPopup = function(item) {
-      $scope.product = item;
-      console.log($scope.product)
-      $scope.product_popup = $modal.open({
-        templateUrl: 'views/modals/product_modal.html',
-        scope: $scope,
-        windowClass: 'product-modal'
-      });
-    };
-
-    $scope.hideProductPopup = function(item) {
-      $scope.product_popup.close();
-    }
-
-    $scope.publishBasket = function($event) {
-        $event.preventDefault();
-        // Save to array of hashtags
-        var words = $('#hashtags-input').text();
-        var tagslistarr = words.split(' ');
-        var arr=[];
-        $.each(tagslistarr,function(i,val){
-            if(tagslistarr[i].indexOf('#') == 0){
-              $scope.basket.hashtags.push(tagslistarr[i]);  
-            }
-        });
-        if ($scope.basket.hashtags.length > 0) {
-            console.log("Basket to be published: ", $scope.basket);
-            var basket = new Medleys($scope.basket);
-            basket.$save(function(response){
-              console.log(response);
-              $scope.basket           = {};
-              $scope.basket.hashtags  = [];
-              $scope.basket.items     = [];
-              $('#create-stage ul').html('');
-              $('#hashtagModal').modal('hide');
-              $('#hashtagModal').on('hidden.bs.modal', function () {
-                $timeout(function(){
-                    $state.go('show', { basketId: response.short_id });
-                    $scope.share = true;
-                }, 500);
-              });
-            });
-        } else {
-           $scope.hashtag_error = 'Please enter at least one hashtag';
-           $timeout(function(){
-              $scope.hashtag_error = false;
-           }, 5000);
-        }
+    $scope.shareFacebook = function(medleyId, username, imageLink, hashtags) {
+        Global.shareFacebook(medleyId, username, imageLink, hashtags);
     };
 
     // Initialization Methods
@@ -230,6 +184,7 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
         $scope.$on('MedleyPublished', function(e, medley) {
           Global.resetMedley();
           $scope.basket = Global.getMedley();
+          $scope.share = true;
         });
 
         // Listener - Infinite Scroll 

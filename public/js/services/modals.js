@@ -17,6 +17,17 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
 				}
 		    });
         },
+        publishedShare: function() {
+          	var modalInstance = $modal.open({
+          		windowClass: 'published-share-modal',
+		        templateUrl: 'views/modals/published_share_modal.html',
+          		controller:  function ($scope, $modalInstance, Global) {
+          			$scope.close = function() {
+          				$modalInstance.close();
+          			};
+				}
+		    });
+        },
         product: function(product) {
         	var modalInstance = $modal.open({
           		windowClass: 'product-modal',

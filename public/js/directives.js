@@ -33,6 +33,19 @@ app.directive("medleyItem", function() {
     };
 });
 
+// Directive - Share Facebook Link
+// app.directive("shareFacebookLink", function() {  
+//     return {
+//         restrict: "A",
+//         replace: true,
+//         controller: function($scope, $element, $attrs, $rootScope, Global, Modals){
+//             $element.click(function() {
+//                 Global.shareFacebook();
+//             })
+//         }
+//     };
+// });
+
 // Directive - Facebook Sign In
 app.directive("facebookSignInLink", function() {  
     return {

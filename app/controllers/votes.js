@@ -50,8 +50,8 @@ exports.destroy = function(req, res) {
 exports.findByMedleyAndUserId = function(req, res, id) {
 	console.log(req.query);
 
-    Vote.find({ medley: req.query.medley_id, user: req.query.user }).exec(function(err, vote) {
-        // console.log("Vote Search Result: ", vote);
+    Vote.find({ medley: req.query.medley, user: req.user }).exec(function(err, vote) {
+        console.log("Vote Search Result: ", vote);
         if (err) {
             console.log(err);
         } else {

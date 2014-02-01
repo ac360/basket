@@ -4,22 +4,22 @@
 			
 			<div class="row">
 				<div id="show-profile" class="col-md-6">
-					<div id="show-profile-image-container" ng-show="show_basket">
-						<img id="show-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{show_basket.user.username}}/picture?type=large">
+					<div id="show-profile-image-container" ng-show="show_medley">
+						<img id="show-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ show_medley.user.username}}/picture?type=large">
 					</div>
-					<div id="show-profile-info-container" ng-show="show_basket">
+					<div id="show-profile-info-container" ng-show="show_medley">
 						<div id="author-container">
-							<a class="author" href="#">{{show_basket.user.name}}</a>
+							<a class="author" href="#">{{ show_medley.user.name }}</a>
 						</div>
 						<div id="info-container">
 							<div id="show-options-views">
-								<i class="fa fa-eye"></i><span class="show-views">{{show_basket.views}}</span>
+								<i class="fa fa-eye"></i><span class="show-views">{{ show_medley.views }}</span>
 							</div>
 							<div id="show-options-votes" ng-click="voteBasket()">
-								<i class="fa fa-heart-o" ng-if="!vote" ng-hide="voteChecking"></i><i class="fa fa-heart" ng-if="vote" ng-hide="voteChecking"></i><i class="fa fa-refresh fa-spin" ng-show="voteChecking"></i><span class="show-votes">{{show_basket.votes}}</span>
+								<i class="fa fa-heart-o" ng-if="!vote" ng-hide="voteChecking"></i><i class="fa fa-heart" ng-if="vote" ng-hide="voteChecking"></i><i class="fa fa-refresh fa-spin" ng-show="voteChecking"></i><span class="show-votes">{{ show_medley.votes }}</span>
 							</div>
 							<div id="show-options-share">
-								<span id="facebook-share-link" ng-click="shareFacebook()"><i class="fa fa-facebook-square"></i> Share</span>
+								<span id="facebook-share-link" ng-click="shareFacebook(show_medley.short_id, show_medley.user.name, show_medley.items[0].images.medium, show_medley.hashtags)"><i class="fa fa-facebook-square"></i> Share</span>
 							</div>
 						</div>
 					</div>
@@ -32,9 +32,11 @@
 						<div id="show-options-hashtags" ng-show="show_basket">
 							<a class="hashtag" href="#" ng-repeat="hashtag in show_basket.hashtags">{{ hashtag }}</a>
 						</div>
-						<div id="show-stage" class="gridster" ng-show="show_basket">
-							<ul dynamic>
-							</ul>
+						
+						<div class="st-center-element embed-medley-medium" style="height:{{ show_medley.height }}px">
+							<div class="embed-item animated bounceIn" style="position:absolute;width:{{ item.width }}px;height:{{ item.height }}px;top:{{ item.top }}px;left:{{ item.left }}px;display:block;" ng-repeat="item in show_medley.items" medley-item>
+								<img ng-src="{{ item.images.medium }}" draggable="false">
+							</div>
 						</div>
 
 

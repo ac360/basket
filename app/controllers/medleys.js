@@ -3,19 +3,19 @@ var mongoose        = require('mongoose'),
     async           = require('async'),
     shortId         = require('short-mongo-id'),
     Medley          = mongoose.model('Medley'),
+    Vote            = mongoose.model('Vote'),
     _               = require('underscore');
 
 
 // Find Medley by id
 exports.medley = function(req, res, next, id) {
-    Medley.find({short_id: req.params.shortId}).populate('user', 'name username').exec(function(err, medleys) {
+    Medley.find({ short_id: req.params.shortId }).populate('user', 'name username').exec(function(err, medleys) {
         if (err) return next(err);
-        if (medleys.length > 0) {
+        if (medleys[0] && medleys[0].short_id) {
             req.medley = medleys[0];
         } else {
-            console.log("Error, couldn't find medley");
             req.medley = null;
-        }
+        };
         next();
     });
 };
@@ -49,26 +49,49 @@ exports.update = function(req, res) {
 
 // Update View Count
 exports.updateViewCount = function(req, res) {
-    var medley = req.medley;
-
-    medley.views = medley.views + 1;
-
-    medley.save(function(err) {
+    req.medley.views = req.medley.views + 1;
+    req.medley.save(function(err, medley) {
         res.jsonp(medley);
     });
 };
 
-// Update View Count
+// Update Vote Count
 exports.updateVoteCount = function(req, res) {
-    console.log(req.query);
-    var medley   = req.medley;
-    if (req.query.vote == 'true') {
-        medley.votes = medley.votes + 1;
-    } else if (req.query.vote == 'false') {
-        medley.votes = medley.votes - 1;
-    };
-    medley.save(function(err) {
-        res.jsonp(medley);
+    Vote.find({ medley: req.medley, user: req.user }).exec(function(err, vote) {
+        if (err) {
+            console.log(err);
+            res.jsonp(err);
+        } else {
+            // User Vote Doesn't Exist
+            if (vote.length < 1) {
+                    var vote = new Vote({ medley: req.medley, user: req.user });
+                    vote.save(function(err, vote) {
+                        if (err) {
+                            console.log(err);
+                            res.jsonp(err);
+                        } else {
+                            req.medley.votes = req.medley.votes + 1;
+                            req.medley.save(function(err, medley){
+                                res.jsonp(medley);
+                            })
+                        }
+                    });
+            // User Vote Exists 
+            } else {
+                var vote = vote[0]
+                vote.remove(function(err, vote){
+                    if (err) {
+                        console.log(err);
+                        res.jsonp(err);
+                    } else {
+                        req.medley.votes = req.medley.votes - 1;
+                        req.medley.save(function(err, medley){
+                            res.jsonp(medley);
+                        })
+                    }
+                })
+            };
+        };
     });
 };
 
