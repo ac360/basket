@@ -11,7 +11,7 @@
 	<div class="col-md-6">
 		 <h1 class="product-modal-title">{{ product.title | limitTo:120 }}</h1>
 		 <hr>
-		 	<a ng-href="{{ product.link }}" class="product-modal-price" target="_blank">${{ product.price_new }}</a><a ng-href="{{ product.link }}" class="pull-right" target="_blank"><img class="product-modal-retailer pull-right" src="img/{{ product.retailer | lowercase }}_logo.png" draggable="false"></a></h3>
+		 	<a ng-href="{{ product.link }}" class="product-modal-price" target="_blank">${{ product.price_new }}</a><a ng-href="{{ product.link }}" class="pull-right" target="_blank"><img class="product-modal-retailer pull-right" ng-src="img/{{ product.retailer | lowercase }}_logo.png" draggable="false"></a></h3>
 		 <hr>
 		 <p class="product-modal-description" ng-show="product.description">
 		 	{{ product.description }}
