@@ -107,8 +107,12 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
           var html = '<li class="basket-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'"><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
           $scope.gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
         });
-        console.log("Initialize Basket: ", $scope.basket);
-    };
+        // Save Positions Immediately
+        $timeout(function(){ 
+            $scope.updateBasketFromGrid();
+        },1000);
+
+    }; // Init create
 
     $scope.initializeCreate();
     

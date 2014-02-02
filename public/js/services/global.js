@@ -32,22 +32,24 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     			mData.medley = { items: [] };
     		},
 
-    		shareFacebook: function(medleyId, username, imageLink, hashtags) {
-    			if (mData.user) {
-    				FB.ui({
-		              method: 'feed',
-		              link: 'http://basket.herokuapp.com/'+medleyId,
-		              caption: "This Medley is a collection of awesome, hand-picked products created by " + username,
-		              display: 'iframe',
-		              picture: imageLink,
-		              name: 'Medley - ' + hashtags.join(" ")
-		            },  function(response){
-		                	console.log(response);
-		                	// Hide Modals?
-		            });
-    			} else {
-		            Modals.signIn();
-		        };
+    		shareFacebook: function(medleyId) {
+    			Medleys.show({ medleyId: medleyId }, function(medley) {
+    			 	if(medley) { 
+    			 		FB.ui({
+			              method: 'feed',
+			              link: 'http://mdly.co/'+medleyId,
+			              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
+			              display: 'iframe',
+			              picture: medley.items[0].images.medium,
+			              name: 'Medley - ' + medley.hashtags.join(" ")
+			            },  function(response){
+			                	console.log(response);
+			                	// Hide Modals?
+			            });
+    			 	} else {
+    			 		console.log("Medley could not be found for sharing...")
+    			 	}
+    			 });
     		},
 
     		updateMedleyViewCount: function(medleyId) {

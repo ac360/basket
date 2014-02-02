@@ -17,11 +17,12 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
 				}
 		    });
         },
-        publishedShare: function() {
+        publishedShare: function(medleyId) {
           	var modalInstance = $modal.open({
           		windowClass: 'published-share-modal',
 		        templateUrl: 'views/modals/published_share_modal.html',
           		controller:  function ($scope, $modalInstance, Global) {
+          			$scope.medleyId = medleyId
           			$scope.close = function() {
           				$modalInstance.close();
           			};

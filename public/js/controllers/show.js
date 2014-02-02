@@ -6,22 +6,21 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     $scope.show_medley      = false;
     $scope.share;
     $scope.voteChecking     = false;
-    $scope.vote             = false;
     $scope.hasVoted         = false;
     $scope.load_error       = false;
 
     $scope.publishedShare = function() {
-      Modals.publishedShare();
+      Modals.publishedShare($scope.show_medley.short_id);
     };
 
     $scope.getVoteStatus = function() {
         Global.getMedleyVoteStatus($scope.show_medley._id, function(vote) {
             // If User Has Not Voted
             if (vote) {
-                $scope.vote = vote;
+                $('.fa-heart-o').removeClass('fa-heart-o').addClass('fa-heart');
             // If User Has Voted
             } else {
-                $scope.vote = false;
+                $('.fa-heart').removeClass('fa-heart').addClass('fa-heart-o');
             };
         });
     };
@@ -52,7 +51,6 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 // Check Share Option
                 if ($scope.share == true) {
                     $timeout(function() {
-                        console.log("share activated")
                         $scope.publishedShare();
                     },4000)
                 };
@@ -60,7 +58,9 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 Global.updateMedleyViewCount($scope.show_medley.short_id)
                 // Get Vote Status
                 if ($scope.user) {
-                    $scope.getVoteStatus();
+                    $timeout(function() {
+                        $scope.getVoteStatus();
+                    })
                 };
             } // If No Medley found 
         });

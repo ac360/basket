@@ -34,17 +34,17 @@ app.directive("medleyItem", function() {
 });
 
 // Directive - Share Facebook Link
-// app.directive("shareFacebookLink", function() {  
-//     return {
-//         restrict: "A",
-//         replace: true,
-//         controller: function($scope, $element, $attrs, $rootScope, Global, Modals){
-//             $element.click(function() {
-//                 Global.shareFacebook();
-//             })
-//         }
-//     };
-// });
+app.directive("shareFacebookLink", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Global, Modals, Medleys){
+            $element.click(function() {
+                Global.shareFacebook($attrs.shareFacebookLink);
+            })
+        }
+    };
+});
 
 // Directive - Facebook Sign In
 app.directive("facebookSignInLink", function() {  
@@ -55,6 +55,33 @@ app.directive("facebookSignInLink", function() {
             $element.click(function() {
                 // Check if user is logged in
                 Global.authenticateUser();
+            }) // element.click()
+        } // controller
+    }; //return
+});
+
+// Directive - Vote Medley
+app.directive("voteLink", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Global, Users){
+            $element.click(function() {
+                if (Global.getCurrentUser()) {
+                    Global.voteMedley($attrs.voteLink, function(medley){
+                        Global.getMedleyVoteStatus(medley._id, function(vote) {
+                            // If User Has Voted
+                            if (vote) {
+                                $( $element ).find( "i" ).removeClass('fa-heart-o').addClass('fa-heart');
+                            // If User Has Not Voted
+                            } else {
+                                $( $element ).find( "i" ).removeClass('fa-heart').addClass('fa-heart-o');
+                            };
+                        });
+                    });
+                } else {
+                    Modals.signIn();
+                };
             }) // element.click()
         } // controller
     }; //return

@@ -15,11 +15,11 @@
 							<div id="show-options-views">
 								<i class="fa fa-eye"></i><span class="show-views">{{ show_medley.views }}</span>
 							</div>
-							<div id="show-options-votes" ng-click="voteBasket()">
-								<i class="fa fa-heart-o" ng-if="!vote" ng-hide="voteChecking"></i><i class="fa fa-heart" ng-if="vote" ng-hide="voteChecking"></i><i class="fa fa-refresh fa-spin" ng-show="voteChecking"></i><span class="show-votes">{{ show_medley.votes }}</span>
+							<div id="show-options-votes" vote-link="{{ show_medley.short_id }}">
+								<i class="fa fa-heart-o"></i><span class="show-votes">{{ show_medley.votes }}</span>
 							</div>
 							<div id="show-options-share">
-								<span id="facebook-share-link" ng-click="shareFacebook(show_medley.short_id, show_medley.user.name, show_medley.items[0].images.medium, show_medley.hashtags)"><i class="fa fa-facebook-square"></i> Share</span>
+								<span id="facebook-share-link" share-facebook-link="{{ show_medley.short_id }}"><i class="fa fa-facebook-square"></i> Share</span>
 							</div>
 						</div>
 					</div>
@@ -29,11 +29,11 @@
 			<div class="row">
 				<div class="col-md-12"> 
 
-						<div id="show-options-hashtags" ng-show="show_basket">
-							<a class="hashtag" href="#" ng-repeat="hashtag in show_basket.hashtags">{{ hashtag }}</a>
+						<div id="show-options-hashtags" ng-show="show_medley">
+							<a class="hashtag" href="#" ng-repeat="hashtag in show_medley.hashtags">{{ hashtag }}</a>
 						</div>
 						
-						<div class="st-center-element embed-medley-medium" style="height:{{ show_medley.height }}px">
+						<div class="st-center-element embed-medley-medium" ng-show="show_medley" style="height:{{ show_medley.height }}px">
 							<div class="embed-item animated bounceIn" style="position:absolute;width:{{ item.width }}px;height:{{ item.height }}px;top:{{ item.top }}px;left:{{ item.left }}px;display:block;" ng-repeat="item in show_medley.items" medley-item>
 								<img ng-src="{{ item.images.medium }}" draggable="false">
 							</div>

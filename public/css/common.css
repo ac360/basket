@@ -164,7 +164,7 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 #facebook-share-link {font-size:17px;}
 #facebook-share-link:hover {cursor:pointer;opacity:0.7;}
 #show-options-share i {font-size:19px;}
-#show-options-hashtags {display:block;width:646px;height:auto;margin:0px auto;text-align: center;padding-bottom:8px;}
+#show-options-hashtags {display:block;width:646px;height:auto;min-height:30px;margin:0px auto;text-align: center;padding-bottom:8px;}
 .hashtag {margin-right:10px;font-size:16px;color:#7bb4f5;}
 .votes {font-size: 20px;color:#F57E7B;}
 .votes .fa-heart {font-size:15px;}
