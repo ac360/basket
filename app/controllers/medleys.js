@@ -12,17 +12,22 @@ var mongoose        = require('mongoose'),
     
     // Add Voted Attribute
     add_voted_attribute = function(user, medley, callback) {
-        Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
-            if (vote.length) {
-                medley       = medley.toObject();
-                medley.voted = true;
+        if (user) {
+                Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
+                    if (vote.length) {
+                        medley       = medley.toObject();
+                        medley.voted = true;
+                        if (callback) { callback(medley) };
+                    } else {
+                        medley       = medley.toObject();
+                        medley.voted = false;
+                        if (callback) { callback(medley) };
+                    };
+                });
+        } else {
                 if (callback) { callback(medley) };
-            } else {
-                medley       = medley.toObject();
-                medley.voted = false;
-                if (callback) { callback(medley) };
-            };
-        });
+        }
+        
     };
 
 // Actions
