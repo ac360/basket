@@ -21,7 +21,7 @@
 								<i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
 							</div>
 							<div class="embed-medley-hashtags">
-								<a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+								<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
 							</div>
 						</div>
 						<div class="view-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
@@ -44,7 +44,7 @@
 								<i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
 							</div>
 							<div class="embed-medley-hashtags">
-								<a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+								<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
 							</div>
 						</div>
 						<div class="vote-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
