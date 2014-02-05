@@ -8,7 +8,7 @@
                     <!-- Authenticated -->
                     <ul id="header-menu" class="list-inline pull-right top-bar" ng-if="user">
                         <li>
-                           <img id="header-profile-image" class="img-circle" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user"> {{user.name}}
+                           <img id="header-profile-image" class="img-circle" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <span class="m-link" ui-sref="profile">{{user.name}}</span>
                         </li>
                         <li>
                             <a href="/signout">Sign Out</a>

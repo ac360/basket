@@ -5,5 +5,5 @@
 	<p class="alert alert-danger st-centered" ng-show="hashtag_error">{{ hashtag_error }}</p>
 	<div contenteditable="true" id="hashtags-input" class="form-control" ng-keyup="validateHashtags()" maxlength="200"/>
 	<p class="st-centered" style="margin-bottom:20px;"><button class="btn btn-blue btn-lg" ng-click="validateAndPublish()"><i class="fa fa-check"></i> Publish</button></p>
-	<p class="st-centered"><a href="#" data-dismiss="modal">Cancel</a></p>
+	<p class="st-centered"><a href="#" data-dismiss="modal" ng-click="close()">Cancel</a></p>
 </div>

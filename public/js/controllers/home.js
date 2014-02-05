@@ -2,69 +2,71 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
 
     // Initialization Methods At Bottom
 
-    // Set Defaults
-    $scope.global                   = Global;
-    $scope.homeMedleys              = {};
-    $scope.homeMedleys.most_voted   = {};
-    $scope.homeMedleys.most_viewed  = {};
-    $scope.homeMedleys.most_recent  = {};
+    // Defaults
 
+    // Methods
 
     $scope.getMostVotedMedleys = function(cb){
-        var self = this;
+        console.log("hello")
         Medleys.getMostVoted({}, function(medleys) {
-            $scope.homeMedleys.most_voted.left_column  = [];
-            $scope.homeMedleys.most_voted.right_column = [];
-            for (var i=0;i<medleys.length;i++){
-                // Set Medley Size
-                angular.forEach(medleys[i].items, function(item) {
-                    medleys[i] = Global.sizeMedleySmall(medleys[i]);
-                });
-                if ((i+2)%2==0) {
-                    $scope.homeMedleys.most_voted.left_column.push(medleys[i]);
-                }
-                else {
-                    $scope.homeMedleys.most_voted.right_column.push(medleys[i]);
-                };
-            }; // for
-            // Callback
-            if(cb){cb()};
+            $scope.most_voted = [];
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.most_voted.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log($scope.most_voted)
         }); // Medleys.getMostVoted
     };
 
     $scope.getMostViewedMedleys = function(cb){
-        var self = this;
         Medleys.getMostViewed({}, function(medleys) {
-            $scope.homeMedleys.most_viewed.left_column  = [];
-            $scope.homeMedleys.most_viewed.right_column = [];
-            for (var i=0;i<medleys.length;i++){
-                // Set Medley Size
-                angular.forEach(medleys[i].items, function(item) {
-                    medleys[i] = Global.sizeMedleySmall(medleys[i]);
-                });
-                if ((i+2)%2==0) {
-                    $scope.homeMedleys.most_viewed.left_column.push(medleys[i]);
-                }
-                else {
-                    $scope.homeMedleys.most_viewed.right_column.push(medleys[i]);
-                };
-            }; // for
-            // Callback
-            if(cb){cb()};
-            console.log($scope.homeMedleys.most_viewed.left_column, $scope.homeMedleys.most_viewed.right_column)
+            $scope.most_viewed = [];
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.most_viewed.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log($scope.most_viewed)
+            if(cb) { cb() };
         }); // Medleys.getMostViewed
     };
 
-    // Initialize
     $scope.initializeHome = function() {
-        var self = this;
-        this.getMostVotedMedleys(function(){
-          self.getMostViewedMedleys(function(){
-            // Callback
-          });
-        });
+        if (!$scope.most_voted){
+            $scope.getMostVotedMedleys();
+        }
+        if (!$scope.most_viewed){
+            $scope.getMostViewedMedleys();
+        }
     };
 
-    $scope.initializeHome();
-    
+    // Initialize
+        $timeout(function(){
+            $scope.initializeHome();
+        });
+
+        // Listeners
+        $scope.$on('MedleyUpdated', function(e, medley){
+            console.log(medley);
+            angular.forEach($scope.most_voted, function(m) {
+                if (m._id == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+            angular.forEach($scope.most_viewed, function(m) {
+                if (m._id == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+        });
+
+
+
 }]);
+
+
+
+
+
+

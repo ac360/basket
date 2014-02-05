@@ -65,17 +65,17 @@ app.directive("voteLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Users){
+        controller: function($scope, $element, $attrs, $rootScope, Global, Users) {
             $element.click(function() {
-                if (Global.getCurrentUser()) {
-                    Global.voteMedley($attrs.voteLink, function(medley){
+                if ( Global.getCurrentUser() ) {
+                    Global.voteMedley($attrs.voteLink, function(medley) {
                         Global.getMedleyVoteStatus(medley._id, function(vote) {
                             // If User Has Voted
                             if (vote) {
-                                $( $element ).find( "i" ).removeClass('fa-heart-o').addClass('fa-heart');
+                                $( '.' + medley.short_id ).find( "i" ).removeClass('fa-heart-o').addClass('fa-heart');
                             // If User Has Not Voted
                             } else {
-                                $( $element ).find( "i" ).removeClass('fa-heart').addClass('fa-heart-o');
+                                $( '.' + medley.short_id ).find( "i" ).removeClass('fa-heart').addClass('fa-heart-o');
                             };
                         });
                     });

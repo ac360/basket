@@ -1,0 +1,45 @@
+<div ng-controller="ProfileController">
+    <div id="user-container" class="row">
+        <div class="col-md-12">
+            
+            <div id="user-profile" class="" ng-show="user">
+                <div id="user-profile-background">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user.username}}/picture?type=large">
+                        </div>
+                        <div class="col-md-8" style="padding-left:20px;">
+                            <h1 class="user-profile-name">{{ user.name }}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" ng-show="user.medleys">
+                <div class="col-md-4"></div> <!-- col-md-4 -->
+                <div id="user-profile-medleys" class="col-md-offset-1 col-md-7"> 
+
+                    <div class="animated bounceInUp" ng-repeat="medley in user.medleys">
+                        <div class="embed-medley-details">
+                            <div class="embed-medley-votes votes">
+                                <i class="fa fa-heart"></i> {{medley.votes}}
+                            </div>
+                            <div class="embed-medley-views views">
+                                <i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
+                            </div>
+                            <div class="embed-medley-hashtags">
+                                <a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+                            </div>
+                        </div>
+                        <div class="view-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
+                            <div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
+                                <img ng-src="{{item.images.medium}}" draggable="false">
+                            </div>
+                        </div>
+                    </div>
+                </div> <!-- col-md-7 -->
+            </div><!-- row -->
+
+        </div><!-- col-md-12 -->
+    </div><!-- row -->
+</div><!-- ProfileController -->

@@ -9,13 +9,13 @@
 					</div>
 					<div id="show-profile-info-container" ng-show="show_medley">
 						<div id="author-container">
-							<a class="author" href="#">{{ show_medley.user.name }}</a>
+							<a class="author" ui-sref="user({ username: show_medley.user.username })">{{ show_medley.user.name }}</a>
 						</div>
 						<div id="info-container">
 							<div id="show-options-views">
 								<i class="fa fa-eye"></i><span class="show-views">{{ show_medley.views }}</span>
 							</div>
-							<div id="show-options-votes" vote-link="{{ show_medley.short_id }}">
+							<div id="show-options-votes" class="{{ show_medley.short_id }}" vote-link="{{ show_medley.short_id }}">
 								<i class="fa fa-heart-o"></i><span class="show-votes">{{ show_medley.votes }}</span>
 							</div>
 							<div id="show-options-share">
@@ -48,18 +48,5 @@
 
 		</div><!-- col-md-12 -->
 	</div><!-- row -->
-
-	<!-- Local Modals -->
-
-	<div id="publishedShareModal" class="modal fade">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	        <h1 class="st-centered">Share Your New Medley!</h1>
-	        <h5 class="st-centered">Your Medley was successfully published, now show the world!</h5>
-	        <p class="st-centered" style="padding:0px;margin:15px 0px;"><button class="btn btn-blue btn-lg" ng-click="shareFacebook()"><i class="fa fa-facebook-square" style="margin-right:3px"></i> Share On Facebook</button></p>
-	        <p class="st-centered"><a href="#" data-dismiss="modal">Cancel</a></p>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
 
 </div><!-- ShowController -->

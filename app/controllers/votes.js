@@ -34,7 +34,6 @@ exports.create = function(req, res) {
 // Delete Vote
 exports.destroy = function(req, res) {
     var vote = req.vote;
-
     vote.remove(function(err) {
         if (err) {
             res.render('error', {

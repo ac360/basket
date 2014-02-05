@@ -10,17 +10,22 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
         getMostVoted:    {
             method:  'GET',
             isArray: true,
-            url:     'medleys_most_voted'
+            url:     'medley/medleys_most_voted'
         },
         getMostViewed:    {
             method:  'GET',
             isArray: true,
-            url:     'medleys_most_viewed'
+            url:     'medley/medleys_most_viewed'
         },
         getNewest:    {
             method:  'GET',
             isArray: true,
-            url:     'medleys_most_recent'
+            url:     'medley/medleys_most_recent'
+        },
+        getUserMedleys:    {
+            method:  'GET',
+            isArray: true,
+            url:     'medley/medleys_by_user/:userId'
         },
         show:    {
             method:  'GET'

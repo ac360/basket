@@ -1,9 +1,8 @@
-/**
- * Module dependencies.
- */
+// Module dependencies.
 var mongoose = require('mongoose'),
-    config = require('../../config/config'),
-    Schema = mongoose.Schema;
+    config   = require('../../config/config'),
+    // Vote     = mongoose.model('Vote'),
+    Schema   = mongoose.Schema;
 
 
 // Medley Schema
@@ -49,16 +48,7 @@ var MedleySchema = new Schema({
     }
 });
 
-/**
- * Validations
- */
-// MedleySchema.path('title').validate(function(title) {
-//     return title.length;
-// }, 'Title cannot be blank');
-
-/**
- * Statics
- */
+// Statics
 MedleySchema.statics = {
     load: function(id, cb) {
         this.findOne({
@@ -67,4 +57,9 @@ MedleySchema.statics = {
     }
 };
 
+// MedleySchema.virtual('voted').get(function () {
+//   return true;
+// });
+
+// MedleySchema.set('toJSON', { virtuals: true });
 mongoose.model('Medley', MedleySchema);

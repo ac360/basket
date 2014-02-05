@@ -4,13 +4,10 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
 
     // Set Defaults
     $scope.show_medley      = false;
-    $scope.share;
-    $scope.voteChecking     = false;
-    $scope.hasVoted         = false;
     $scope.load_error       = false;
 
     $scope.publishedShare = function() {
-      Modals.publishedShare($scope.show_medley.short_id);
+        Modals.publishedShare($scope.show_medley.short_id);
     };
 
     $scope.getVoteStatus = function() {
@@ -23,16 +20,6 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 $('.fa-heart').removeClass('fa-heart').addClass('fa-heart-o');
             };
         });
-    };
-
-    $scope.voteBasket = function() {
-        if ($scope.user) {
-            Global.voteMedley($scope.show_medley.short_id, function(medley){
-                $scope.getVoteStatus();
-            });
-        } else {
-            Modals.signIn();
-        };
     };
 
     $scope.initializeShow = function() {
@@ -69,8 +56,8 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     // Initialize
 
         // Listeners - Medley Updated
-        $scope.$on('MedleyUpdated', function(e, medley){
-            console.log("Updated: ", medley)
+        $scope.$on('MedleyUpdated', function(e, medley) {
+            console.log("Updated: ", medley);
             $scope.show_medley.votes = medley.votes;
             $scope.show_medley.views = medley.views;
         });

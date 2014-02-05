@@ -1,10 +1,10 @@
 window.app = angular.module('mean', ['ngCookies', 'ngResource', 'ngAnimate', 'ngAnimate-animate.css', 'ui.bootstrap', 'ui.router', 'mean.system', 'mean.medleys', 'mean.retailers', 'mean.users', 'mean.votes', 'angularLocalStorage']);
 
-angular.module('mean.system', []);
+angular.module('mean.system',    []);
 angular.module('mean.retailers', []);
-angular.module('mean.medleys', []);
-angular.module('mean.users',  []);
-angular.module('mean.votes',  []);
+angular.module('mean.medleys',   []);
+angular.module('mean.users',     []);
+angular.module('mean.votes',     []);
 
 
 // Init
@@ -13,7 +13,7 @@ angular.module('mean.votes',  []);
     window.fbAsyncInit = function() {
         // init the FB JS SDK for use
         FB.init({
-          appId      : '736751053015158',                    // Dev: 252087231617494 Pro: 736751053015158
+          appId      : '252087231617494',                    // Dev: 252087231617494 Pro: 736751053015158
           status     : true,                                 // Check Facebook Login status
           xfbml      : true                                  // Look for social plugins on the page
         });

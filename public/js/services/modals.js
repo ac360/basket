@@ -50,29 +50,29 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           		controller:  function ($scope, $modalInstance, $timeout, $state, Global) {
           			// Defaults	
           			$scope.hashtag_error = false;
-					// Methods
-					$scope.validateAndPublish = function()  {
-				        // Save to array of hashtags
-				        var words = $('#hashtags-input').text();
-				        var tagslistarr = words.split(' ');
-				        var hashtags=[];
-				        angular.forEach(tagslistarr, function(hashtag,val) {
-				            if(hashtag.indexOf('#') == 0){
-				              hashtags.push(hashtag);  
-				            }
-				        });
-				        if (hashtags.length > 0) {
-				        	console.log("hashtags present setting prop")
-				        	Global.setMedleyProperty("hashtags", hashtags, function(medley){
-								Global.publishMedley();
-							});
-				        } else {
-				           $scope.hashtag_error = 'Please enter at least one hashtag';
-				           $timeout(function(){
-				              $scope.hashtag_error = false;
-				           }, 5000);
-				        } // if statement
-					}; // validateAndPublish  
+      					// Methods
+      					$scope.validateAndPublish = function()  {
+      				        // Save to array of hashtags
+      				        var words = $('#hashtags-input').text();
+      				        var tagslistarr = words.split(' ');
+      				        var hashtags=[];
+      				        angular.forEach(tagslistarr, function(hashtag,val) {
+      				            if(hashtag.indexOf('#') == 0){
+      				              hashtags.push(hashtag);  
+      				            }
+      				        });
+      				        if (hashtags.length > 0) {
+      				        	console.log("hashtags present setting prop")
+      				        	Global.setMedleyProperty("hashtags", hashtags, function(medley){
+      								Global.publishMedley();
+      							});
+      				        } else {
+      				           $scope.hashtag_error = 'Please enter at least one hashtag';
+      				           $timeout(function(){
+      				              $scope.hashtag_error = false;
+      				           }, 5000);
+      				        } // if statement
+      					}; // validateAndPublish  
 
           			$scope.close = function() {
           				$modalInstance.close();

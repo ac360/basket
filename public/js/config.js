@@ -11,9 +11,6 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/home.html"       },
             "footer":    { templateUrl: "views/footer/footer.html"      },
-          },
-          onEnter: function(){
-            console.log("State Changed Callback")
           }
         })
         .state('search', {
@@ -22,9 +19,6 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/search.html"     },
             "footer":    { templateUrl: "views/footer/footer.html"      },
-          },
-          onEnter: function(){
-            console.log("State Changed Callback")
           }
         })
         .state('create', {
@@ -33,20 +27,38 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/create.html"     },
             "footer":    { templateUrl: "views/footer/footer.html"      },
-          },
-          onEnter: function(){
-            console.log("State Changed Callback")
           }
         })
         .state('show', {
-          url: "/:basketId",
+          url: "/m/:basketId",
           views: {
             "header":    { templateUrl: "views/header/show.html"        },
             "content":   { templateUrl: "views/content/show.html"       },
             "footer":    { templateUrl: "views/footer/footer.html"      },
-          },
-          onEnter: function(){
-            console.log("State Changed Callback")
+          }
+        })
+        .state('hashtag', {
+          url: "/hashtag/:hashtag",
+          views: {
+            "header":    { templateUrl: "views/header/search.html"     },
+            "content":   { templateUrl: "views/content/hashtag.html"    },
+            "footer":    { templateUrl: "views/footer/footer.html"      },
+          }
+        })
+        .state('profile', {
+          url: "/me",
+          views: {
+            "header":    { templateUrl: "views/header/profile.html"     },
+            "content":   { templateUrl: "views/content/profile.html"    },
+            "footer":    { templateUrl: "views/footer/footer.html"      },
+          }
+        })
+        .state('user', {
+          url: "/user/:username",
+          views: {
+            "header":    { templateUrl: "views/header/user.html"        },
+            "content":   { templateUrl: "views/content/user.html"       },
+            "footer":    { templateUrl: "views/footer/footer.html"      },
           }
         })
 });

@@ -1,17 +1,19 @@
 // Issues service used for issues REST endpoint
 angular.module('mean.users').factory("Users", ['$resource', function($resource) {
-    return $resource('users/me', {
+    return $resource('api/users/me', {
     }, {
         getCurrentUser : {
             method: 'GET',
-            url:    'users/me'
-        },
-        update: {
-            method: 'PUT'
+            url:    'api/users/me'
         },
         signin: {
         	method: 'POST',
-        	url:    'users/me'
+        	url:    'api/users/me'
+        },
+        getUser: {
+            method: 'GET',
+            params: { username: '@_username' },
+            url:    'api/users/:username'
         }
     });
 }]);

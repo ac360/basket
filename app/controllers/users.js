@@ -2,30 +2,30 @@
 var mongoose = require('mongoose'),
     User = mongoose.model('User');
 
-// Auth callback
-exports.authCallback = function(req, res, next) {
-    res.redirect('/');
-};
 
-// Show login form - TODO - Security vulnerability!  Anyone can submit an ID and be authorized!!!  Research how to do this more securely!
-exports.signin = function(req, res) {
-    User.findOne({ fb_id: req.body.userID })
-        .exec(function(err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
-            req.logIn(user, function(err) {
-                if (err) return next(err);
-                res.jsonp(req.user);
-            });
-        });
-};
-
-// Show sign up form
-exports.signup = function(req, res) {
-    res.render('users/signup', {
-        title: 'Sign up',
-        user: new User()
+// Find user by username
+exports.user = function(req, res, next, id) {
+    User.findOne({ username: req.params.username }).exec(function(err, user) {
+        if (err) { console.log(err) };
+        if (user) {
+            req.profile = user;
+            next();
+        } else {
+            req.profile = null;
+            next();
+        };
     });
+};
+
+//  Show profile
+exports.show = function(req, res) {
+    var user = req.profile;
+    res.jsonp(req.profile);
+};
+
+// Send User
+exports.me = function(req, res) {
+    res.jsonp(req.user || null);
 };
 
 // Logout
@@ -102,32 +102,4 @@ exports.create = function(req, res) {
             res.jsonp(req.user);
         });
     });
-};
-
-//  Show profile
-exports.show = function(req, res) {
-    var user = req.profile;
-
-    res.render('users/show', {
-        title: user.name,
-        user: user
-    });
-};
-
-// Send User
-exports.me = function(req, res) {
-    res.jsonp(req.user || null);
-};
-
-// Find user by id
-exports.user = function(req, res, next, id) {
-    User.findOne({
-            _id: id
-        })
-        .exec(function(err, user) {
-            if (err) return next(err);
-            if (!user) return next(new Error('Failed to load User ' + id));
-            req.profile = user;
-            next();
-        });
 };
