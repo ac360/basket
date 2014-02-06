@@ -13,7 +13,7 @@ angular.module('mean.system').controller('HashtagController', ['$scope', 'Global
 	                $scope.hashtagpage.medleys.push( Global.sizeMedleySmall(medley) );
 	                Global.updateMedleyViewCount(medley.short_id);
 	            });
-	            console.log($scope.hashtagpage.medleys)
+	            console.log("All done:", $scope.hashtagpage.medleys)
         	});
     }; // initializeHashtag();
 

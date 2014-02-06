@@ -176,30 +176,50 @@ var mongoose        = require('mongoose'),
         var hashtag = '#' + req.params.hashtag;
         console.log("hashtag activated: ", hashtag);
         Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username').exec(function(err, medleys) {
-                if (err) {return console.log(err) };
-                var medleys_with_voted_attribute = [];
-                medleys.forEach(function(m){
-                    add_voted_attribute(req.user, m, function(medley) {
-                        medleys_with_voted_attribute.push(medley);
-                        if (medleys_with_voted_attribute.length === 10) { 
-                            eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
-                        };
+                if (err) { 
+                    console.log(err) ;
+                    return false;
+                } else {
+                    console.log("Medleys with hashtag "+hashtag+" length:", medleys.length)
+                    var medleys_with_voted_attribute = [];
+
+                    // Event Listener
+                    eventEmitter.on('hashtagMedleys', function(medleys)  {
+                        console.log("Medleys with hashtag "+hashtag+" length with voted attribute:", medleys.length)
+                        eventEmitter.removeAllListeners('hashtagMedleys');
+                        medleys.sort(function(obj1, obj2) {
+                            return obj2.votes - obj1.votes;
+                        });
+                        res.jsonp(medleys);
                     });
-                });
-                // Event Listener
-                eventEmitter.on('hashtagMedleys', function(medleys)  {
-                    eventEmitter.removeAllListeners('hashtagMedleys');
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.votes - obj1.votes;
+
+                    // Add Voted Attribute
+                    medleys.forEach(function(m){
+                        add_voted_attribute(req.user, m, function(medley) {
+                            medleys_with_voted_attribute.push(medley);
+                            if (medleys_with_voted_attribute.length == medleys.length) { 
+                                console.log("If statement working")
+                                eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
+                            };
+                        });
                     });
-                    res.jsonp(medleys);
-                });
-        });
+                }
+        }); // Medley.find
     };
 
     // Show Most Voted Medleys
     exports.most_voted = function(req, res) {
             Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+                // Event Listener
+                eventEmitter.on('mostVoted', function(medleys)  {
+                    eventEmitter.removeAllListeners('mostVoted');
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.votes - obj1.votes;
+                    });
+                    res.jsonp(medleys);
+                }); 
+
+                // Add Voted Attribute
                 var medleys_with_voted_attribute = [];
                 medleys.forEach(function(m){
                     add_voted_attribute(req.user, m, function(medley){
@@ -210,19 +230,21 @@ var mongoose        = require('mongoose'),
                     });
                 });
             });
-            // Event Listener
-            eventEmitter.on('mostVoted', function(medleys)  {
-                eventEmitter.removeAllListeners('mostVoted');
-                medleys.sort(function(obj1, obj2) {
-                    return obj2.votes - obj1.votes;
-                });
-                res.jsonp(medleys);
-            });
     };
 
     // Show Most Viewed Medleys
     exports.most_viewed = function(req, res) {
            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+                // Event Listener
+                eventEmitter.on('mostViewed', function(medleys) {
+                    eventEmitter.removeAllListeners('mostViewed');
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.views - obj1.views;
+                    });
+                    res.jsonp(medleys);
+                });
+                
+                // Add Voted Attribute
                 var medleys_with_voted_attribute = [];
                 medleys.forEach(function(m){
                     add_voted_attribute(req.user, m, function(medley){
@@ -232,14 +254,6 @@ var mongoose        = require('mongoose'),
                         };
                     });
                 });
-            });
-            // Event Listener
-            eventEmitter.on('mostViewed', function(medleys) {
-                eventEmitter.removeAllListeners('mostViewed');
-                medleys.sort(function(obj1, obj2) {
-                    return obj2.views - obj1.views;
-                });
-                res.jsonp(medleys);
             });
     };
 

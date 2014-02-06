@@ -33,7 +33,9 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		},
 
     		getMedleysByHashtag: function(hashtag, callback) {
+    			console.log("hashtag medley GLobal function called for: "+hashtag)
     			Medleys.getByHashtag({ hashtag: hashtag }, function(medleys) {
+    				console.log("hashtags found in Global:", medleys)
 	    			if (callback) { callback(medleys) };
 		        });
     		},
