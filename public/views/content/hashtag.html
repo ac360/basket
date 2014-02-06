@@ -1,4 +1,4 @@
-<div ng-controller="HashtagController">
+<div id="hashtag-page" ng-controller="HashtagController">
     <div id="user-container" class="row">
         <div class="col-md-12">
             
@@ -7,17 +7,17 @@
                     <div class="row">
                         <div class="col-md-12" style="padding-left:20px;">
                             <h6>Showing search results for:</h6>
-                            <h1 class="user-profile-name">#{{ hashtag }}</h1>
+                            <h1 class="user-profile-name">#{{ hashtagpage.hashtag }}</h1>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row" ng-show="user.medleys">
+            <div class="row" ng-show="{{ hashtagpage.medleys.length > -1 }}">
                 <div class="col-md-4"></div> <!-- col-md-4 -->
-                <div id="user-profile-medleys" class="col-md-offset-1 col-md-7"> 
+                <div class="medleys-list col-md-offset-1 col-md-7"> 
 
-                    <div class="animated bounceInUp" ng-repeat="medley in user.medleys">
+                    <div class="animated bounceInUp" ng-repeat="medley in hashtagpage.medleys">
                         <div class="embed-medley-details">
                             <div class="embed-medley-votes votes">
                                 <i class="fa fa-heart"></i> {{medley.votes}}
@@ -26,7 +26,7 @@
                                 <i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
                             </div>
                             <div class="embed-medley-hashtags">
-                                <a class="hashtag" herf="#" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
+                                <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
                             </div>
                         </div>
                         <div class="view-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
@@ -34,7 +34,8 @@
                                 <img ng-src="{{item.images.medium}}" draggable="false">
                             </div>
                         </div>
-                    </div>
+                    </div> <!-- repeat hashtagpage.medleys -->
+
                 </div> <!-- col-md-7 -->
             </div><!-- row -->
 

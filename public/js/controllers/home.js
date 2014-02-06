@@ -7,7 +7,6 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
     // Methods
 
     $scope.getMostVotedMedleys = function(cb){
-        console.log("hello")
         Medleys.getMostVoted({}, function(medleys) {
             $scope.most_voted = [];
             // Set Medley Size
@@ -15,7 +14,6 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
                 $scope.most_voted.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
-            console.log($scope.most_voted)
         }); // Medleys.getMostVoted
     };
 
@@ -27,7 +25,6 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
                 $scope.most_viewed.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
-            console.log($scope.most_viewed)
             if(cb) { cb() };
         }); // Medleys.getMostViewed
     };
@@ -48,7 +45,7 @@ angular.module('mean.system').controller('HomeController', ['$scope', 'Global', 
 
         // Listeners
         $scope.$on('MedleyUpdated', function(e, medley){
-            console.log(medley);
+            //console.log("Medley Updated", medley);
             angular.forEach($scope.most_voted, function(m) {
                 if (m._id == medley._id) { 
                     m.votes = medley.votes

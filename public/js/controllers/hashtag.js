@@ -1,9 +1,20 @@
 angular.module('mean.system').controller('HashtagController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
-    // Initialization Methods At Bottom
+    // Defaults
+    $scope.hashtagpage = {};
 
     $scope.initializeHashtag = function() {
-        	$scope.hashtag = $stateParams.hashtag;
+        	$scope.hashtagpage.hashtag = $stateParams.hashtag;
+        	$scope.hashtagpage.medleys = [];
+        	Global.getMedleysByHashtag($scope.hashtagpage.hashtag, function(medleys){
+        		console.log("hashtag medleys loaded: ", medleys)
+        		// Set Medley Size
+	            angular.forEach(medleys, function(medley) {
+	                $scope.hashtagpage.medleys.push( Global.sizeMedleySmall(medley) );
+	                Global.updateMedleyViewCount(medley.short_id);
+	            });
+	            console.log($scope.hashtagpage.medleys)
+        	});
     }; // initializeHashtag();
 
     // Initialize

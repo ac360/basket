@@ -19,15 +19,16 @@ module.exports = function(app, passport, auth) {
 
     // Medley API - Internal
         var medleys = require('../app/controllers/medleys');
-        app.post('/medleys',                            auth.requiresLogin, medleys.create);
-        app.get('/medleys/:shortId',                    medleys.show);
-        app.put('/medleys/:shortId',                    auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
-        app.del('/medleys/:shortId',                    auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
-        app.get('/medleys/:shortId/updateviewcount',    medleys.updateViewCount);
-        app.get('/medleys/:shortId/updatevotecount',    auth.requiresLogin, medleys.updateVoteCount);
-        app.get('/medley/medleys_by_user/:userId',      medleys.getUserMedleys);
-        app.get('/medley/medleys_most_voted',           medleys.most_voted);
-        app.get('/medley/medleys_most_viewed',          medleys.most_viewed);
+        app.post('/api/m',                                          auth.requiresLogin, medleys.create);
+        app.get('/api/m/short_id/:shortId',                         medleys.show);
+        app.put('/api/m/short_id/:shortId',                         auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
+        app.del('/api/m/short_id/:shortId',                         auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
+        app.get('/api/m/short_id/:shortId/updateviewcount',         medleys.updateViewCount);
+        app.get('/api/m/short_id/:shortId/updatevotecount',         auth.requiresLogin, medleys.updateVoteCount);
+        app.get('/api/m/by_user/:userId',                           medleys.getUserMedleys);
+        app.get('/api/m/by_hashtag/:hashtag',                       medleys.getByHashtag);
+        app.get('/api/m/by_votes',                                  medleys.most_voted);
+        app.get('/api/m/by_views',                                  medleys.most_viewed);
  
         //Finish with setting up the shortId param
         app.param('shortId', medleys.medley);

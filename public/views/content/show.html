@@ -30,7 +30,7 @@
 				<div class="col-md-12"> 
 
 						<div id="show-options-hashtags" ng-show="show_medley">
-							<a class="hashtag" href="#" ng-repeat="hashtag in show_medley.hashtags">{{ hashtag }}</a>
+							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in show_medley.hashtags" ui-sref="">{{ hashtag }}</a>
 						</div>
 						
 						<div class="st-center-element embed-medley-medium" ng-show="show_medley" style="height:{{ show_medley.height }}px">

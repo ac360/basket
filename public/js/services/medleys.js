@@ -1,47 +1,53 @@
 // Medleys service used for medleys REST endpoint
 angular.module('mean.medleys').factory("Medleys", ['$resource', function($resource) {
-    return $resource('medleys/:medleyId', {
+    return $resource('/api/m', {
         medleyId: '@_id'
     }, {
-    	get:    {
-    		method:  'GET',
-    		isArray: true
-    	},
         getMostVoted:    {
             method:  'GET',
             isArray: true,
-            url:     'medley/medleys_most_voted'
+            url:     'api/m/by_votes'
         },
         getMostViewed:    {
             method:  'GET',
             isArray: true,
-            url:     'medley/medleys_most_viewed'
+            url:     'api/m/by_views'
         },
+        // Not hooked up yet
         getNewest:    {
             method:  'GET',
             isArray: true,
-            url:     'medley/medleys_most_recent'
+            url:     'api/m/by_recent'
         },
         getUserMedleys:    {
             method:  'GET',
             isArray: true,
-            url:     'medley/medleys_by_user/:userId'
+            url:     'api/m/by_user/:userId'
+        },
+        getByHashtag:    {
+            method:  'GET',
+            isArray: true,
+            url:     'api/m/by_hashtag/:hashtag'
         },
         show:    {
-            method:  'GET'
-        },
-        update: {
-            method:  'PUT'
+            method:  'GET',
+            isArray: false,
+            url:     'api/m/short_id/:shortId'
         },
         updateViewCount: {
             method:  'GET',
-            params: { medleyId: '@_id' },
-            url:     'medleys/:medleyId/updateviewcount'
+            isArray: false,
+            url:     'api/m/short_id/:medleyId/updateviewcount'
         },
         updateVoteCount: {
             method:  'GET',
-            params: { medleyId: '@_id' },
-            url:     'medleys/:medleyId/updatevotecount'
+            isArray: false,
+            url:     'api/m/short_id/:medleyId/updatevotecount'
+        },
+        update: {
+            method:  'PUT',
+            isArray: false,
+            url:     'api/m/short_id/:shortId'
         }
     });
 }]);

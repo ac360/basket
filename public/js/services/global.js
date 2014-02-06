@@ -23,13 +23,19 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		},
 
     		showMedley: function(medleyId, callback) {
-    			 Medleys.show({ medleyId: medleyId }, function(medley) {
+    			 Medleys.show({ shortId: medleyId }, function(medley) {
     			 	if(callback){ callback(medley) };
     			 });
     		},
 
     		resetMedley: function() {
     			mData.medley = { items: [] };
+    		},
+
+    		getMedleysByHashtag: function(hashtag, callback) {
+    			Medleys.getByHashtag({ hashtag: hashtag }, function(medleys) {
+	    			if (callback) { callback(medleys) };
+		        });
     		},
 
     		shareFacebook: function(medleyId) {

@@ -1,4 +1,4 @@
-<div ng-controller="ProfileController">
+<div id="profile-page" ng-controller="ProfileController">
     <div id="user-container" class="row">
         <div class="col-md-12">
             
@@ -17,7 +17,7 @@
 
             <div class="row" ng-show="user.medleys">
                 <div class="col-md-4"></div> <!-- col-md-4 -->
-                <div id="user-profile-medleys" class="col-md-offset-1 col-md-7"> 
+                <div id="user-profile-medleys" class="medleys-list col-md-offset-1 col-md-7"> 
 
                     <div class="animated bounceInUp" ng-repeat="medley in user.medleys">
                         <div class="embed-medley-details">

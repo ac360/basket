@@ -170,6 +170,33 @@ var mongoose        = require('mongoose'),
         });
     };
 
+    // Find Medleys by Hashtag
+    exports.getByHashtag = function(req, res) {
+
+        var hashtag = '#' + req.params.hashtag;
+        console.log("hashtag activated: ", hashtag);
+        Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username').exec(function(err, medleys) {
+                if (err) {return console.log(err) };
+                var medleys_with_voted_attribute = [];
+                medleys.forEach(function(m){
+                    add_voted_attribute(req.user, m, function(medley) {
+                        medleys_with_voted_attribute.push(medley);
+                        if (medleys_with_voted_attribute.length === 10) { 
+                            eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
+                        };
+                    });
+                });
+                // Event Listener
+                eventEmitter.on('hashtagMedleys', function(medleys)  {
+                    eventEmitter.removeAllListeners('hashtagMedleys');
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.votes - obj1.votes;
+                    });
+                    res.jsonp(medleys);
+                });
+        });
+    };
+
     // Show Most Voted Medleys
     exports.most_voted = function(req, res) {
             Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
