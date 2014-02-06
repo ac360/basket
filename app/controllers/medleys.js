@@ -174,18 +174,15 @@ var mongoose        = require('mongoose'),
     exports.getByHashtag = function(req, res) {
 
         var hashtag = '#' + req.params.hashtag;
-        console.log("hashtag activated: ", hashtag);
         Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
                 } else {
-                    console.log("Medleys with hashtag "+hashtag+" length:", medleys.length)
                     var medleys_with_voted_attribute = [];
 
                     // Event Listener
                     eventEmitter.on('hashtagMedleys', function(medleys)  {
-                        console.log("Medleys with hashtag "+hashtag+" length with voted attribute:", medleys.length)
                         eventEmitter.removeAllListeners('hashtagMedleys');
                         medleys.sort(function(obj1, obj2) {
                             return obj2.votes - obj1.votes;
@@ -198,7 +195,6 @@ var mongoose        = require('mongoose'),
                         add_voted_attribute(req.user, m, function(medley) {
                             medleys_with_voted_attribute.push(medley);
                             if (medleys_with_voted_attribute.length == medleys.length) { 
-                                console.log("If statement working")
                                 eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
                             };
                         });
@@ -243,7 +239,7 @@ var mongoose        = require('mongoose'),
                     });
                     res.jsonp(medleys);
                 });
-                
+
                 // Add Voted Attribute
                 var medleys_with_voted_attribute = [];
                 medleys.forEach(function(m){
