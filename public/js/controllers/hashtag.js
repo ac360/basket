@@ -7,13 +7,12 @@ angular.module('mean.system').controller('HashtagController', ['$scope', 'Global
         	$scope.hashtagpage.hashtag = $stateParams.hashtag;
         	$scope.hashtagpage.medleys = [];
         	Global.getMedleysByHashtag($scope.hashtagpage.hashtag, function(medleys){
-        		console.log("hashtag medleys loaded: ", medleys)
         		// Set Medley Size
 	            angular.forEach(medleys, function(medley) {
 	                $scope.hashtagpage.medleys.push( Global.sizeMedleySmall(medley) );
 	                Global.updateMedleyViewCount(medley.short_id);
 	            });
-	            console.log("All done:", $scope.hashtagpage.medleys)
+	            console.log("Hashtag Medleys Loaded:", $scope.hashtagpage.medleys)
         	});
     }; // initializeHashtag();
 
