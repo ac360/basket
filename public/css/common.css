@@ -1,6 +1,6 @@
 
 body {background: #f6f6f6;background-size:100% auto;padding:10px;font-weight:400;font-family:"proxima-nova",sans-serif!important;-webkit-font-smoothing: antialiased;}
-div, h1, h2, h3, h4, h5, h6, p, li, a, span {font-family:"proxima-nova",sans-serif;}
+div, h1, h2, h3, h4, h5, h6, p, li, a, span {font-family:"proxima-nova",sans-serif!important;}
 a {color:#7bb4f5;cursor: pointer;}
 a:hover {color:#93c4fc;text-decoration: none;cursor: pointer;}
 input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!important;}
