@@ -15,14 +15,15 @@
                 </div>
             </div>
 
-            <div class="row" ng-show="user.medleys">
+            <div class="row" ng-show="profilepage.medleys">
                 <div class="col-md-4"></div> <!-- col-md-4 -->
                 <div id="user-profile-medleys" class="medleys-list col-md-offset-1 col-md-7"> 
 
-                    <div class="animated bounceInUp" ng-repeat="medley in user.medleys">
+                    <div class="animated bounceInUp" ng-repeat="medley in profilepage.medleys">
                         <div class="embed-medley-details">
-                            <div class="embed-medley-votes votes">
-                                <i class="fa fa-heart"></i> {{medley.votes}}
+
+                            <div class="embed-medley-votes votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}">
+                                <i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i>  {{medley.votes}}
                             </div>
                             <div class="embed-medley-views views">
                                 <i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
@@ -30,11 +31,14 @@
                             <div class="embed-medley-hashtags">
                                 <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
                             </div>
+
                         </div>
                         <div class="view-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
+                            
                             <div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
                                 <img ng-src="{{item.images.medium}}" draggable="false">
                             </div>
+
                         </div>
                     </div>
                 </div> <!-- col-md-7 -->

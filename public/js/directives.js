@@ -70,6 +70,7 @@ app.directive("voteLink", function() {
                 if ( Global.getCurrentUser() ) {
                     Global.voteMedley($attrs.voteLink, function(medley) {
                         Global.getMedleyVoteStatus(medley._id, function(vote) {
+                            console.log(vote)
                             // If User Has Voted
                             if (vote) {
                                 $( '.' + medley.short_id ).find( "i" ).removeClass('fa-heart-o').addClass('fa-heart');

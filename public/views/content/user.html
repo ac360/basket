@@ -25,7 +25,7 @@
 
 					<div class="animated bounceInUp" ng-repeat="medley in user_profile.medleys">
 						<div class="embed-medley-details">
-							<div class="embed-medley-votes votes">
+							<div class="embed-medley-votes votes" vote-link="{{ show_medley.short_id }}">
 								<i class="fa fa-heart"></i> {{medley.votes}}
 							</div>
 							<div class="embed-medley-views views">
