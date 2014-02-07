@@ -1,29 +1,39 @@
 angular.module('mean.system').controller('UserController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
-    // Initialization Methods At Bottom
-   
+    // Defaults
+    $scope.userpage = {}
+
+    // Methods
     $scope.initializeUser = function() {
         Users.getUser({ username: $stateParams.username }, function(user) {
         	if (user) {
-        		$scope.user_profile = user;
-        		console.log("User Loaded: ", $scope.user_profile);
-        		Medleys.getUserMedleys({ userId: user._id },function(medleys){
-        			$scope.user_profile.medleys = [];
+        		$scope.userpage.user = user;
+        		console.log("User Loaded: ", $scope.userpage.user);
+        		Medleys.getUserMedleys({ userId: $scope.userpage.user._id },function(medleys){
+        			$scope.userpage.medleys = [];
         			angular.forEach(medleys, function(medley) {
-        				$scope.user_profile.medleys.push( Global.sizeMedleySmall(medley) );
+        				$scope.userpage.medleys.push( Global.sizeMedleySmall(medley) );
         			})
 		        });
         	} else {
-        		$scope.user_profile = null;
-        		console.log("User Not Found: ", $scope.user_profile);
+        		$scope.userpage.user = null;
+        		console.log("User Not Found: ", $scope.userpage.user);
         	};
         });
     }; // initializeUser();
 
     // Initialize
 
-        // Listeners - Medley Updated
+        // Listeners - User Updated
         $scope.$on('UserUpdated', function(e, user){});
+        // Listeners - Medley Updated
+        $scope.$on('MedleyUpdated', function(e, medley){
+            angular.forEach($scope.userpage.medleys, function(m) {
+                if (m._id == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+        });
 
         $scope.initializeUser();
     

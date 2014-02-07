@@ -3,14 +3,14 @@
 		<div class="col-md-12">
 			
 			<div class="row">
-				<div id="user-profile" class="" ng-show="user_profile">
+				<div id="user-profile" class="" ng-show="userpage.user">
 					<div id="user-profile-background">
 						<div class="row">
 							<div class="col-md-4">
-								<img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user_profile.username}}/picture?type=large">
+								<img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ userpage.user.username}}/picture?type=large">
 							</div>
 							<div class="col-md-8" style="padding-left:20px;">
-								<h1 class="user-profile-name">{{ user_profile.name }}</h1>
+								<h1 class="user-profile-name">{{ userpage.user.name }}</h1>
 								<button class="btn btn-blue btn-lg"><i class="fa fa-plus" style="margin-right:5px;"></i> Follow</button>
 							</div>
 						</div>
@@ -23,9 +23,9 @@
 				</div> <!-- col-md-4 -->
 				<div id="user-profile-medleys" class="col-md-8"> 
 
-					<div class="animated bounceInUp" ng-repeat="medley in user_profile.medleys">
+					<div class="animated bounceInUp" ng-repeat="medley in userpage.medleys">
 						<div class="embed-medley-details">
-							<div class="embed-medley-votes votes" vote-link="{{ show_medley.short_id }}">
+							<div class="embed-medley-votes votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}">
 								<i class="fa fa-heart"></i> {{medley.votes}}
 							</div>
 							<div class="embed-medley-views views">
