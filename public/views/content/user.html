@@ -1,11 +1,11 @@
 <div id="user-page" ng-controller="UserController">
 	<div id="user-container" class="row">
 		<div class="col-md-12">
-			
 			<div class="row">
-				<div id="user-profile" class="" ng-show="userpage.user">
-					<div id="user-profile-background">
-						<div class="row">
+				<div class="col-md-4 hidden-sm hidden-xs" style="padding-top:40px;">
+
+					<div id="side-container" data-spy="affix" data-offset-top="0" data-offset-bottom="200">
+                        <div class="row">
 							<div class="col-md-4">
 								<img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ userpage.user.username}}/picture?type=large">
 							</div>
@@ -14,12 +14,9 @@
 								<button class="btn btn-blue btn-lg"><i class="fa fa-plus" style="margin-right:5px;"></i> Follow</button>
 							</div>
 						</div>
-						<div class="row">
-						</div>
-					</div>
-				</div>
+                    </div>
 
-				<div class="col-md-4"></div> <!-- col-md-4 -->
+				</div> <!-- col-md-4 -->
 				<div id="user-profile-medleys" class="medleys-list col-md-offset-1 col-md-7"> 
 
 					<div class="animated bounceInUp" ng-repeat="medley in userpage.medleys">

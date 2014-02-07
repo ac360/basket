@@ -1,22 +1,22 @@
 <div id="profile-page" ng-controller="ProfileController">
     <div id="user-container" class="row">
         <div class="col-md-12">
-            
-            <div id="user-profile" class="" ng-show="user">
-                <div id="user-profile-background">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user.username}}/picture?type=large">
-                        </div>
-                        <div class="col-md-8" style="padding-left:20px;">
-                            <h1 class="user-profile-name">{{ user.name }}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <div class="row" ng-show="profilepage.medleys">
-                <div class="col-md-4"></div> <!-- col-md-4 -->
+                <div class="col-md-4 hidden-sm hidden-xs" style="padding-top:40px;">
+
+                    <div id="side-container" data-spy="affix" data-offset-top="0" data-offset-bottom="200">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user.username}}/picture?type=large">
+                            </div>
+                            <div class="col-md-8" style="padding-left:20px;">
+                                <h1 class="user-profile-name">{{ user.name }}</h1>
+                            </div>
+                        </div>
+                    </div>
+
+                </div> <!-- col-md-4 -->
                 <div id="user-profile-medleys" class="medleys-list col-md-offset-1 col-md-7"> 
 
                     <div class="animated bounceInUp" ng-repeat="medley in profilepage.medleys">
