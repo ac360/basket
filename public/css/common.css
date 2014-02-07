@@ -185,12 +185,15 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 /* Hashtag Page */
 #hashtag-page .medleys-list {padding-top:40px;}
 
-/* User Profile */
+/* Profile Page */
 #profile-page .medleys-list {padding-top:35px;}
 #user-profile {position: fixed;left:8%;overflow:hidden;max-height:500px;margin-top:40px;margin-left:0px;min-height:50px;width:300px;}
 #user-profile-background {display:block;padding:10px;background:rgba(0,0,0,0.05);-webkit-border-radius: 6px;border-radius: 6px;}
 .user-profile-name  {font-size:25px;color:#555;margin-top:5px;}
 .user-profile-image {max-width:100px;max-height:100px;background:#fff;padding:4px;border-top:1px solid rgba(0,0,0,0.15);border-right:1px solid rgba(0,0,0,0.15);border-left:1px solid rgba(0,0,0,0.15);-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);-moz-transform: rotate(-4deg);-webkit-transform: rotate(-4deg);-o-transform: rotate(-4deg);-ms-transform: rotate(-4deg);transform: rotate(-4deg);}
+
+/* User Page */
+#user-page .medleys-list {padding-top:35px;}
 
 /* Footer */
 #footer p {color:#bbb;font-family:"proxima-nova",sans-serif!important;text-align:right;font-weight:100;margin-top:20px;}
