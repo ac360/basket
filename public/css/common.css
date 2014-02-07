@@ -59,8 +59,8 @@ font-size: 32px;color:#f57e7b;text-align: center;padding:2px;font-weight:bold;}
 /* Home Page */
 #home-container {margin-top:20px;}
 #home-container h3 {color:#444;margin-bottom:20px;}
-.embed-medley {display:block;float:left;margin:0px 5px 20px 0px;background:rgba(0,0,0,0.05);position: relative !important;
-	 width:545px !important; min-height: 280px !important;-webkit-border-radius: 6px;border-radius: 6px;}
+.embed-medley {display:block;float:left;margin:0px 5px 20px 0px;background:rgba(0,0,0,0.02);position: relative !important;
+	 width:545px !important; min-height: 280px !important;-webkit-border-radius: 6px;border-radius: 6px;border:1px solid rgba(0,0,0,0.03);}
 .embed-medley-medium {display:block;margin:0px 5px 0px 0px;background:rgba(0,0,0,0.05);position: relative !important;
 	 width:646px;min-height:450px;-webkit-border-radius: 6px;border-radius: 6px;}
 .embed-item {text-align: center; background:#ffffff; -webkit-border-radius: 6px; border-radius: 6px; -webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);border-top: 1px solid rgba(0,0,0,0.1);border-right: 1px solid rgba(0,0,0,0.1);border-left: 1px solid rgba(0,0,0,0.1);}

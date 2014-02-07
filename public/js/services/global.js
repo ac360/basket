@@ -219,6 +219,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 		    authenticateUser: function(callback) {
 	            // Check if current user
 	            Users.getCurrentUser({}, function(user) {
+
 	                if (user.email) {
 	                    $rootScope.$broadcast('SignedInViaFacebook', user);
 	                    mData.user = user;

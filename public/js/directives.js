@@ -53,6 +53,7 @@ app.directive("facebookSignInLink", function() {
         replace: true,
         controller: function($scope, $element, $attrs, $rootScope, Global, Users){
             $element.click(function() {
+                console.log("clicked!");
                 // Check if user is logged in
                 Global.authenticateUser();
             }) // element.click()
