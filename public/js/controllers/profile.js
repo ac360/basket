@@ -11,6 +11,7 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
         			$scope.profilepage.medleys = [];
         			angular.forEach(medleys, function(medley) {
         				$scope.profilepage.medleys.push( Global.sizeMedleySmall(medley) );
+                        Global.updateMedleyViewCount(medley.short_id);
         			});
 		        });
         	} else {

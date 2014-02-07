@@ -13,6 +13,7 @@ angular.module('mean.system').controller('UserController', ['$scope', 'Global', 
         			$scope.userpage.medleys = [];
         			angular.forEach(medleys, function(medley) {
         				$scope.userpage.medleys.push( Global.sizeMedleySmall(medley) );
+                        Global.updateMedleyViewCount(medley.short_id);
         			})
 		        });
         	} else {
