@@ -19,7 +19,13 @@ angular.module('mean.system').controller('HashtagController', ['$scope', 'Global
     // Initialize
 
         // Listeners - Medley Updated
-        $scope.$on('HashtagUpdated', function(e, user){});
+        $scope.$on('MedleyUpdated', function(e, medley){
+            angular.forEach($scope.hashtagpage.medleys, function(m) {
+                if (m._id == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+        });
 
         $scope.initializeHashtag();
     
