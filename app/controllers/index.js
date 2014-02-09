@@ -18,7 +18,7 @@ exports.show_redirect = function(req, res) {
 	Medley.find({short_id: req.params.shortId}, function(err, medley) {
         if (err) return next(err);
         req.medley = medley[0];
-        res.redirect('/#!/'+req.medley.short_id);
+        res.redirect('/#!/m/'+req.medley.short_id);
     });
     
 }

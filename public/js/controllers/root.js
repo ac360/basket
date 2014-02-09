@@ -218,6 +218,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         // Listener - Remove Body Classes
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
             if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
+            if (toState.name !== 'show') { $(document).attr('title', 'Medley - The New Shopping Cart!'); };
         });
 
         // Listener - Infinite Scroll 

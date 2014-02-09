@@ -23,7 +23,7 @@
 								<img ng-src="{{item.images.medium}}" draggable="false">
 							</div>
 						</div>
-						<div class="medley-info" style="margin-bottom:25px;">
+						<div class="medley-info" style="margin-bottom:40px;">
 							<button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
 							<a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
 							<a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
