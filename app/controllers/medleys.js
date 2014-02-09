@@ -24,10 +24,7 @@ var mongoose        = require('mongoose'),
                         if (callback) { callback(medley) };
                     };
                 });
-        } else {
-                if (callback) { callback(medley) };
-        }
-        
+        } else { if (callback) { callback(medley) } };
     };
 
 // Actions
@@ -154,6 +151,15 @@ var mongoose        = require('mongoose'),
     exports.getUserMedleys = function(req, res) {
         Medley.find({ user: req.params.userId }).sort({ votes: -1 }).limit(10).populate('user', 'name username').exec(function(err, medleys) {
                 if (req.user) {
+                    // Event Listener
+                    eventEmitter.on('userMedleys', function(medleys)  {
+                        eventEmitter.removeAllListeners('userMedleys');
+                        medleys.sort(function(obj1, obj2) {
+                            return obj2.votes - obj1.votes;
+                        });
+                        res.jsonp(medleys);
+                    });
+                    // Add Voted Attribute
                     var medleys_with_voted_attribute = [];
                     medleys.forEach(function(m){
                         add_voted_attribute(req.user, m, function(medley) {
@@ -166,14 +172,6 @@ var mongoose        = require('mongoose'),
                 } else {
                     res.jsonp(medleys);
                 };
-                // Event Listener
-                eventEmitter.on('userMedleys', function(medleys)  {
-                    eventEmitter.removeAllListeners('userMedleys');
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.votes - obj1.votes;
-                    });
-                    res.jsonp(medleys);
-                });
         });
     }; // getUserMedleys
 
@@ -227,7 +225,6 @@ var mongoose        = require('mongoose'),
                             });
                             res.jsonp(medleys);
                         }); 
-
                         // Add Voted Attribute
                         var medleys_with_voted_attribute = [];
                         medleys.forEach(function(m){
@@ -261,7 +258,6 @@ var mongoose        = require('mongoose'),
                             });
                             res.jsonp(medleys);
                         });
-
                         // Add Voted Attribute
                         var medleys_with_voted_attribute = [];
                         medleys.forEach(function(m){

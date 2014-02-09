@@ -19,8 +19,12 @@ exports.user = function(req, res, next, id) {
 
 //  Show profile
 exports.show = function(req, res) {
-    var user = req.profile;
-    res.jsonp(req.profile);
+    var user = req.profile.toObject();
+    delete user.email
+    delete user.fb_id
+    delete user.provider
+    delete user.timezone
+    res.jsonp(user);
 };
 
 // Send User
