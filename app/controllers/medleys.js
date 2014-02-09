@@ -164,7 +164,7 @@ var mongoose        = require('mongoose'),
                     medleys.forEach(function(m){
                         add_voted_attribute(req.user, m, function(medley) {
                             medleys_with_voted_attribute.push(medley);
-                            if (medleys_with_voted_attribute.length === 10) { 
+                            if (medleys_with_voted_attribute.length == medleys.length) { 
                                 eventEmitter.emit('userMedleys', medleys_with_voted_attribute); 
                             };
                         });
@@ -230,7 +230,7 @@ var mongoose        = require('mongoose'),
                         medleys.forEach(function(m){
                             add_voted_attribute(req.user, m, function(medley){
                                 medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length === 10) { 
+                                if (medleys_with_voted_attribute.length == medleys.length) { 
                                     eventEmitter.emit('mostVoted', medleys_with_voted_attribute); 
                                 };
                             });
@@ -263,7 +263,7 @@ var mongoose        = require('mongoose'),
                         medleys.forEach(function(m){
                             add_voted_attribute(req.user, m, function(medley){
                                 medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length === 10) { 
+                                if (medleys_with_voted_attribute.length == medleys.length) { 
                                     eventEmitter.emit('mostViewed', medleys_with_voted_attribute); 
                                 };
                             });
