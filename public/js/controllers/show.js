@@ -50,6 +50,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 if ($scope.share == true) {
                     $timeout(function() {
                         $scope.publishedShare();
+                        $scope.share = false;
                     },4000)
                 };
                 // Update View Count
