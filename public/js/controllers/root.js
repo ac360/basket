@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('RootController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', '$modal', function ($rootScope, $scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, $modal) {
+angular.module('mean.system').controller('RootController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', '$modal', 'Modals', 'Folders', function ($rootScope, $scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, $modal, Modals, Folders) {
 
     // Initialization Methods At Bottom
 
@@ -26,6 +26,44 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.status.message             = '';
     $scope.status.status              = false;
     $scope.share                      = false;
+    $scope.draggable                  = true;
+
+
+    // FOLDERS
+    $scope.addMedleyToFolder = function(event, data) {
+        if (Global.getCurrentUser()) {
+            var medley   = data;
+            var folderId = $(event.currentTarget).attr("data-id");
+            angular.forEach($scope.folders, function(f, index){
+              if (f._id === folderId) {
+                f.medleys.push(medley.short_id);
+                Global.updateFolder(f);
+                return;
+              };
+            });
+        } else {
+            Modals.signIn();
+        }
+    };
+    $scope.newFolderModal = function() {
+        if (Global.getCurrentUser()) {
+            Modals.folder();
+        } else {
+            Modals.signIn();
+        }
+    };
+    $scope.noUserFolder = function() {
+        Modals.signIn();
+    };
+    $scope.deleteFolder = function(folder) {
+        var r = confirm("Are you sure you want to delete this folder?  You will lose all of the medleys in it!")
+        if (r === true) {
+            Folders.delete({ folderId: folder._id }, function(folder){
+                console.log("Folder deleted:", folder);
+                $rootScope.$broadcast('FoldersUpdated', folder);
+            })
+        };
+    };
 
     $scope.setRetailer = function(retailer) {
       $scope.retailer = retailer;
@@ -206,22 +244,52 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
 
         // Listener - Authetication
         $scope.$on('SignedInViaFacebook', function(e, user){
-          console.log("User Signed In: ", user);
-          $scope.user = user;
+              console.log("User Signed In: ", user);
+              $scope.user = user;
+              Global.loadFolders(function(folders) {
+                $scope.folders = folders;
+              });
+        });
+        // Listener - Folders Loaded
+        $scope.$on('FoldersLoaded', function(e, folders){
+            // Set Folders
+            $scope.folders = folders;
+            // Set Folder if Folder Page
+            if ($state.current.name === 'folder') {
+                angular.forEach($scope.folders, function(f) {
+                    if (f._id == $stateParams.folderId) { 
+                        $scope.folder = f;
+                    };
+                });
+            };
+        });
+        // Listener - Folders Updated
+        $scope.$on('FoldersUpdated', function(e, folder){
+              console.log("Folders Updated");
+              Global.loadFolders(function(folders) {
+                  $scope.folders = folders;
+              });
         });
         // Listener - Medley Published
         $scope.$on('MedleyPublished', function(e, medley) {
-          Global.resetMedley();
-          $scope.basket = Global.getMedley();
-          $scope.share = true;
+              Global.resetMedley();
+              $scope.basket = Global.getMedley();
+              $scope.share = true;
         });
         // Listener - Remove Body Classes
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-            if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
-            if (toState.name !== 'show') { $(document).attr('title', 'Medley - The New Shopping Cart!'); };
+              if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
+              if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!') };
+              // Set Folder if Folder Page
+              if (toState.name === 'folder') {
+                    angular.forEach($scope.folders, function(f) {
+                        if (f._id == toParams.folderId) { 
+                            $scope.folder = f;
+                        };
+                    });
+              };
         });
-
-        // Listener - Infinite Scroll 
+        // Listener - Search Infinite Scroll 
         $(window).scroll(function() {
             if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
               // Make Sure you have listings...

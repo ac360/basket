@@ -3,32 +3,54 @@
         <div class="col-md-12">
 
             <div class="row" ng-show="profilepage.medleys">
-                <div class="col-md-4 hidden-sm hidden-xs" style="padding-top:40px;">
+                <div class="col-md-3 hidden-sm hidden-xs" style="padding-top:40px;">
 
-                    <div id="side-container">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user.username}}/picture?type=large">
-                            </div>
-                            <div class="col-md-8" style="padding-left:20px;">
-                                <h1 class="user-profile-name">{{ user.name }}</h1>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="side-container" class="folders-side-container">
+                        <p class="st-centered">
+                             <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ user.username}}/picture?type=large">
+                        </p>
+                        <h1 class="user-profile-name st-centered">{{ user.name }}</h1>
+                        <h4>Your Saved Medleys</h4>
+                        <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
+                        <ul class="list-unstyled">
+
+                            <!-- UnAuthenticated -->
+                            <li ng-if="!user" ng-click="noUserFolder()" ui-on-Drop="addMedleyToFolder($event,$data)" drop-target>
+                                <div class="folder-link">
+                                    <i class="fa fa-folder"></i> Favorites
+                                </div>
+                            </li>
+                            <!-- Authenticated -->
+                            <li class="folder" data-id="{{ folder._id }}" ui-on-Drop="addMedleyToFolder($event,$data)" ng-repeat="folder in folders" drop-target>
+                                <div class="folder-link" ui-sref="folder({ folderId: folder._id })">
+                                    <i class="fa fa-folder"></i> {{ folder.title }}
+                                </div>
+                                <i class="fa fa-times pull-right" ng-click="deleteFolder(folder)"></i>
+                            </li>
+                            <li ng-click="newFolderModal()">
+                                <div class="folder-link">
+                                    <i class="fa fa-plus"></i> Create New Folder
+                                </div>
+                            </li>
+
+                        </ul>
+                    </div><!-- #side-container -->
 
                 </div> <!-- col-md-4 -->
-                <div id="user-profile-medleys" class="medleys-list col-md-offset-1 col-md-7"> 
+                <div id="user-profile-medleys" class="medleys-list col-md-6"> 
 
-                    <div class="medley-small" ng-repeat="medley in profilepage.medleys">
+                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in profilepage.medleys">
                         <div class="medley-hashtags">
                             <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
                         </div>
-                        <div class="medley-box medley-box-small" style="height:{{medley.height}}px">
+                        <div class="medley-box medley-box-small" style="height:{{medley.height}}px" 
+                        ui-draggable="{{ draggable }}" drag="medley">
                             <div class="medley-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
                                 <img ng-src="{{item.images.medium}}" draggable="false">
                             </div>
                         </div>
-                        <div class="medley-info" style="margin-bottom:25px;">
+                        <div class="medley-info" style="margin-bottom:40px;">
+                            <button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
                             <a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
                             <a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
                             <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.name }}</a>

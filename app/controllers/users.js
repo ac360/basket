@@ -1,6 +1,7 @@
 // Module dependencies.
-var mongoose = require('mongoose'),
-    User = mongoose.model('User');
+var mongoose    = require('mongoose'),
+    User        = mongoose.model('User');
+    Folder      = mongoose.model('Folder');
 
 
 // Find user by username
@@ -61,7 +62,16 @@ exports.session = function(req, res) {
                             return next(err);
                         };
                     };
-                    console.log("User successfully created, logging them in...")
+
+                    console.log("User successfully created, logging them in...");
+                    // Create A Favorites Folder
+                    var folder = new Folder({ user: user, title: 'Favorites' });
+                    folder.save(function(err){
+                        if (err) {
+                            console.log("Folder Creation Error:", err);
+                        };
+                    })
+                    // Log In User
                     req.logIn(user, function(err) {
                         console.log("User Logged In");
                         if (err) return next(err);

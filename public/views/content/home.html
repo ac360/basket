@@ -4,21 +4,49 @@
 			<div class="col-md-3">
 			</div>
 			<div class="col-md-offset-1 col-md-6">
-				<button class="btn btn-grey btn-lg"><span class="caret"></span> Your Medley Feed</button>
+				
 			</div>
 		</div>
 
 		<div class="row">
 			<div class="col-md-3">
+				<div id="side-container" class="folders-side-container">
+					<button class="btn btn-primary"><span class="caret"></span> Featured Medleys</button>
+					<h4>Your Saved Medleys</h4>
+					<small style="font-size:10px;">Drag a Medley over a folder to save it</small>
+					<ul class="list-unstyled">
+
+						<!-- UnAuthenticated -->
+						<li ng-if="!user" ng-click="noUserFolder()" ui-on-Drop="addMedleyToFolder($event,$data)" drop-target>
+							<div class="folder-link">
+								<i class="fa fa-folder"></i> Favorites
+							</div>
+						</li>
+						<!-- Authenticated -->
+						<li class="folder" data-id="{{ folder._id }}" ui-on-Drop="addMedleyToFolder($event,$data)" ng-repeat="folder in folders" drop-target>
+							<div class="folder-link" ui-sref="folder({ folderId: folder._id })">
+								<i class="fa fa-folder"></i> {{ folder.title }}
+							</div>
+							<i class="fa fa-times pull-right" ng-click="deleteFolder(folder)"></i>
+						</li>
+						<li ng-click="newFolderModal()">
+							<div class="folder-link">
+								<i class="fa fa-plus"></i> Create New Folder
+							</div>
+						</li>
+
+					</ul>
+				</div><!-- #side-container -->
 			</div> <!-- col-md-6 -->
-			<div class="col-md-offset-1 col-md-6">
+			<div class="col-md-6">
 				<div class="home-col-left">
 
 					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in most_recent">
 						<div class="medley-hashtags">
 							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
 						</div>
-						<div class="medley-box medley-box-small" style="height:{{medley.height}}px">
+						<div class="medley-box medley-box-small" style="height:{{medley.height}}px" 
+						ui-draggable="{{ draggable }}" drag="medley">
 							<div class="medley-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
 								<img ng-src="{{item.images.medium}}" draggable="false">
 							</div>

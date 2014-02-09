@@ -1,17 +1,16 @@
-angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal', '$state', '$stateParams', "Users", "Modals", "Medleys", "Votes", function($http, $rootScope, $modal, $state, $stateParams, Users, Modals, Medleys, Votes) {
+angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal', '$state', '$stateParams', "Users", "Modals", "Medleys", "Votes", "Folders", function($http, $rootScope, $modal, $state, $stateParams, Users, Modals, Medleys, Votes, Folders) {
     
-	var mData = { user: null, medley: { items: [] } };
+	var mData = { user: null, folders: null, medley: { items: [] } };
 
     return {
+    		// ---------- MEDLEYS ----------
     		setMedleyProperty: function(propertyName, property, callback ) {
     			mData.medley[propertyName] = property;
     			if(callback) { callback(mData.medley) };
     		},
-
     		getMedley: function() {
     			return mData.medley;
     		},
-
     		publishMedley: function(callback) {
     			var self = this;
 	            var medley = new Medleys(mData.medley);
@@ -21,25 +20,64 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	            	$rootScope.$broadcast('MedleyPublished', medley);
 	            });
     		},
-
     		showMedley: function(medleyId, callback) {
     			 Medleys.show({ shortId: medleyId }, function(medley) {
     			 	if(callback){ callback(medley) };
     			 });
     		},
-
     		resetMedley: function() {
     			mData.medley = { items: [] };
     		},
-
     		getMedleysByHashtag: function(hashtag, callback) {
-    			console.log("hashtag medley GLobal function called for: "+hashtag)
     			Medleys.getByHashtag({ hashtag: hashtag }, function(medleys) {
     				console.log("hashtags found in Global:", medleys)
 	    			if (callback) { callback(medleys) };
 		        });
     		},
+    		getMedleysByFolder: function(folderId, callback) {
+    			Medleys.getByFolder({ folderId: folderId }, function(medleys) {
+    				console.log("Folder Medleys found in Global:", medleys)
+	    			if (callback) { callback(medleys) };
+		        });
+    		},
 
+    		// ---------- FOLDERS ----------
+    		loadFolders: function(callback) {
+    			var self = this;
+    			if ( mData.user ) {
+		            Folders.getByUser(function(folders) {
+		            	mData.folders = folders;
+		            	console.log("Global - User's Folders Loaded: ", folders);
+		            	$rootScope.$broadcast('FoldersLoaded', folders);
+		            	if (callback) { callback(mData.folders) };
+		            });
+		        }; 
+    		},
+    		createNewFolder: function(title, callback) {
+    			var self = this;
+    			if ( mData.user ) {
+		            var folder = new Folders({ title: title });
+		            folder.$save(function(folder) {
+		            	console.log("folder created: ", folder);
+		            	$rootScope.$broadcast('FoldersUpdated', folder);
+		            }); 
+		        } else {
+		            Modals.signIn();
+		        }
+    		},
+    		updateFolder: function(folder, callback) {
+    			var self = this;
+    			if ( mData.user ) {
+    				var folder = new Folders(folder)
+		            folder.$update({ folderId: folder._id }, function(folder) {
+		            	$rootScope.$broadcast('FoldersUpdated', folder);
+		            }); 
+		        } else {
+		            Modals.signIn();
+		        }
+    		},
+
+    		// ---------- SHARE FUNCTIONS ----------
     		shareFacebook: function(medleyId) {
     			Medleys.show({ shortId: medleyId }, function(medley) {
     			 	if(medley) { 
@@ -168,8 +206,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     			// Check if current user
 	            Users.getCurrentUser({}, function(user) {
 	                if (user.email) {
+	                	mData.user = user;
 	                    $rootScope.$broadcast('SignedInViaFacebook', user);
-	                    mData.user = user;
 	                    // Callback
 	                    if (callback) { callback(user) };
 	                } else {
@@ -201,9 +239,9 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                             });
 	                             newUser.$save(function(user){
 	                                  console.log("Successfully saved new user to database and signed in: ", user);
+	                                  mData.user = user;
 	                                  // Broadcast User when Signed In
 	                                  $rootScope.$broadcast('SignedInViaFacebook', user);
-	                                  mData.user = user;
 	                                  // Callback
 	                                  if (callback) { callback(user) };
 	                             });
@@ -218,8 +256,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	            // Check if current user
 	            Users.getCurrentUser({}, function(user) {
 	                if (user.email) {
+	                	mData.user = user;
 	                    $rootScope.$broadcast('SignedInViaFacebook', user);
-	                    mData.user = user;
 	                    // Callback
 	                    if (callback) { callback(user) };
 	                } else {
@@ -244,8 +282,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                             newUser.$save(function(user){
 	                                  console.log("Successfully saved new user to database and signed in: ", user);
 	                                  // Broadcast User when Signed In
-	                                  $rootScope.$broadcast('SignedInViaFacebook', user);
 	                                  mData.user = user;
+	                                  $rootScope.$broadcast('SignedInViaFacebook', user);
 	                                  // Callback
 	                                  if (callback) { callback(user) };
 	                             });
@@ -271,8 +309,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                                 });
 	                                 newUser.$save(function(user){
 	                                      // Broadcast User when Signed In
-	                                      $rootScope.$broadcast('SignedInViaFacebook', user);
 	                                      mData.user = user;
+	                                      $rootScope.$broadcast('SignedInViaFacebook', user);
 	                                      // Callback
 	                                      if (callback) { callback(user) };
 	                                 });

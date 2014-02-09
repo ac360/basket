@@ -4,6 +4,7 @@ var mongoose        = require('mongoose'),
     shortId         = require('short-mongo-id'),
     Medley          = mongoose.model('Medley'),
     Vote            = mongoose.model('Vote'),
+    Folder          = mongoose.model('Folder'),
     events          = require('events'),
     eventEmitter    = new events.EventEmitter(),
     _               = require('underscore');
@@ -207,6 +208,27 @@ var mongoose        = require('mongoose'),
                     }; // if user logged in
                 }; // if err
         }); // Medley.find
+    }; // getByHashtag
+
+    // Find Medleys by Folder
+    exports.getByFolder = function(req, res) {
+        // Load Folder
+        Folder.findOne({ _id: req.params.folderId, user: req.user }).exec(function(err, folder) {
+            if (err) { 
+                console.log(err);
+                res.jsonp({error: "Error Loading Folder"});
+            } else  if (!folder) {
+                console.log("No Folder Found");
+                res.jsonp({ error: "Folder Couldn't be Found" });
+            } else {
+                // Get X Number of Medleys - TODO enable params here
+                var medleyIDs = folder.medleys.slice(0,20);
+                Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username').exec(function(err, medleys) {
+                     res.jsonp(medleys);
+                });
+            };
+
+        });
     }; // getByHashtag
 
     // Show Most Voted Medleys

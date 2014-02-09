@@ -29,6 +29,11 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
             isArray: true,
             url:     'api/m/by_hashtag/:hashtag'
         },
+        getByFolder:    {
+            method:  'GET',
+            isArray: true,
+            url:     'api/m/by_folder/:folderId'
+        },
         show:    {
             method:  'GET',
             isArray: false,

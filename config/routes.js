@@ -26,6 +26,7 @@ module.exports = function(app, passport, auth) {
         app.get('/api/m/short_id/:shortId/updatevotecount',         auth.requiresLogin, medleys.updateVoteCount);
         app.get('/api/m/by_user/:userId',                           medleys.getUserMedleys);
         app.get('/api/m/by_hashtag/:hashtag',                       medleys.getByHashtag);
+        app.get('/api/m/by_folder/:folderId',                       medleys.getByFolder);
         app.get('/api/m/by_votes',                                  medleys.most_voted);
         app.get('/api/m/by_views',                                  medleys.most_viewed);
         app.get('/api/m/by_date',                                   medleys.most_recent);
@@ -41,6 +42,15 @@ module.exports = function(app, passport, auth) {
 
         //Finish with setting up the voteId param
         app.param('voteId', votes.vote);
+
+    // Folder API - Internal
+        var folders = require('../app/controllers/folders');
+        app.get('/api/f',                     auth.requiresLogin, folders.getByUser);
+        app.post('/api/f',                    auth.requiresLogin, folders.create);
+        app.put('/api/f/:folderId',           auth.requiresLogin, folders.update);
+        app.del('/api/f/:folderId',           auth.requiresLogin, folders.destroy);
+        //Finish with setting up the folderId param
+        app.param('folderId', folders.folder);
 
     // Client API - Internal
         var clients = require('../app/controllers/clients');

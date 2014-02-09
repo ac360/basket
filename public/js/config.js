@@ -37,6 +37,14 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "footer":    { templateUrl: "views/footer/show.html"        },
           }
         })
+        .state('folder', {
+          url: "/f/:folderId",
+          views: {
+            "header":    { templateUrl: "views/header/folder.html"      },
+            "content":   { templateUrl: "views/content/folder.html"     },
+            "footer":    { templateUrl: "views/footer/footer.html"      },
+          }
+        })
         .state('hashtag', {
           url: "/hashtag/:hashtag",
           views: {
