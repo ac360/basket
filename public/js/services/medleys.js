@@ -14,10 +14,10 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
             url:     'api/m/by_views'
         },
         // Not hooked up yet
-        getNewest:    {
+        getMostRecent:    {
             method:  'GET',
             isArray: true,
-            url:     'api/m/by_recent'
+            url:     'api/m/by_date'
         },
         getUserMedleys:    {
             method:  'GET',

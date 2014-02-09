@@ -275,5 +275,38 @@ var mongoose        = require('mongoose'),
             });
     }; // most_viewed
 
+    // Show Most Recent Medleys
+    exports.most_recent = function(req, res) {
+           Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+                if (err) { 
+                    console.log(err) ;
+                    return false;
+                } else {
+                    if (req.user) {
+                        // Event Listener
+                        eventEmitter.on('mostRecent', function(medleys) {
+                            eventEmitter.removeAllListeners('mostRecent');
+                            medleys.sort(function(obj1, obj2) {
+                                return obj2.created - obj1.created;
+                            });
+                            res.jsonp(medleys);
+                        });
+                        // Add Voted Attribute
+                        var medleys_with_voted_attribute = [];
+                        medleys.forEach(function(m){
+                            add_voted_attribute(req.user, m, function(medley){
+                                medleys_with_voted_attribute.push(medley);
+                                if (medleys_with_voted_attribute.length == medleys.length) { 
+                                    eventEmitter.emit('mostRecent', medleys_with_voted_attribute); 
+                                };
+                            });
+                        });
+                    } else {
+                        res.jsonp(medleys);
+                    }; // if user logged in
+                }; // if err
+            });
+    }; // most_viewed
+
 
 
