@@ -133,7 +133,8 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .medley-box 		 			{display:block;float:left;margin:0px;position:relative!important;}
 .medley-box-small  				{width:545px;min-height:280px;}
 .medley-box-medium 				{width:646px;min-height:450px;}
-.medley-hashtags  				{display:block;float:left;width:100%;min-height:35px;padding:0px;margin-bottom:5px;}
+.medley-hashtags  				{display:block;float:left;width:100%;min-height:35px;height:auto;padding:0px;margin-bottom:5px;text-align:center;}
+.hashtag                        {float:left;margin-right:5px;margin-bottom:6px;}
 .medley-info                    {display:block;float:left;width:100%;min-height:30px;padding-top:5px;}
 .medley-info .view-button    	{font-weight:100!important;padding-right:10px;padding-left:10px;}
 .medley-info .views  			{font-size:18px;margin-right:7px;}
