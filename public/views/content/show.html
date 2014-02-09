@@ -1,52 +1,91 @@
 <div ng-controller="ShowController">
-	<div id="show-container" class="row animated fadeInUp">
-		<div class="col-md-12">
-			
-			<div class="row">
-				<div id="show-profile" class="col-md-6">
-					<div id="show-profile-image-container" ng-show="show_medley">
-						<img id="show-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ show_medley.user.username}}/picture?type=large">
-					</div>
-					<div id="show-profile-info-container" ng-show="show_medley">
-						<div id="author-container">
-							<a class="author" ui-sref="user({ username: show_medley.user.username })">{{ show_medley.user.name }}</a>
-						</div>
-						<div id="info-container">
-							<div id="show-options-views">
-								<i class="fa fa-eye"></i><span class="show-views">{{ show_medley.views }}</span>
-							</div>
-							<div id="show-options-votes" class="{{ show_medley.short_id }}" vote-link="{{ show_medley.short_id }}">
-								<i class="fa fa-heart-o"></i><span class="show-votes">{{ show_medley.votes }}</span>
-							</div>
-							<div id="show-options-share">
-								<span id="facebook-share-link" share-facebook-link="{{ show_medley.short_id }}"><i class="fa fa-facebook-square"></i> Share</span>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
+
+	<div ng-show="templateReady">
+
+		    <!-- Logo & Profile Container -->
+		    <div class="row logo-container">
+		        <div class="col-md-12">
+					<a class="logo" ui-sref="home">medley</a>
+		            <ul class="list-inline pull-right menu">
+		            	<!-- Authenticated -->
+		                <li ng-if="user">
+		                   <img class="img-circle profile-image" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <a ui-sref="profile">{{user.name}}</a>
+		                </li>
+		                <li ng-if="user">
+		                    <a href="/signout">Sign Out</a>
+		                </li>
+		            	<!-- UnAuthenticated -->
+		                <li ng-if="!user">
+		                    <a facebook-sign-in-link>Sign In With Facebook</a>
+		                </li>
+		            </ul>
+		        </div>
+		    </div> <!-- row -->
 
 			<div class="row">
-				<div class="col-md-12"> 
-
-						<div id="show-options-hashtags" ng-show="show_medley">
-							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in show_medley.hashtags" ui-sref="">{{ hashtag }}</a>
-						</div>
-						
-						<div class="st-center-element embed-medley-medium" ng-show="show_medley" style="height:{{ show_medley.height }}px">
-							<div class="embed-item animated bounceIn" style="position:absolute;width:{{ item.width }}px;height:{{ item.height }}px;top:{{ item.top }}px;left:{{ item.left }}px;display:block;" ng-repeat="item in show_medley.items" medley-item>
-								<img ng-src="{{ item.images.medium }}" draggable="false">
+				<div class="col-md-12">
+					
+					<div class="row">
+						<div class="col-md-4 show-medley-info-container">
+							<div class="show-author-image-container" ng-show="show_medley">
+								<img class="show-author-image" draggable="false" ng-src="http://graph.facebook.com/{{ show_medley.user.username}}/picture?type=large">
+							</div>
+							<div class="show-medley-info-subcontainer" ng-show="show_medley">
+								<div class="show-author-container">
+									<a ui-sref="user({ username: show_medley.user.username })">{{ show_medley.user.name }}</a>
+								</div>
+								<div class="medley-info">
+									<a class="views"> <i class="fa fa-eye"></i> {{ show_medley.views }}</a> 
+									<a class="votes {{ show_medley.short_id }}" vote-link="{{ show_medley.short_id }}"><i class="fa fa-heart" ng-if="show_medley.voted"></i><i class="fa fa-heart-o" ng-if="!show_medley.voted"></i> {{ show_medley.votes}}</a>
+								    <a class="share" share-facebook-link="{{ show_medley.short_id }}">
+										<i class="fa fa-facebook-square"></i> Share
+									</a>
+								</div>
 							</div>
 						</div>
+					</div>
 
+					<div class="row">
+						<div class="col-md-12"> 
 
-						<h3 class="st-centered" ng-if="load_error" style="margin-top:60px;color:#777">
-							Sorry, this medley does not exist
-						</h3>
-				</div>
+							<div class="medley-medium" style="margin:0px auto;">
+								<div class="medley-hashtags" ng-show="show_medley" style="text-align:center;">
+									<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in show_medley.hashtags">{{ hashtag }}</a>
+								</div>
+								
+								<div class="st-center-element medley-box medley-box-medium" ng-show="show_medley" style="height:{{ show_medley.height }}px">
+									<div class="medley-item" style="position:absolute;width:{{ item.width }}px;height:{{ item.height }}px;top:{{ item.top }}px;left:{{ item.left }}px;display:block;" ng-repeat="item in show_medley.items" medley-item>
+										<img ng-src="{{ item.images.medium }}" draggable="false">
+									</div>
+								</div>
+
+								<h3 class="st-centered" ng-if="load_error" style="margin-top:60px;color:#777">
+									Sorry, this medley does not exist
+								</h3>
+							</div>
+
+						</div>
+					</div><!-- row -->
+
+				</div><!-- col-md-12 -->
 			</div><!-- row -->
 
-		</div><!-- col-md-12 -->
-	</div><!-- row -->
+			<div class="footer" class="row">
+		        <div class="col-md-12">
+		          <p>Medley © 2014</p>
+		        </div>
+		    </div>
+    </div> <!-- #show-page -->
 
+    <div id="show-loading" class="row" ng-hide="templateReady">
+    	<div class="col-md-12">
+    		<h3 class="show-loading">Loading Medley...</h3>
+    	</div>
+    </div>
 </div><!-- ShowController -->
+
+
+
+
+
+

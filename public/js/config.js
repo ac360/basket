@@ -10,7 +10,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
           views: {
             "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/home.html"       },
-            "footer":    { templateUrl: "views/footer/footer.html"      },
+            "footer":    { templateUrl: "views/footer/footer.html"      }
           }
         })
         .state('search', {
@@ -34,7 +34,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
           views: {
             "header":    { templateUrl: "views/header/show.html"        },
             "content":   { templateUrl: "views/content/show.html"       },
-            "footer":    { templateUrl: "views/footer/footer.html"      },
+            "footer":    { templateUrl: "views/footer/show.html"        },
           }
         })
         .state('hashtag', {

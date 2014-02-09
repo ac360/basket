@@ -5,6 +5,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     // Set Defaults
     $scope.show_medley      = false;
     $scope.load_error       = false;
+    $scope.templateReady    = false;
 
     $scope.publishedShare = function() {
         Modals.publishedShare($scope.show_medley.short_id);
@@ -22,6 +23,14 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
         });
     };
 
+    $scope.applyTemplate = function(template) {
+        // Add Template Style
+        var h = $(window).height() + 40
+        $('body').addClass(template);
+
+        $scope.templateReady = true;
+    };
+
     $scope.initializeShow = function() {
         var self = this;
         Global.showMedley( $stateParams.basketId, function(medley) {
@@ -35,6 +44,8 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 // Update Page Title
                 var pageTitle = "Medley - " + $scope.show_medley.hashtags.join(" ");
                 $(document).attr('title', pageTitle);
+                // Apply Template
+                $scope.applyTemplate(medley.template);
                 // Check Share Option
                 if ($scope.share == true) {
                     $timeout(function() {
@@ -62,6 +73,16 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
             $scope.show_medley.views = medley.views;
         });
 
-        $scope.initializeShow();
+        if ($scope.user) {
+            $scope.initializeShow();
+        } else {
+            $scope.initializeShow();
+            // Listener - Authetication
+            $scope.$on('SignedInViaFacebook', function(e, user){
+                $timeout(function() {
+                    $scope.getVoteStatus();
+                })
+            });
+        }
     
 }]);

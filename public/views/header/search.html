@@ -2,22 +2,20 @@
         <div class="col-md-12">
             
             <!-- Logo & Profile Container -->
-            <div id="header-row" class="row">
-                <div id="header-container" class="col-md-12">
-                    <a id="logo" ui-sref="home">medley</a>
-                    <!-- Authenticated -->
-                    <ul id="header-menu" class="list-inline pull-right top-bar" ng-if="user">
-                        <li>
-                           <img id="header-profile-image" class="img-circle" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <span class="m-link" ui-sref="profile">{{user.name}}</span>
+            <div class="row logo-container">
+                <div class="col-md-12">
+                    <a class="logo" ui-sref="home">medley</a>
+                    <ul class="list-inline pull-right menu">
+                        <!-- Authenticated -->
+                        <li ng-if="user">
+                            <img class="img-circle profile-image" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <a ui-sref="profile">{{user.name}}</a>
                         </li>
-                        <li>
+                        <li ng-if="user">
                             <a href="/signout">Sign Out</a>
                         </li>
-                    </ul>
-                    <!-- UnAuthenticated -->
-                     <ul class="list-inline pull-right top-bar" ng-if="!user">
-                        <li>
-                            <p id="facebook-login-link" facebook-sign-in-link>Sign In With Facebook</p>
+                        <!-- UnAuthenticated -->
+                        <li ng-if="!user">
+                            <a facebook-sign-in-link>Sign In With Facebook</a>
                         </li>
                     </ul>
                 </div>
@@ -34,7 +32,7 @@
                     <div id="search-container" class="col-md-7">
                         <div class="input-group">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-blue btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
+                                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
                                   <li><a ng-click="setRetailer('All Retailers')">All Retailers</a></li>
                                   <li class="divider"></li>
@@ -44,7 +42,7 @@
                             </div><!-- /btn-group -->
                           <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_keywords" placeholder="Enter A Product"> 
                           <span class="input-group-btn">
-                            <button class="btn btn-blue btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
+                            <button class="btn btn-primary btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
                           </span>
                         </div><!-- /input-group -->
                     </div>

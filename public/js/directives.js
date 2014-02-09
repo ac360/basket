@@ -66,7 +66,7 @@ app.directive("voteLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Users) {
+        controller: function($scope, $element, $attrs, $rootScope, Global, Users, Modals) {
             $element.click(function() {
                 if ( Global.getCurrentUser() ) {
                     Global.voteMedley($attrs.voteLink, function(medley) {

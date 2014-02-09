@@ -55,20 +55,15 @@ var mongoose        = require('mongoose'),
             if (err) {
                 console.log(err);
             } else {
-                console.log("Medley Successfully Saved: ", medley);
-                add_voted_attribute(req, medley, function(medley){
+                if (req.user) {
+                    console.log("Medley Successfully Saved: ", medley);
+                    add_voted_attribute(req, medley, function(medley){
+                        res.jsonp(medley);
+                    });
+                } else {
                     res.jsonp(medley);
-                });
+                };
             }
-        });
-    };
-
-    // Update a Medley
-    exports.update = function(req, res) {
-        var medley = req.medley;
-        medley     = _.extend(medley, req.body);
-        medley.save(function(err) {
-            res.jsonp(medley);
         });
     };
 
@@ -76,9 +71,13 @@ var mongoose        = require('mongoose'),
     exports.updateViewCount = function(req, res) {
         req.medley.views = req.medley.views + 1;
         req.medley.save(function(err, medley) {
-            add_voted_attribute(req, req.medley, function(medley){
+            if (req.user) {
+                add_voted_attribute(req, req.medley, function(medley){
+                    res.jsonp(medley);
+                });
+            } else {
                 res.jsonp(medley);
-            });
+            }
         });
     };
 
@@ -87,7 +86,7 @@ var mongoose        = require('mongoose'),
         Vote.find({ medley: req.medley, user: req.user }).exec(function(err, vote) {
             if (err) {
                 console.log(err);
-                res.jsonp(err);
+                res.jsonp({ error: "Something went wrong with your vote"});
             } else {
                 // User Vote Doesn't Exist
                 if (vote.length < 1) {
@@ -142,23 +141,31 @@ var mongoose        = require('mongoose'),
 
     // Show A Medley
     exports.show = function(req, res) {
-        add_voted_attribute(req, req.medley, function(medley){
-            res.jsonp(medley);
-        });
+        if (req.user) {
+            add_voted_attribute(req, req.medley, function(medley){
+                res.jsonp(medley);
+            });
+        } else {
+            res.jsonp(req.medley);
+        };
     };
 
     // Find Medley by Username
     exports.getUserMedleys = function(req, res) {
         Medley.find({ user: req.params.userId }).sort({ votes: -1 }).limit(10).populate('user', 'name username').exec(function(err, medleys) {
-                var medleys_with_voted_attribute = [];
-                medleys.forEach(function(m){
-                    add_voted_attribute(req.user, m, function(medley) {
-                        medleys_with_voted_attribute.push(medley);
-                        if (medleys_with_voted_attribute.length === 10) { 
-                            eventEmitter.emit('userMedleys', medleys_with_voted_attribute); 
-                        };
-                    });
-                });
+                if (req.user) {
+                    var medleys_with_voted_attribute = [];
+                    medleys.forEach(function(m){
+                        add_voted_attribute(req.user, m, function(medley) {
+                            medleys_with_voted_attribute.push(medley);
+                            if (medleys_with_voted_attribute.length === 10) { 
+                                eventEmitter.emit('userMedleys', medleys_with_voted_attribute); 
+                            };
+                        });
+                    })
+                } else {
+                    res.jsonp(medleys);
+                };
                 // Event Listener
                 eventEmitter.on('userMedleys', function(medleys)  {
                     eventEmitter.removeAllListeners('userMedleys');
@@ -168,90 +175,109 @@ var mongoose        = require('mongoose'),
                     res.jsonp(medleys);
                 });
         });
-    };
+    }; // getUserMedleys
 
     // Find Medleys by Hashtag
     exports.getByHashtag = function(req, res) {
-
         var hashtag = '#' + req.params.hashtag;
         Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
                 } else {
-                    var medleys_with_voted_attribute = [];
-
-                    // Event Listener
-                    eventEmitter.on('hashtagMedleys', function(medleys)  {
-                        eventEmitter.removeAllListeners('hashtagMedleys');
-                        medleys.sort(function(obj1, obj2) {
-                            return obj2.votes - obj1.votes;
+                    if (req.user) {
+                        var medleys_with_voted_attribute = [];
+                        // Event Listener
+                        eventEmitter.on('hashtagMedleys', function(medleys)  {
+                            eventEmitter.removeAllListeners('hashtagMedleys');
+                            medleys.sort(function(obj1, obj2) {
+                                return obj2.votes - obj1.votes;
+                            });
+                            res.jsonp(medleys);
                         });
+                        // Add Voted Attribute
+                        medleys.forEach(function(m){
+                            add_voted_attribute(req.user, m, function(medley) {
+                                medleys_with_voted_attribute.push(medley);
+                                if (medleys_with_voted_attribute.length == medleys.length) { 
+                                    eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
+                                };
+                            });
+                        })
+                    } else {
                         res.jsonp(medleys);
-                    });
-
-                    // Add Voted Attribute
-                    medleys.forEach(function(m){
-                        add_voted_attribute(req.user, m, function(medley) {
-                            medleys_with_voted_attribute.push(medley);
-                            if (medleys_with_voted_attribute.length == medleys.length) { 
-                                eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
-                            };
-                        });
-                    });
-                }
+                    }; // if user logged in
+                }; // if err
         }); // Medley.find
-    };
+    }; // getByHashtag
 
     // Show Most Voted Medleys
     exports.most_voted = function(req, res) {
             Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
-                // Event Listener
-                eventEmitter.on('mostVoted', function(medleys)  {
-                    eventEmitter.removeAllListeners('mostVoted');
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.votes - obj1.votes;
-                    });
-                    res.jsonp(medleys);
-                }); 
+                if (err) { 
+                    console.log(err) ;
+                    return false;
+                } else {
+                    if (req.user) {
+                        // Event Listener
+                        eventEmitter.on('mostVoted', function(medleys)  {
+                            eventEmitter.removeAllListeners('mostVoted');
+                            medleys.sort(function(obj1, obj2) {
+                                return obj2.votes - obj1.votes;
+                            });
+                            res.jsonp(medleys);
+                        }); 
 
-                // Add Voted Attribute
-                var medleys_with_voted_attribute = [];
-                medleys.forEach(function(m){
-                    add_voted_attribute(req.user, m, function(medley){
-                        medleys_with_voted_attribute.push(medley);
-                        if (medleys_with_voted_attribute.length === 10) { 
-                            eventEmitter.emit('mostVoted', medleys_with_voted_attribute); 
-                        };
-                    });
-                });
+                        // Add Voted Attribute
+                        var medleys_with_voted_attribute = [];
+                        medleys.forEach(function(m){
+                            add_voted_attribute(req.user, m, function(medley){
+                                medleys_with_voted_attribute.push(medley);
+                                if (medleys_with_voted_attribute.length === 10) { 
+                                    eventEmitter.emit('mostVoted', medleys_with_voted_attribute); 
+                                };
+                            });
+                        });
+                    } else {
+                        res.jsonp(medleys);
+                    }; // if user logged in
+                }; // if err
             });
-    };
+    }; // most_voted
 
     // Show Most Viewed Medleys
     exports.most_viewed = function(req, res) {
            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
-                // Event Listener
-                eventEmitter.on('mostViewed', function(medleys) {
-                    eventEmitter.removeAllListeners('mostViewed');
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.views - obj1.views;
-                    });
-                    res.jsonp(medleys);
-                });
+                if (err) { 
+                    console.log(err) ;
+                    return false;
+                } else {
+                    if (req.user) {
+                        // Event Listener
+                        eventEmitter.on('mostViewed', function(medleys) {
+                            eventEmitter.removeAllListeners('mostViewed');
+                            medleys.sort(function(obj1, obj2) {
+                                return obj2.views - obj1.views;
+                            });
+                            res.jsonp(medleys);
+                        });
 
-                // Add Voted Attribute
-                var medleys_with_voted_attribute = [];
-                medleys.forEach(function(m){
-                    add_voted_attribute(req.user, m, function(medley){
-                        medleys_with_voted_attribute.push(medley);
-                        if (medleys_with_voted_attribute.length === 10) { 
-                            eventEmitter.emit('mostViewed', medleys_with_voted_attribute); 
-                        };
-                    });
-                });
+                        // Add Voted Attribute
+                        var medleys_with_voted_attribute = [];
+                        medleys.forEach(function(m){
+                            add_voted_attribute(req.user, m, function(medley){
+                                medleys_with_voted_attribute.push(medley);
+                                if (medleys_with_voted_attribute.length === 10) { 
+                                    eventEmitter.emit('mostViewed', medleys_with_voted_attribute); 
+                                };
+                            });
+                        });
+                    } else {
+                        res.jsonp(medleys);
+                    }; // if user logged in
+                }; // if err
             });
-    };
+    }; // most_viewed
 
 
 

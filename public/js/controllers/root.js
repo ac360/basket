@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('RootController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', '$modal', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, $modal) {
+angular.module('mean.system').controller('RootController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', '$modal', function ($rootScope, $scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, $modal) {
 
     // Initialization Methods At Bottom
 
@@ -173,7 +173,36 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
     // Initialization Methods
 
         // Get Current User Or Try To Log Them In Via Facebook
-        Global.autoSignIn();
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '252087231617494',  // Dev: 252087231617494 Pro: 736751053015158
+                status     : true, // check login status
+                cookie     : false, // enable cookies to allow the server to access the session
+                xfbml      : true  // parse XFBML
+            });
+            // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
+            // for any authentication related change, such as login, logout or session refresh. This means that
+            // whenever someone who was previously logged out tries to log in again, the correct case below
+            // will be handled.
+            FB.Event.subscribe('auth.authResponseChange', function(response) {
+                // Here we specify what we do with the response anytime this event occurs.
+                if (response.status === 'connected') {
+                    signInViaFacebook();
+                } else if (response.status === 'not_authorized') {
+                } else {}
+            });
+        };
+        // Load the SDK asynchronously
+        (function(d){
+            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement('script'); js.id = id; js.async = true;
+            js.src = "//connect.facebook.net/en_US/all.js";
+            ref.parentNode.insertBefore(js, ref);
+        }(document));
+        function signInViaFacebook() {
+            Global.autoSignIn();
+        };
 
         // Listener - Authetication
         $scope.$on('SignedInViaFacebook', function(e, user){
@@ -185,6 +214,10 @@ angular.module('mean.system').controller('RootController', ['$scope', 'Global', 
           Global.resetMedley();
           $scope.basket = Global.getMedley();
           $scope.share = true;
+        });
+        // Listener - Remove Body Classes
+        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+            if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
         });
 
         // Listener - Infinite Scroll 

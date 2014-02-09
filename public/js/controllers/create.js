@@ -67,6 +67,14 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
       });
     };
 
+    $scope.changeTemplate = function(template) {
+      Global.setMedleyProperty("template", template, function(medley) {
+        $scope.basket = medley;
+        console.log("From Global: ", $scope.basket)
+      });
+      $('body').removeClass().addClass(template);
+    };
+
     $scope.showPublishModal = function(){
         if (Global.getCurrentUser()) {
             Modals.hashtag()
@@ -104,7 +112,7 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
                             }).data("gridster");
         // Add Scope Items
         angular.forEach($scope.basket.items, function(item, index){
-          var html = '<li class="basket-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'"><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
+          var html = '<li class="medley-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'"><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
           $scope.gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
         });
         // Save Positions Immediately

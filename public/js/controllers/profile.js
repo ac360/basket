@@ -2,6 +2,7 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
 
     // Defaults
     $scope.profilepage = {}
+    $scope.profilepage.error = false;
 
     // Methods
     $scope.initializeProfile = function() {
@@ -27,11 +28,17 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
         $scope.$on('MedleyUpdated', function(e, medley){
             angular.forEach($scope.profilepage.medleys, function(m) {
                 if (m._id == medley._id) { 
-                    m.votes = medley.votes
+                    m.votes = medley.votes;
                 };
             });
         });
-
-        $scope.initializeProfile();
+        if ($scope.user) {
+            $scope.initializeProfile();
+        } else {
+            // Listener - Authetication
+            $scope.$on('SignedInViaFacebook', function(e, user){
+              $scope.initializeProfile();
+            });
+        };
     
 }]);

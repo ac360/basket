@@ -6,7 +6,7 @@
 		</a>
 		<p class="product-modal-no-image" ng-show="{{!product.images.large}}">No Image Available</p>
 		<hr>
-		<p class="button-container"><a ng-href="{{ product.link }}" class="btn btn-lg btn-primary" target="_blank">Buy</a></p>
+		<p class="button-container"><button ng-href="{{ product.link }}" class="btn btn-lg btn-primary" target="_blank">Buy</button></p>
 	</div>
 	<div class="col-md-6">
 		 <h1 class="product-modal-title">{{ product.title | limitTo:120 }}</h1>

@@ -1,13 +1,17 @@
 <div class="row">
 	<div class="col-md-12 st-no-padding" ng-controller="CreateController">
 		<div id="create-container">
-			<div id="create-stage" class="gridster">
+			<div id="create-stage" class="gridster medley-box">
 				<ul dynamic>
 				</ul>
 			</div>
 			<div id="create-options">
-				<button class="btn btn-blue btn-lg" ng-click="showPublishModal()" ng-show="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
-				<button class="btn btn-blue btn-lg disabled" ng-hide="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+				<button class="btn btn-primary btn-lg" ng-click="showPublishModal()" ng-show="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+				<button class="btn btn-primary btn-lg disabled" ng-hide="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+				<ul id="template-list" class="list-unstyled">
+					<li><a ng-click="changeTemplate('a1')">Light</a></li>
+					<li><a ng-click="changeTemplate('a2')">Dark</a></li>
+				</ul>
 			</div>
 		</div>
 	</div>

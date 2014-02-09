@@ -1,58 +1,36 @@
 <div class="row" ng-controller="HomeController">
 	<div id="home-container" class="col-md-12">
-		<div class="row">
-			<div class="col-md-6">
-				<h3>Most viewed medleys</h3>
+		<div class="row" style="padding:15px 0px;">
+			<div class="col-md-3">
 			</div>
-			<div class="col-md-6">
-				<h3>Most loved medleys</h3>
+			<div class="col-md-offset-1 col-md-6">
+				<button class="btn btn-grey btn-lg"><span class="caret"></span> Your Medley Feed</button>
 			</div>
 		</div>
+
 		<div class="row">
-
-			<div class="col-md-6">
-				<div class="home-col-left">
-					<div ng-repeat="medley in most_viewed">
-						<div class="embed-medley-details">
-							<div class="embed-medley-votes votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}">
-								<i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i>  {{medley.votes}}
-							</div>
-							<div class="embed-medley-views views">
-								<i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
-							</div>
-							<div class="embed-medley-hashtags">
-								<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
-							</div>
-						</div>
-						<div class="view-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
-							<div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
-								<img ng-src="{{item.images.medium}}" draggable="false">
-							</div>
-						</div>
-					</div>
-				</div>
+			<div class="col-md-3">
 			</div> <!-- col-md-6 -->
-
-			<div class="col-md-6">
+			<div class="col-md-offset-1 col-md-6">
 				<div class="home-col-left">
-					<div ng-repeat="medley in most_voted">
-						<div class="embed-medley-details">
-							<div class="embed-medley-votes votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}">
-								<i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i>  {{medley.votes}}
-							</div>
-							<div class="embed-medley-views views">
-								<i class="fa fa-eye"></i> <span class="show-views">{{medley.views}}</span>
-							</div>
-							<div class="embed-medley-hashtags">
-								<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{hashtag}}</a>
-							</div>
+
+					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in most_voted">
+						<div class="medley-hashtags">
+							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
 						</div>
-						<div class="vote-medley{{ $index }} embed-medley" style="height:{{medley.height}}px">
-							<div class="embed-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
+						<div class="medley-box medley-box-small" style="height:{{medley.height}}px">
+							<div class="medley-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
 								<img ng-src="{{item.images.medium}}" draggable="false">
 							</div>
 						</div>
+						<div class="medley-info" style="margin-bottom:25px;">
+							<button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
+							<a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
+							<a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
+						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.name }}</a>
+						</div>
 					</div>
+
 				</div>
 			</div> <!-- col-md-6 -->
 

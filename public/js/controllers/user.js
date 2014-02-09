@@ -10,6 +10,7 @@ angular.module('mean.system').controller('UserController', ['$scope', 'Global', 
         		$scope.userpage.user = user;
         		console.log("User Loaded: ", $scope.userpage.user);
         		Medleys.getUserMedleys({ userId: $scope.userpage.user._id },function(medleys){
+                    console.log("Loaded User's Medleys:", medleys)
         			$scope.userpage.medleys = [];
         			angular.forEach(medleys, function(medley) {
         				$scope.userpage.medleys.push( Global.sizeMedleySmall(medley) );

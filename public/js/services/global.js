@@ -74,16 +74,14 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	        },
 
 	        voteMedley: function(medleyId, callback) {
-	            this.authenticateUser(function(user){
-	                if (!user) { 
-	                    Modals.signIn() 
-	                } else {
-	                    Medleys.updateVoteCount({ medleyId: medleyId }, function(medley) {
-	                        $rootScope.$broadcast('MedleyUpdated', medley);
-	                        if (callback) { callback(medley) };
-	                    })
-	                }
-	            })
+                Medleys.updateVoteCount({ medleyId: medleyId }, function(medley) {
+                	if (medley.error){
+                		console.log(medley);
+                	} else {
+                		$rootScope.$broadcast('MedleyUpdated', medley);
+                    	if (callback) { callback(medley) };
+                	};
+                });
 	        },
 
     		showProductModal: function(product, callback) {
@@ -219,7 +217,6 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 		    authenticateUser: function(callback) {
 	            // Check if current user
 	            Users.getCurrentUser({}, function(user) {
-
 	                if (user.email) {
 	                    $rootScope.$broadcast('SignedInViaFacebook', user);
 	                    mData.user = user;
@@ -229,14 +226,6 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                    var self = this;
 	                    FB.getLoginStatus(function(response) {
 	                      if (response.status === 'connected') {
-	                        // TODO:  UPDATE USER EMAIL ADDRESS ON LOGIN!
-	                        // the user is logged in and has authenticated your
-	                        // app, and response.authResponse supplies
-	                        // the user's ID, a valid access token, a signed
-	                        // request, and the time the access token 
-	                        // and signed request each expire
-	                        // var uid = response.authResponse.userID;
-	                        // var accessToken = response.authResponse.accessToken;
 	                        console.log('User is already logged into Facebook: ', response);
 	                        FB.api('/me', function(response) {
 	                            console.log('Successfully Retrieved User Information: ', response);

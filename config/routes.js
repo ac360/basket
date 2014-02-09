@@ -21,7 +21,6 @@ module.exports = function(app, passport, auth) {
         var medleys = require('../app/controllers/medleys');
         app.post('/api/m',                                          auth.requiresLogin, medleys.create);
         app.get('/api/m/short_id/:shortId',                         medleys.show);
-        app.put('/api/m/short_id/:shortId',                         auth.requiresLogin, auth.medley.hasAuthorization, medleys.update);
         app.del('/api/m/short_id/:shortId',                         auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
         app.get('/api/m/short_id/:shortId/updateviewcount',         medleys.updateViewCount);
         app.get('/api/m/short_id/:shortId/updatevotecount',         auth.requiresLogin, medleys.updateVoteCount);
