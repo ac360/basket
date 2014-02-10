@@ -56,7 +56,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                         });
                     };
                     $scope.close = function() {
-                      $modalInstance.close();
+                        $modalInstance.close();
                     };
                     // Listener - Folders Updated
                     $scope.$on('FoldersUpdated', function(e, folder){

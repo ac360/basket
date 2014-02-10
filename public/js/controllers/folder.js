@@ -2,31 +2,31 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
 
     // Defaults
     $scope.folderpage = {};
-    $scope.folderpage.medleys = false;
 
-    $scope.initializeFolderPage = function() {
-    	Global.getMedleysByFolder($stateParams.folderId, function(medleys) {
+    $scope.getMedleysByFolder = function() {
+        Global.getMedleysByFolder($stateParams.folderId, function(medleys) {
             $scope.folderpage.medleys = [];
-    		// Set Medley Size
+            // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.folderpage.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
-    	});
-    }; // initializeFolderPage()
-
+        });
+    };
 
     // Initialize
         if ($scope.user) {
-            $scope.initializeFolderPage();
+            $scope.getMedleysByFolder();
         } else {
             // Listener - Authetication
             $scope.$on('SignedInViaFacebook', function(e, user){
-              $scope.initializeFolderPage();
+                $scope.getMedleysByFolder();
             });
         };
-        // Listeners - Folders Loaded
-        $scope.$on('FoldersLoaded', function(e, folders){});
+        // Listener - Folders Updated
+        $scope.$on('FoldersUpdated', function(e, folder){
+                $scope.getMedleysByFolder();
+        });
         // Listeners - Medley Updated
         $scope.$on('MedleyUpdated', function(e, medley){
             angular.forEach($scope.folderpage.medleys, function(m) {

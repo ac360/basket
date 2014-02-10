@@ -8,6 +8,8 @@ input:focus, textarea:focus, select:focus, a:focus, button:focus {outline:none!i
 /* Style Placeholder Text --> */ ::-webkit-input-placeholder { font-family:"proxima-nova";text-align:center!important;font-weight:100; } :-moz-placeholder { /* Firefox 18- */ font-family:"proxima-nova";text-align:center!important;font-weight:100;  } ::-moz-placeholder {  /* Firefox 19+ */ font-family:"proxima-nova";text-align:center!important;font-weight:100;  } :-ms-input-placeholder { font-family:"proxima-nova";text-align:center!important;font-weight:100;  } .form-control:focus {border: none; outline: 0; -webkit-box-shadow:none; box-shadow:none; }
 hr {border-top:1px solid rgba(0,0,0,0.1);}
 .disabled {opacity:0.3!important;}
+.btn-danger				{background:#f57b7b!important;border:1px solid #f57b7b!important;letter-spacing:0px;-webkit-box-shadow: 0 2px 0 0 #cd7373;box-shadow: 0 2px 0 0 #cd7373;color:#fff!important;}
+.btn-danger:hover 		{background:#fa9999!important;border:1px solid #fa9999!important;cursor:pointer;color:#fff;}
 
 .st-centered {text-align:center!important;}
 .st-no-margin {margin:0px;}
@@ -184,6 +186,7 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .gridster ul 						{list-style-type: none;}
 .basket-item.basket-item-large img 	{position: absolute;z-index: 1;max-width:90%;max-height: 90%;margin-left: auto;margin-right: auto; margin-top: auto; margin-bottom: auto; left: 0; right: 0; top: 0; bottom: 0;}
 #template-list         				{margin-top:20px;}
+.template                           {height:50px;width:100px;background:#fff;padding:4px;margin-bottom:5px;-webkit-border-radius: 3px;border-radius: 3px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1); box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);border-top: 1px solid rgba(0,0,0,0.1);border-right: 1px solid rgba(0,0,0,0.1);border-left: 1px solid rgba(0,0,0,0.1);}
 
 /* Templates */
 .a1 					 		{background:#f6f6f6;color:#666666;}

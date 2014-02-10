@@ -46,7 +46,7 @@ exports.update = function(req, res) {
     if (req.user.id === req.folder.user.id) {
             folder          = req.folder;
             folder.title    = req.body.title;
-            folder.medleys  = req.body.medleys;
+            folder.medleys  = _.uniq(req.body.medleys);
             folder.save(function(err) {
                 if (err) {
                     console.log("Error: ", err);

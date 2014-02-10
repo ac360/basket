@@ -70,6 +70,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     			if ( mData.user ) {
     				var folder = new Folders(folder)
 		            folder.$update({ folderId: folder._id }, function(folder) {
+		            	console.log("Global - Folder Updated");
 		            	$rootScope.$broadcast('FoldersUpdated', folder);
 		            }); 
 		        } else {

@@ -45,6 +45,18 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             Modals.signIn();
         }
     };
+    $scope.removeMedleyFromFolder = function(medley, folder) {
+        if (Global.getCurrentUser()) {
+            angular.forEach(folder.medleys, function(m, index){
+                if ( m === medley.short_id ) {
+                    folder.medleys.splice(index, 1);
+                };
+            });
+            Global.updateFolder(folder);
+        } else {
+            Modals.signIn();
+        }
+    };
     $scope.newFolderModal = function() {
         if (Global.getCurrentUser()) {
             Modals.folder();
@@ -265,9 +277,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         });
         // Listener - Folders Updated
         $scope.$on('FoldersUpdated', function(e, folder){
-              console.log("Folders Updated");
               Global.loadFolders(function(folders) {
                   $scope.folders = folders;
+                  $rootScope.$broadcast('FoldersLoaded', $scope.folders);
               });
         });
         // Listener - Medley Published
@@ -279,7 +291,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         // Listener - Remove Body Classes
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
               if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
-              if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!') };
+              if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };
               // Set Folder if Folder Page
               if (toState.name === 'folder') {
                     angular.forEach($scope.folders, function(f) {
