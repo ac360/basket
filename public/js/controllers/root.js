@@ -45,18 +45,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             Modals.signIn();
         }
     };
-    $scope.removeMedleyFromFolder = function(medley, folder) {
-        if (Global.getCurrentUser()) {
-            angular.forEach(folder.medleys, function(m, index){
-                if ( m === medley.short_id ) {
-                    folder.medleys.splice(index, 1);
-                };
-            });
-            Global.updateFolder(folder);
-        } else {
-            Modals.signIn();
-        }
-    };
     $scope.newFolderModal = function() {
         if (Global.getCurrentUser()) {
             Modals.folder();

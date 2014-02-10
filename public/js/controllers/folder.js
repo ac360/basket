@@ -3,6 +3,26 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     // Defaults
     $scope.folderpage = {};
 
+    $scope.removeMedleyFromFolder = function(medleyId, folder) {
+        if (Global.getCurrentUser()) {
+            // Remove Immediately From Page
+            angular.forEach($scope.folderpage.medleys, function(m, index){
+                if ( m.short_id === medleyId ) {
+                    $scope.folderpage.medleys.splice(index, 1);
+                };
+            });
+            // Remove From Data 
+            angular.forEach(folder.medleys, function(m, index){
+                if ( m === medleyId ) {
+                    folder.medleys.splice(index, 1);
+                    Global.updateFolder(folder);
+                };
+            });
+        } else {
+            Modals.signIn();
+        }
+    };
+
     $scope.getMedleysByFolder = function() {
         Global.getMedleysByFolder($stateParams.folderId, function(medleys) {
             $scope.folderpage.medleys = [];
