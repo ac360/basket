@@ -7,10 +7,6 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     $scope.load_error       = false;
     $scope.templateReady    = false;
 
-    $scope.publishedShare = function() {
-        Modals.publishedShare($scope.show_medley.short_id);
-    };
-
     $scope.getVoteStatus = function() {
         Global.getMedleyVoteStatus($scope.show_medley._id, function(vote) {
             // If User Has Not Voted
@@ -49,9 +45,9 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 // Check Share Option
                 if ($scope.share == true) {
                     $timeout(function() {
-                        $scope.publishedShare();
-                        $scope.share = false;
-                    },4000)
+                        Modals.publishedShare($scope.show_medley.short_id);
+                        $scope.$parent.$parent.share = false;
+                    }, 4000);
                 };
                 // Update View Count
                 Global.updateMedleyViewCount($scope.show_medley.short_id)
