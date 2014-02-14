@@ -2,7 +2,7 @@
     "db": "mongodb://localhost/bettertown-travis",
     "port": 3001,
     "app": {
-        "name": "BetterTown - Travis"
+        "name": "Medley - Travis"
     },
     "facebook": {
         "clientID": "APP_ID",
