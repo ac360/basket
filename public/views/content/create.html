@@ -8,9 +8,10 @@
 			<div id="create-options">
 				<button class="btn btn-primary btn-lg" ng-click="showPublishModal()" ng-show="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
 				<button class="btn btn-primary btn-lg disabled" ng-hide="basket.items.length > 1"><i class="fa fa-check"></i> Publish</button>
+				<h5 style="margin:25px 0px 10px 0px">Templates:</h5>
 				<ul id="template-list" class="list-unstyled">
-					<li class="template template-light"><a ng-click="changeTemplate('a1')">Light</a></li>
-					<li class="template template-dark"><a ng-click="changeTemplate('a2')">Dark</a></li>
+					<li ng-click="changeTemplate('a1')"><i class="fa fa-chevron-right" style="color:#7bb4f5;" ng-show="basket.template == 'a1'"></i> <img class="template template-a1" ng-src="img/template-a1.png"></li>
+					<li ng-click="changeTemplate('a2')"><i class="fa fa-chevron-right" style="color:#f57b7b;" ng-show="basket.template == 'a2'"></i> <img class="template template-a2" ng-src="img/template-a2.png"></li>
 				</ul>
 			</div>
 		</div>
