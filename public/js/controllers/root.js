@@ -213,7 +213,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         // Get Current User Or Try To Log Them In Via Facebook
         window.fbAsyncInit = function() {
             FB.init({
-                appId      : '736751053015158',  // Dev: 252087231617494 Pro: 736751053015158
+                appId      : facebookKey,
                 status     : true, // check login status
                 cookie     : false, // enable cookies to allow the server to access the session
                 xfbml      : true  // parse XFBML
