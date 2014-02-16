@@ -22,7 +22,7 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
         getUserMedleys:    {
             method:  'GET',
             isArray: true,
-            url:     'api/m/by_user/:userId'
+            url:     'api/m/by_user/:username'
         },
         getByHashtag:    {
             method:  'GET',

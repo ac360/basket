@@ -1,13 +1,13 @@
-<div id="hashtag-page" ng-controller="HashtagController">
+<div id="hashtag-page" ng-init="MedleysByHashtag()">
     <div id="user-container" class="row">
         <div class="col-md-12">
 
-            <div class="row" ng-show="{{ hashtagpage.medleys.length > -1 }}">
+            <div class="row" ng-show="{{ medleys.length > -1 }}">
                 <div class="col-md-3 hidden-sm hidden-xs" style="padding-top:50px;">
 
                         <div id="side-container" class="folders-side-container">
                             <h6>Medleys with this hashtag:</h6>
-                            <h1 class="user-profile-name">#{{ hashtagpage.hashtag }}</h1>
+                            <h1 class="user-profile-name">#{{ hashtag }}</h1>
                             <h4>Your Saved Medleys</h4>
                             <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
                             <ul class="list-unstyled">
@@ -38,7 +38,7 @@
 
                 <div class="medleys-list col-md-6"> 
 
-                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in hashtagpage.medleys">
+                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
                         <div class="medley-hashtags">
                             <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
                         </div>
@@ -61,4 +61,4 @@
 
         </div><!-- col-md-12 -->
     </div><!-- row -->
-</div><!-- HashtagController -->
+</div>

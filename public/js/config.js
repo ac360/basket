@@ -53,14 +53,6 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
         })
-        .state('profile', {
-          url: "/me",
-          views: {
-            "header":    { templateUrl: "views/header/profile.html"     },
-            "content":   { templateUrl: "views/content/profile.html"    },
-            "footer":    { templateUrl: "views/footer/footer.html"      },
-          }
-        })
         .state('user', {
           url: "/user/:username",
           views: {

@@ -3,6 +3,7 @@ var mongoose        = require('mongoose'),
     async           = require('async'),
     shortId         = require('short-mongo-id'),
     Medley          = mongoose.model('Medley'),
+    User            = mongoose.model('User'),
     Vote            = mongoose.model('Vote'),
     Folder          = mongoose.model('Folder'),
     events          = require('events'),
@@ -149,8 +150,11 @@ var mongoose        = require('mongoose'),
     };
 
     // Find Medley by Username
-    exports.getUserMedleys = function(req, res) {
-        Medley.find({ user: req.params.userId }).sort({ votes: -1 }).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+    exports.getByUsername = function(req, res) {
+        User.findOne({ username: req.params.username }).exec(function(err, user) {
+            if (err) return next(new Error('Failed to load user' + req.params.username));
+            // Find Medleys
+            Medley.find({ user: user._id }).sort({ votes: -1 }).limit(10).populate('user', 'name username').exec(function(err, medleys) {
                 if (req.user) {
                     // Event Listener
                     eventEmitter.on('userMedleys', function(medleys)  {
@@ -173,6 +177,8 @@ var mongoose        = require('mongoose'),
                 } else {
                     res.jsonp(medleys);
                 };
+            });
+
         });
     }; // getUserMedleys
 

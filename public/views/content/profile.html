@@ -1,8 +1,8 @@
-<div id="profile-page" ng-controller="ProfileController">
+<div id="profile-page" ng-init="MedleysByProfile()">
     <div id="user-container" class="row">
         <div class="col-md-12">
 
-            <div class="row" ng-show="profilepage.medleys">
+            <div class="row" ng-show="medleys">
                 <div class="col-md-3 hidden-sm hidden-xs" style="padding-top:40px;">
 
                     <div id="side-container" class="folders-side-container">
@@ -39,7 +39,7 @@
                 </div> <!-- col-md-4 -->
                 <div id="user-profile-medleys" class="medleys-list col-md-6"> 
 
-                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in profilepage.medleys">
+                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
                         <div class="medley-hashtags">
                             <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
                         </div>

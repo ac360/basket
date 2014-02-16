@@ -24,7 +24,7 @@ module.exports = function(app, passport, auth) {
         app.del('/api/m/short_id/:shortId',                         auth.requiresLogin, auth.medley.hasAuthorization, medleys.destroy);
         app.get('/api/m/short_id/:shortId/updateviewcount',         medleys.updateViewCount);
         app.get('/api/m/short_id/:shortId/updatevotecount',         auth.requiresLogin, medleys.updateVoteCount);
-        app.get('/api/m/by_user/:userId',                           medleys.getUserMedleys);
+        app.get('/api/m/by_user/:username',                         medleys.getByUsername);
         app.get('/api/m/by_hashtag/:hashtag',                       medleys.getByHashtag);
         app.get('/api/m/by_folder/:folderId',                       medleys.getByFolder);
         app.get('/api/m/by_votes',                                  medleys.most_voted);

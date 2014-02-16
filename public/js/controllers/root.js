@@ -27,7 +27,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.status.status              = false;
     $scope.share                      = false;
     $scope.draggable                  = true;
-
+    $scope.medleys                    = false;
+    $scope.profile                    = null;
 
     // FOLDERS
     $scope.addMedleyToFolder = function(event, data) {
@@ -65,10 +66,64 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         };
     };
 
-    $scope.setRetailer = function(retailer) {
-      $scope.retailer = retailer;
+    // USERS
+    $scope.loadProfile = function(username) {
+        if (username) { 
+            username: username;
+        } else {
+            username: $stateParams.username
+        }
+        Users.getUser({ username: $stateParams.username }, function(profile) {
+            if (profile) {
+                $scope.profile = profile;
+                console.log("Profile Loaded: ", $scope.profile);
+            } else {
+                $scope.profile = null;
+                console.log("User Not Found: ", $scope.profile);
+            };
+        });
     };
 
+    // MEDLEY FEEDS
+    $scope.MedleysByProfile = function(username) {
+        if (username) {
+            username = username;
+        } else {
+            username = $stateParams.username;
+        };
+        $scope.medleys = [];
+        // Fetch Your Medleys
+        Medleys.getUserMedleys({ username: username },function(medleys) {
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by profile+ "+$scope.user.name+" loaded:", $scope.medleys);
+        });
+    };
+    $scope.MedleysByHashtag = function(hashtag) {
+        $scope.medleys = [];
+        if (hashtag) {
+            $scope.hashtag = hashtag;
+        } else {
+            $scope.hashtag = $stateParams.hashtag;
+        };
+        Global.getMedleysByHashtag($scope.hashtag, function(medleys) { 
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by hashtag+ "+$scope.hashtag+" loaded:", $scope.medleys);
+        });
+    };
+
+    
+
+    // SEARCH
+    $scope.setRetailer = function(retailer) {
+        $scope.retailer = retailer;
+    };
     $scope.searchRetailers = function(keywords, items, cb) {
         // Clear Results
         $scope.search_results       = false;
@@ -108,7 +163,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             console.log("Search results for " + $scope.search_keywords, $scope.search_results);
         });
     };
-
     $scope.scrollSearch = function() {
         $scope.scrollsearch_in_progress = true;
         // If All Retailers still have more listings...
@@ -155,7 +209,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
           }, 2000);
         }; // if statment
     }; // infiniteSearch()
-
     $scope.setBasketStatus = function() {
       if ( $scope.basket.items.length == 1 ) { 
         $scope.basket_status = "Add 1 more item...";
@@ -168,7 +221,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         $scope.basket_publish = false;
       };
     };
-
     $scope.addBasketItem = function(item, $event) {
         // Set Gridster Defaults
         item.row = item.col = item.size_x = item.size_y = 1;
@@ -181,7 +233,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         $scope.basket_full = true;
         this.setBasketStatus();
     };
-
     $scope.removeArrayItem = function(hashKey, sourceArray) {
         var self = this;
         angular.forEach(sourceArray, function(obj, index){
@@ -195,17 +246,11 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
           $scope.basket = medley;
         });
     };
-
     $scope.showProductPreview = function(item) {
       $scope.product_preview = item;
     };
-
     $scope.hideProductPreview = function(item) {
       $scope.product_preview = false;
-    };
-
-    $scope.shareFacebook = function(medleyId, username, imageLink, hashtags) {
-        Global.shareFacebook(medleyId, username, imageLink, hashtags);
     };
 
     // Initialization Methods
@@ -242,13 +287,14 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             Global.autoSignIn();
         };
 
+        // LISTENERS ---------------
         // Listener - Authetication
         $scope.$on('SignedInViaFacebook', function(e, user){
-              console.log("User Signed In: ", user);
-              $scope.user = user;
-              Global.loadFolders(function(folders) {
+            $scope.user = user;
+            console.log("User Signed In: ", $scope.user);
+            Global.loadFolders(function(folders) {
                 $scope.folders = folders;
-              });
+            });
         });
         // Listener - Folders Loaded
         $scope.$on('FoldersLoaded', function(e, folders){
