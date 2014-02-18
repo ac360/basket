@@ -270,7 +270,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             FB.Event.subscribe('auth.authResponseChange', function(response) {
                 // Here we specify what we do with the response anytime this event occurs.
                 if (response.status === 'connected') {
-                    signInViaFacebook();
+                    Global.autoSignIn();
                 } else if (response.status === 'not_authorized') {
                 } else {}
             });
@@ -283,10 +283,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             js.src = "//connect.facebook.net/en_US/all.js";
             ref.parentNode.insertBefore(js, ref);
         }(document));
-        function signInViaFacebook() {
-            Global.autoSignIn();
-        };
-
+        
         // LISTENERS ---------------
         // Listener - Authetication
         $scope.$on('SignedInViaFacebook', function(e, user){
