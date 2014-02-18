@@ -238,7 +238,7 @@ var mongoose        = require('mongoose'),
     }; // getByHashtag
 
     // Show Most Voted Medleys
-    exports.most_voted = function(req, res) {
+    exports.getByVotes = function(req, res) {
             Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
@@ -271,8 +271,8 @@ var mongoose        = require('mongoose'),
     }; // most_voted
 
     // Show Most Viewed Medleys
-    exports.most_viewed = function(req, res) {
-           Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+    exports.getByViews = function(req, res) {
+            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -304,8 +304,8 @@ var mongoose        = require('mongoose'),
     }; // most_viewed
 
     // Show Most Recent Medleys
-    exports.most_recent = function(req, res) {
-           Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+    exports.getByDate = function(req, res) {
+            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -335,6 +335,46 @@ var mongoose        = require('mongoose'),
                 }; // if err
             });
     }; // most_viewed
+
+    exports.getByFeatured = function(req, res) {
+        var allMedleys                   = [];
+        var medleys_with_voted_attribute = [];
+        // Event Listener
+        eventEmitter.on('featuredMedleysProcessed', function(medleys) {
+            eventEmitter.removeAllListeners('featuredMedleysProcessed');
+            function randOrd(){
+                return (Math.round(Math.random())-0.5); 
+            };
+            allMedleys.sort( randOrd );
+            res.jsonp(medleys);
+        });
+        // Get By Votes
+        Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByVotes) {
+            allMedleys = allMedleys.concat(medleysByVotes);
+            // Get By Date
+            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByDate) {
+                allMedleys = allMedleys.concat(medleysByDate);
+                // Get By Views
+                Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByViews) {
+                    // allMedleys = allMedleys.concat(medleysByViews);
+                    console.log("LLLEENNNGGTTTHHHH:   ", allMedleys.length)
+                    if (req.user) {
+                        // Add Voted Attribute
+                        allMedleys.forEach(function(m){
+                            add_voted_attribute(req.user, m, function(medley){
+                                medleys_with_voted_attribute.push(medley);
+                                if (medleys_with_voted_attribute.length == allMedleys.length) { 
+                                    eventEmitter.emit('featuredMedleysProcessed', medleys_with_voted_attribute); 
+                                };
+                            });
+                        });
+                    } else {
+                        eventEmitter.emit('featuredMedleysProcessed', allMedleys);
+                    };
+                });
+            });
+        });
+    };
 
 
 

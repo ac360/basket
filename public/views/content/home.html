@@ -1,4 +1,4 @@
-<div class="row" ng-controller="HomeController">
+<div class="row" ng-init="MedleysByFeatured()">
 	<div id="home-container" class="col-md-12">
 		<div class="row" style="padding:15px 0px;">
 			<div class="col-md-3">
@@ -41,7 +41,7 @@
 			<div class="col-md-6">
 				<div class="home-col-left">
 
-					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in most_recent">
+					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
 						<div class="medley-hashtags">
 							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
 						</div>

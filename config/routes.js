@@ -27,9 +27,10 @@ module.exports = function(app, passport, auth) {
         app.get('/api/m/by_user/:username',                         medleys.getByUsername);
         app.get('/api/m/by_hashtag/:hashtag',                       medleys.getByHashtag);
         app.get('/api/m/by_folder/:folderId',                       medleys.getByFolder);
-        app.get('/api/m/by_votes',                                  medleys.most_voted);
-        app.get('/api/m/by_views',                                  medleys.most_viewed);
-        app.get('/api/m/by_date',                                   medleys.most_recent);
+        app.get('/api/m/by_votes',                                  medleys.getByVotes);
+        app.get('/api/m/by_views',                                  medleys.getByViews);
+        app.get('/api/m/by_date',                                   medleys.getByDate);
+        app.get('/api/m/by_featured',                               medleys.getByFeatured);
  
         //Finish with setting up the shortId param
         app.param('shortId', medleys.medley);

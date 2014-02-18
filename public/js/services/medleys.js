@@ -3,6 +3,11 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
     return $resource('/api/m', {
         medleyId: '@_id'
     }, {
+        getFeatured:    {
+            method:  'GET',
+            isArray: true,
+            url:     'api/m/by_featured'
+        },
         getMostVoted:    {
             method:  'GET',
             isArray: true,

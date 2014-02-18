@@ -30,7 +30,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.medleys                    = false;
     $scope.profile                    = null;
 
-    // FOLDERS
+    // FOLDERS -----------------------------------------
     $scope.addMedleyToFolder = function(event, data) {
         if (Global.getCurrentUser()) {
             var medley   = data;
@@ -66,7 +66,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         };
     };
 
-    // USERS
+    // USERS --------------------------------------------
     $scope.loadProfile = function(username) {
         if (username) { 
             username: username;
@@ -84,7 +84,51 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         });
     };
 
-    // MEDLEY FEEDS
+    // MEDLEY FEEDS ------------------------------------
+    $scope.MedleysByFeatured = function(cb){
+        $scope.medleys = [];
+        Medleys.getFeatured({}, function(medleys) {
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by featured loaded:", $scope.medleys);
+        }); // Medleys.getMostVoted
+    };
+    $scope.MedleysByMostRecent = function(cb){
+        $scope.medleys = [];
+        Medleys.getMostRecent({}, function(medleys) {
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by most recent loaded:", $scope.medleys);
+        }); // Medleys.getMostVoted
+    };
+    $scope.MedleysByVotes = function(cb){
+        $scope.medleys = [];
+        Medleys.getMostVoted({}, function(medleys) {
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by most voted loaded:", $scope.medleys);
+        }); // Medleys.getMostVoted
+    };
+    $scope.MedleysByViews = function(cb){
+        $scope.medleys = [];
+        Medleys.getMostViewed({}, function(medleys) {
+            // Set Medley Size
+            angular.forEach(medleys, function(medley) {
+                $scope.medleys.push( Global.sizeMedleySmall(medley) );
+                Global.updateMedleyViewCount(medley.short_id);
+            });
+            console.log("Medleys by most views loaded:", $scope.medleys);
+        }); // Medleys.getMostViewed
+    };
     $scope.MedleysByProfile = function(username) {
         if (username) {
             username = username;
@@ -120,7 +164,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
 
     
 
-    // SEARCH
+    // SEARCH ------------------------------------------
     $scope.setRetailer = function(retailer) {
         $scope.retailer = retailer;
     };
@@ -283,7 +327,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             js.src = "//connect.facebook.net/en_US/all.js";
             ref.parentNode.insertBefore(js, ref);
         }(document));
-        
+
         // LISTENERS ---------------
         // Listener - Authetication
         $scope.$on('SignedInViaFacebook', function(e, user){
