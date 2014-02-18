@@ -346,16 +346,23 @@ var mongoose        = require('mongoose'),
                 return (Math.round(Math.random())-0.5); 
             };
             allMedleys.sort( randOrd );
-            res.jsonp(medleys);
+            var finalMedleys = _.uniq(allMedleys, function (item) {
+                return item._id + item._id;
+            });
+            res.jsonp(finalMedleys);
         });
         // Get By Votes
         Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByVotes) {
+            console.log("VOTES: ", medleysByVotes.length);
             allMedleys = allMedleys.concat(medleysByVotes);
             // Get By Date
             Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByDate) {
+                console.log("DATE: ", medleysByDate.length);
                 allMedleys = allMedleys.concat(medleysByDate);
                 // Get By Views
                 Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByViews) {
+                    console.log("VIEWS: ", medleysByViews.length);
+                    allMedleys = allMedleys.concat(medleysByViews);
                     // allMedleys = allMedleys.concat(medleysByViews);
                     console.log("LLLEENNNGGTTTHHHH:   ", allMedleys.length)
                     if (req.user) {
