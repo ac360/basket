@@ -337,6 +337,14 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 $scope.folders = folders;
             });
         });
+        // Listeners - Medley Updated
+        $scope.$on('MedleyUpdated', function(e, medley){
+            angular.forEach($scope.medleys, function(m) {
+                if (m._id  == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+        });
         // Listener - Folders Loaded
         $scope.$on('FoldersLoaded', function(e, folders){
             // Set Folders
