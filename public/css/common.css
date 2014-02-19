@@ -76,6 +76,7 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .product-preview-description {margin-bottom:15px;color:#666;overflow:hidden;}
 .product-preview-price {font-size:24px;color:#444;font-weight:bold;margin-top:0px;}
 
+/* Side Container */
 #side-container						{display:block;position:fixed;padding:10px;background:rgba(0,0,0,0.04);-webkit-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);}
 .profile-side-container	            {width:350px;}
 .hashtag-side-container				{}
@@ -90,6 +91,9 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .folders-side-container li i        {color:rgba(0,0,0,0.2);margin-right:5px;}
 .folders-side-container li .fa-times       {margin-top:2px;}
 .folders-side-container li .fa-times:hover {color:#ff7e7b;}
+/* Right Side Container */
+#right-side-container				{display:block;position:fixed;min-height:300px;max-height:500px;width:200px;padding:10px;background:rgba(0,0,0,0.04);-webkit-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);}
+
 /* Folder Page */
 #folder-page .medleys-list   		{padding-top:40px;min-height:600px;}                
 /* Hashtag Page */
@@ -139,7 +143,7 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 	.folder-modal .modal-content-container {padding:0px 30px 50px 30px;}	
 	.folder-modal .modal-content h1 {font-weight:300!important;color:#666;}
 	.folder-modal .modal-content h5 {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
-	.folder-modal .modal-content #folder-input {max-width:300px;text-align:center;border:1px solid rgba(0,0,0,0.08);padding-top:5px;padding-bottom:5px;margin: 0 auto;height:45px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
+	.folder-modal .modal-content #folder-input {max-width:300px;text-align:center;border-top:1px solid rgba(0,0,0,0.08);border-right:1px solid rgba(0,0,0,0.08);border-left:1px solid rgba(0,0,0,0.08);padding-top:5px;padding-bottom:5px;margin: 0 auto;height:45px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.folder-modal .modal-content #folder-input span {color:#7bb4f5;}
 
 	/* Published Success */
