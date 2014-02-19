@@ -103,7 +103,7 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 /* Admin */
 .admin-box    {margin-top:10px;min-height:500px;background:rgba(0,0,0,0.02);-webkit-border-radius: 6px;border-radius: 6px;}
 .admin-box h1 {font-size:14px;}
-.users-list li {font-size:12px;line-height:12px;padding:5px 5px 10px 5px;border-bottom:1px solid rgba(0,0,0,0.05);}
+.users-list li {font-size:12px;line-height:14px;padding:5px 5px 10px 5px;border-bottom:1px solid rgba(0,0,0,0.05);}
 .users-list li:hover {cursor:pointer;background:rgba(0,0,0,0.05);}
 
 /* Footer */
