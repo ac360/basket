@@ -9,30 +9,21 @@
                              <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ profile.username}}/picture?type=large">
                         </p>
                         <h1 class="user-profile-name st-centered">{{ profile.name }}</h1>
-                        <h4>Your Saved Medleys</h4>
-                        <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
-                        <ul class="list-unstyled">
-
-                            <!-- UnAuthenticated -->
-                            <li ng-if="!user" ng-click="noUserFolder()" ui-on-Drop="addMedleyToFolder($event,$data)" drop-target>
-                                <div class="folder-link">
-                                    <i class="fa fa-folder"></i> Favorites
-                                </div>
-                            </li>
-                            <!-- Authenticated -->
-                            <li class="folder" data-id="{{ folder._id }}" ui-on-Drop="addMedleyToFolder($event,$data)" ng-repeat="folder in folders" drop-target>
-                                <div class="folder-link" ui-sref="folder({ folderId: folder._id })">
-                                    <i class="fa fa-folder"></i> {{ folder.title }}
-                                </div>
-                                <i class="fa fa-times pull-right" ng-click="deleteFolder(folder)"></i>
-                            </li>
-                            <li ng-click="newFolderModal()">
-                                <div class="folder-link">
-                                    <i class="fa fa-plus"></i> Create New Folder
-                                </div>
-                            </li>
-
-                        </ul>
+                        <div id="account-options" class="row" ng-show="{{ user._id === profile._id }}">
+                            <div class="col-md-12">
+                                <hr>
+                                <h4>Account Options</h4>
+                                <form class="form" role="form">
+                                    <div class="form-group">
+                                        <small>Amazon Affiliate Code:</small>
+                                        <input type="text" class="form-control" placeholder="Amazon Affiliate Code" ng-model="user.affiliate">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-primary btn-sm">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </div><!-- #side-container -->
 
 				</div> <!-- col-md-3 -->

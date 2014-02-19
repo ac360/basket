@@ -19,6 +19,7 @@ var UserSchema = new Schema({
     timezone:   String,
     fb_id:      String,
     admin:      { type: Boolean, default: false },
+    affiliate:  { type: String, default: 'medley01-20', trim: true },
     provider:   String
 });
 

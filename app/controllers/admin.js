@@ -14,7 +14,6 @@ var mongoose        = require('mongoose'),
 
 
 // Actions
-
     exports.getUsers = function(req, res) {
     	if (req.user && req.user.admin === true){
     		User.find().sort({created: -1}).limit(40).exec(function(err, users) {

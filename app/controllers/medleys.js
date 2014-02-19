@@ -33,7 +33,7 @@ var mongoose        = require('mongoose'),
 
     // Find Medley by id
     exports.medley = function(req, res, next, id) {
-        Medley.find({ short_id: req.params.shortId }).populate('user', 'name username').exec(function(err, medleys) {
+        Medley.find({ short_id: req.params.shortId }).populate('user', 'name username affiliate').exec(function(err, medleys) {
             if (err) return next(err);
             if (medleys[0] && medleys[0].short_id) {
                 req.medley = medleys[0];
@@ -154,7 +154,7 @@ var mongoose        = require('mongoose'),
         User.findOne({ username: req.params.username }).exec(function(err, user) {
             if (err) return next(new Error('Failed to load user' + req.params.username));
             // Find Medleys
-            Medley.find({ user: user._id }).sort({ votes: -1 }).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+            Medley.find({ user: user._id }).sort({ votes: -1 }).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (req.user) {
                     // Event Listener
                     eventEmitter.on('userMedleys', function(medleys)  {
@@ -185,7 +185,7 @@ var mongoose        = require('mongoose'),
     // Find Medleys by Hashtag
     exports.getByHashtag = function(req, res) {
         var hashtag = '#' + req.params.hashtag;
-        Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username').exec(function(err, medleys) {
+        Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -229,7 +229,7 @@ var mongoose        = require('mongoose'),
             } else {
                 // Get X Number of Medleys - TODO enable params here
                 var medleyIDs = folder.medleys.slice(0,20);
-                Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username').exec(function(err, medleys) {
+                Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username affiliate').exec(function(err, medleys) {
                      res.jsonp(medleys);
                 });
             };
@@ -239,7 +239,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Voted Medleys
     exports.getByVotes = function(req, res) {
-            Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+            Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -272,7 +272,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Viewed Medleys
     exports.getByViews = function(req, res) {
-            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -305,7 +305,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Recent Medleys
     exports.getByDate = function(req, res) {
-            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleys) {
+            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -352,13 +352,13 @@ var mongoose        = require('mongoose'),
             res.jsonp(finalMedleys);
         });
         // Get By Votes
-        Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByVotes) {
+        Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {
             allMedleys = allMedleys.concat(medleysByVotes);
             // Get By Date
-            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByDate) {
+            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByDate) {
                 allMedleys = allMedleys.concat(medleysByDate);
                 // Get By Views
-                Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByViews) {
+                Medley.find().sort({views: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
                     allMedleys = allMedleys.concat(medleysByViews);
                     if (req.user) {
                         // Add Voted Attribute
