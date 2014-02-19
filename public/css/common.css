@@ -100,6 +100,11 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .user-profile-image         		{max-width:100px;max-height:100px;background:#fff;padding:4px;border-top:1px solid rgba(0,0,0,0.15);border-right:1px solid rgba(0,0,0,0.15);border-left:1px solid rgba(0,0,0,0.15);-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);}
 /* User Page */
 #user-page .medleys-list 			{padding-top:35px;}
+/* Admin */
+.admin-box    {margin-top:10px;min-height:500px;background:rgba(0,0,0,0.02);-webkit-border-radius: 6px;border-radius: 6px;}
+.admin-box h1 {font-size:14px;}
+.users-list li {font-size:12px;line-height:12px;padding:5px 5px 10px 5px;border-bottom:1px solid rgba(0,0,0,0.05);}
+.users-list li:hover {cursor:pointer;background:rgba(0,0,0,0.05);}
 
 /* Footer */
 .footer p {color:#bbb;font-family:"proxima-nova",sans-serif!important;text-align:right;font-weight:100;margin-top:20px;}

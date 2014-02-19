@@ -61,6 +61,14 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
         })
+        .state('admin', {
+          url: "/admin",
+          views: {
+            "header":    { templateUrl: "views/header/admin.html"       },
+            "content":   { templateUrl: "views/content/admin.html"      },
+            "footer":    { templateUrl: "views/footer/admin.html"       },
+          }
+        })
 });
 
 //Setting HTML5 Location Mode

@@ -17,6 +17,10 @@ module.exports = function(app, passport, auth) {
         var retailers = require('../app/controllers/retailers');
         app.get('/retailers/search', retailers.search);
 
+    // Admin API - Internal
+        var admin = require('../app/controllers/admin');
+        app.get('/api/a/users',                         admin.getUsers);
+
     // Medley API - Internal
         var medleys = require('../app/controllers/medleys');
         app.post('/api/m',                                          auth.requiresLogin, medleys.create);

@@ -8,6 +8,7 @@ var mongoose = require('mongoose'),
 
 // User Schema
 var UserSchema = new Schema({
+    created:    { type: Date, default: Date.now },
     email:      { type: String, unique: true },
     username:   { type: String, unique: true },
     name:       String,

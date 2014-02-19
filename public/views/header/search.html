@@ -11,7 +11,7 @@
                             <img class="img-circle profile-image" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <a ui-sref="user({ username: user.username })">{{user.name}}</a>
                         </li>
                         <li ng-if="user.admin">
-                            <a href="/signout">Admin</a>
+                            <a ui-sref="admin">Admin</a>
                         </li>
                         <li ng-if="user">
                             <a href="/signout">Sign Out</a>
