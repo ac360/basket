@@ -395,8 +395,10 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
               if (toState.name === 'create') { 
                     if ($scope.basket && $scope.basket.template) {
                         $('body').removeClass().addClass($scope.basket.template); 
+                        $('.logo').html('<img ng-src="img/logo_'+$scope.basket.template+'.png" draggable="false">');
                     } else {
                         $('body').removeClass().addClass('a1'); 
+                        $('.logo').html('<img ng-src="img/logo_a1.png" draggable="false">');
                     };
               };
               if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };

@@ -73,6 +73,7 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
         console.log("From Global: ", $scope.basket)
       });
       $('body').removeClass().addClass(template);
+      $('.logo').html('<img src="img/logo_'+$scope.basket.template+'.png" draggable="false">');
     };
 
     $scope.showPublishModal = function(){
