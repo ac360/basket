@@ -29,17 +29,22 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.draggable                  = true;
     $scope.medleys                    = false;
     $scope.profile                    = null;
+    $scope.feed                       = 'Featured Medleys'
 
 
     // FEED --------------------------------------------
     $scope.setFeed = function(type) {
         if (type === 'featured') {
+            $scope.feed = "Featured Medleys"
             $scope.MedleysByFeatured(); 
         } else if (type === 'voted') {
+            $scope.feed = "Most Voted Medleys"
             $scope.MedleysByVotes();
         } else if (type === 'viewed') {
+            $scope.feed = "Most Viewed Medleys"
             $scope.MedleysByViews();
         } else if (type === 'recent') {
+            $scope.feed = "Most Recent Medleys"
             $scope.MedleysByMostRecent();
         };
     };
