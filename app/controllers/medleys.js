@@ -353,18 +353,13 @@ var mongoose        = require('mongoose'),
         });
         // Get By Votes
         Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByVotes) {
-            console.log("VOTES: ", medleysByVotes.length);
             allMedleys = allMedleys.concat(medleysByVotes);
             // Get By Date
             Medley.find().sort({created: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByDate) {
-                console.log("DATE: ", medleysByDate.length);
                 allMedleys = allMedleys.concat(medleysByDate);
                 // Get By Views
                 Medley.find().sort({views: -1}).limit(10).populate('user', 'name username').exec(function(err, medleysByViews) {
-                    console.log("VIEWS: ", medleysByViews.length);
                     allMedleys = allMedleys.concat(medleysByViews);
-                    // allMedleys = allMedleys.concat(medleysByViews);
-                    console.log("LLLEENNNGGTTTHHHH:   ", allMedleys.length)
                     if (req.user) {
                         // Add Voted Attribute
                         allMedleys.forEach(function(m){

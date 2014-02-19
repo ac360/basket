@@ -17,6 +17,7 @@ var UserSchema = new Schema({
     locale:     String,
     timezone:   String,
     fb_id:      String,
+    admin:      { type: Boolean, default: false },
     provider:   String
 });
 
