@@ -11,7 +11,19 @@
 		<div class="row">
 			<div class="col-md-3">
 				<div id="side-container" class="folders-side-container">
-					<button class="btn btn-primary"><span class="caret"></span> Featured Medleys</button>
+					<div class="dropdown">
+                            <button type="button" class="btn btn-primary dropdown-toggle">
+                            	<span class="caret"></span> Featured Medleys
+                            </button>
+                            <ul class="dropdown-menu feed-menu">
+                              <li ng-click="setFeed('featured')"><i class="fa fa-angle-right"></i>Featured Medleys</li>
+                              <li ng-click="setFeed('voted')"><i class="fa fa-angle-right"></i>Most Voted Medleys</li>
+                              <li ng-click="setFeed('viewed')"><i class="fa fa-angle-right"></i>Most Viewed Medleys</li>
+                              <li ng-click="setFeed('recent')"><i class="fa fa-angle-right"></i>Most Recent Medleys</li>
+                            </ul>
+                    </div><!-- .dropdown -->
+
+
 					<h4>Your Saved Medleys</h4>
 					<small style="font-size:10px;">Drag a Medley over a folder to save it</small>
 					<ul class="list-unstyled">

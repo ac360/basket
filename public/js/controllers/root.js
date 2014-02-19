@@ -30,6 +30,19 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.medleys                    = false;
     $scope.profile                    = null;
 
+
+    // FEED --------------------------------------------
+    $scope.setFeed = function(type) {
+        if (type === 'featured') {
+            $scope.MedleysByFeatured(); 
+        } else if (type === 'voted') {
+            $scope.MedleysByVotes();
+        } else if (type === 'viewed') {
+            $scope.MedleysByViews();
+        } else if (type === 'recent') {
+            $scope.MedleysByMostRecent();
+        };
+    };
     // FOLDERS -----------------------------------------
     $scope.addMedleyToFolder = function(event, data) {
         if (Global.getCurrentUser()) {
