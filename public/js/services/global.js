@@ -83,6 +83,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		shareFacebook: function(medleyId) {
     			Medleys.show({ shortId: medleyId }, function(medley) {
     				medley = medley[0];
+    				console.log("Facebook Share Medley Activated:  ", medley);
     			 	if(medley) { 
     			 		FB.ui({
 			              method: 'feed',
