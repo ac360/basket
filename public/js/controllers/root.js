@@ -31,7 +31,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.profile                    = null;
     $scope.feed                       = 'Featured Medleys'
 
-
     // FEED --------------------------------------------
     $scope.setFeed = function(type) {
         if (type === 'featured') {
@@ -353,6 +352,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             console.log("User Signed In: ", $scope.user);
             Global.loadFolders(function(folders) {
                 $scope.folders = folders;
+
             });
         });
         // Listeners - Medley Updated

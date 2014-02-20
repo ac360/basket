@@ -10,6 +10,10 @@ angular.module('mean.users').factory("Users", ['$resource', function($resource) 
         	method: 'POST',
         	url:    'api/users/me'
         },
+        updateCurrentUser: {
+            method: 'PUT',
+            url:    'api/users/me'
+        },
         getUser: {
             method: 'GET',
             params: { username: '@_username' },

@@ -6,25 +6,9 @@
 
                     <div id="side-container" class="folders-side-container" ng-init="loadProfile()">
                         <p class="st-centered">
-                             <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ profile.username}}/picture?type=large">
+                            <img class="user-profile-image" draggable="false" ng-src="http://graph.facebook.com/{{ profile.username}}/picture?type=large">
                         </p>
                         <h1 class="user-profile-name st-centered">{{ profile.name }}</h1>
-                        <div id="account-options" class="row" ng-if="{{ user._id == profile._id }}">
-                            <div class="col-md-12">
-                                <hr>
-                                <h4>Account Options:</h4>
-                                <form class="form" role="form">
-                                    <div class="form-group">
-                                        <small>Amazon Affiliate</small>
-                                        <input type="text" class="form-control" placeholder="Amazon Affiliate Code" ng-model="user.affiliate">
-                                    </div>
-                                    <div class="form-group">
-                                        <input type="submit" class="btn btn-primary btn-sm">
-                                    </div>
-                                </form>
-                                <hr>
-                            </div>
-                        </div>
                         <h4>Your Saved Medleys</h4>
                         <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
                         <ul class="list-unstyled">
@@ -74,11 +58,6 @@
 
 				</div> <!-- col-md-6 -->
 
-                <div class="col-md-offset-1 col-md-2" style="padding-top:40px;">
-                    <div id="right-side-container" ng-show="{{ user.username === profile.username }}">
-                       
-                    </div>
-                </div>
 			</div><!-- row -->
 
 		</div><!-- col-md-12 -->

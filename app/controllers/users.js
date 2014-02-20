@@ -33,6 +33,18 @@ exports.me = function(req, res) {
     res.jsonp(req.user || null);
 };
 
+// Update Current User
+exports.updateCurrent = function(req, res) {
+    console.log("Recevieved: ", req.body);
+    req.user.username  = req.body.username;
+    req.user.affiliate = req.body.affiliate;
+    req.user.email     = req.body.email;
+    req.user.save(function(err, user){
+        if (err) {return console.log("error")};
+        res.jsonp(user);
+    });
+};
+
 // Logout
 exports.signout = function(req, res) {
     req.logout();

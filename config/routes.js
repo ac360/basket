@@ -7,6 +7,7 @@ module.exports = function(app, passport, auth) {
 
     // Users API - Internal
         app.get('/api/users/me',        users.me);
+        app.put('/api/users/me',        users.updateCurrent);
         app.post('/api/users/me',       users.session);
         app.get('/api/users/:username', users.show);
 

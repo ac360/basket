@@ -15,6 +15,7 @@ var mongoose        = require('mongoose'),
     // Add Voted Attribute
     add_voted_attribute = function(user, medley, callback) {
         if (user) {
+                // Add Voted Attribute
                 Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
                     if (vote.length) {
                         medley       = medley.toObject();
@@ -27,6 +28,39 @@ var mongoose        = require('mongoose'),
                     };
                 });
         } else { if (callback) { callback(medley) } };
+    };
+
+    process_and_render_medleys = function(user, res, medleys) {
+        // Add Affiliate Code
+        medleys.forEach(function(m, index){
+            if (m.user.affilate !== 'medley01-20') {
+                m.items.forEach(function(i){
+                    i.link = i.link.replace("medley01-20", m.user.affiliate);    
+                });
+            };
+        });
+        // Add Voted Attribute
+        if (user) {
+            medleys.forEach(function(m, index){
+                // Find Vote And Process
+                Vote.findOne({ medley: m._id, user: user._id }).exec(function(err, vote) {
+                    if (vote) {
+                        m            = m.toObject();
+                        m.voted      = true;
+                    } else {
+                        m            = m.toObject();
+                        m.voted      = false;
+                    };
+                    if (index + 1 === medleys.length) {
+                        // Render
+                        res.jsonp(medleys)  
+                    };
+                });
+            });
+        } else {
+            // Render
+            res.jsonp(medleys)
+        };
     };
 
 // Actions
@@ -56,11 +90,13 @@ var mongoose        = require('mongoose'),
             } else {
                 if (req.user) {
                     console.log("Medley Successfully Saved: ", medley);
-                    add_voted_attribute(req, medley, function(medley){
+                    add_voted_attribute(req.user, medley, function(medley){
                         res.jsonp(medley);
                     });
                 } else {
-                    res.jsonp(medley);
+                    var medleys = [];
+                    medleys.push(medley);
+                    process_and_render_medleys(req.user, res, medleys);
                 };
             }
         });
@@ -71,7 +107,7 @@ var mongoose        = require('mongoose'),
         req.medley.views = req.medley.views + 1;
         req.medley.save(function(err, medley) {
             if (req.user) {
-                add_voted_attribute(req, req.medley, function(medley){
+                add_voted_attribute(req.user, req.medley, function(medley){
                     res.jsonp(medley);
                 });
             } else {
@@ -97,7 +133,7 @@ var mongoose        = require('mongoose'),
                         } else {
                             req.medley.votes = req.medley.votes + 1;
                             req.medley.save(function(err, medley) {
-                                add_voted_attribute(req, req.medley, function(medley) {
+                                add_voted_attribute(req.user, req.medley, function(medley) {
                                     res.jsonp(medley); 
                                 });
                             })
@@ -113,7 +149,7 @@ var mongoose        = require('mongoose'),
                         } else {
                             req.medley.votes = req.medley.votes - 1;
                             req.medley.save(function(err, medley) {
-                                add_voted_attribute(req, req.medley, function(medley) {
+                                add_voted_attribute(req.user, req.medley, function(medley) {
                                     res.jsonp(medley);
                                 });
                             })
@@ -140,13 +176,9 @@ var mongoose        = require('mongoose'),
 
     // Show A Medley
     exports.show = function(req, res) {
-        if (req.user) {
-            add_voted_attribute(req, req.medley, function(medley){
-                res.jsonp(medley);
-            });
-        } else {
-            res.jsonp(req.medley);
-        };
+        var medleys = [];
+        medleys.push(req.medley);
+        process_and_render_medleys(req.user, res, medleys);
     };
 
     // Find Medley by Username
@@ -154,29 +186,11 @@ var mongoose        = require('mongoose'),
         User.findOne({ username: req.params.username }).exec(function(err, user) {
             if (err) return next(new Error('Failed to load user' + req.params.username));
             // Find Medleys
-            Medley.find({ user: user._id }).sort({ votes: -1 }).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
-                if (req.user) {
-                    // Event Listener
-                    eventEmitter.on('userMedleys', function(medleys)  {
-                        eventEmitter.removeAllListeners('userMedleys');
-                        medleys.sort(function(obj1, obj2) {
-                            return obj2.votes - obj1.votes;
-                        });
-                        res.jsonp(medleys);
-                    });
-                    // Add Voted Attribute
-                    var medleys_with_voted_attribute = [];
-                    medleys.forEach(function(m){
-                        add_voted_attribute(req.user, m, function(medley) {
-                            medleys_with_voted_attribute.push(medley);
-                            if (medleys_with_voted_attribute.length == medleys.length) { 
-                                eventEmitter.emit('userMedleys', medleys_with_voted_attribute); 
-                            };
-                        });
-                    })
-                } else {
-                    res.jsonp(medleys);
-                };
+            Medley.find({ user: user._id }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
+                medleys.sort(function(obj1, obj2) {
+                    return obj2.votes - obj1.votes;
+                });
+                process_and_render_medleys(req.user, res, medleys);
             });
 
         });
@@ -190,28 +204,10 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    if (req.user) {
-                        var medleys_with_voted_attribute = [];
-                        // Event Listener
-                        eventEmitter.on('hashtagMedleys', function(medleys)  {
-                            eventEmitter.removeAllListeners('hashtagMedleys');
-                            medleys.sort(function(obj1, obj2) {
-                                return obj2.votes - obj1.votes;
-                            });
-                            res.jsonp(medleys);
-                        });
-                        // Add Voted Attribute
-                        medleys.forEach(function(m){
-                            add_voted_attribute(req.user, m, function(medley) {
-                                medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length == medleys.length) { 
-                                    eventEmitter.emit('hashtagMedleys', medleys_with_voted_attribute); 
-                                };
-                            });
-                        })
-                    } else {
-                        res.jsonp(medleys);
-                    }; // if user logged in
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.votes - obj1.votes;
+                    });
+                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
         }); // Medley.find
     }; // getByHashtag
@@ -230,7 +226,7 @@ var mongoose        = require('mongoose'),
                 // Get X Number of Medleys - TODO enable params here
                 var medleyIDs = folder.medleys.slice(0,20);
                 Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username affiliate').exec(function(err, medleys) {
-                     res.jsonp(medleys);
+                    process_and_render_medleys(req.user, res, medleys);
                 });
             };
 
@@ -244,136 +240,62 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    if (req.user) {
-                        // Event Listener
-                        eventEmitter.on('mostVoted', function(medleys)  {
-                            eventEmitter.removeAllListeners('mostVoted');
-                            medleys.sort(function(obj1, obj2) {
-                                return obj2.votes - obj1.votes;
-                            });
-                            res.jsonp(medleys);
-                        }); 
-                        // Add Voted Attribute
-                        var medleys_with_voted_attribute = [];
-                        medleys.forEach(function(m){
-                            add_voted_attribute(req.user, m, function(medley){
-                                medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length == medleys.length) { 
-                                    eventEmitter.emit('mostVoted', medleys_with_voted_attribute); 
-                                };
-                            });
-                        });
-                    } else {
-                        res.jsonp(medleys);
-                    }; // if user logged in
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.votes - obj1.votes;
+                    });
+                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_voted
 
     // Show Most Viewed Medleys
     exports.getByViews = function(req, res) {
-            Medley.find().sort({views: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({views: -1}).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
                 } else {
-                    if (req.user) {
-                        // Event Listener
-                        eventEmitter.on('mostViewed', function(medleys) {
-                            eventEmitter.removeAllListeners('mostViewed');
-                            medleys.sort(function(obj1, obj2) {
-                                return obj2.views - obj1.views;
-                            });
-                            res.jsonp(medleys);
-                        });
-                        // Add Voted Attribute
-                        var medleys_with_voted_attribute = [];
-                        medleys.forEach(function(m){
-                            add_voted_attribute(req.user, m, function(medley){
-                                medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length == medleys.length) { 
-                                    eventEmitter.emit('mostViewed', medleys_with_voted_attribute); 
-                                };
-                            });
-                        });
-                    } else {
-                        res.jsonp(medleys);
-                    }; // if user logged in
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.views - obj1.views;
+                    });
+                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_viewed
 
     // Show Most Recent Medleys
     exports.getByDate = function(req, res) {
-            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({created: -1}).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
                 } else {
-                    if (req.user) {
-                        // Event Listener
-                        eventEmitter.on('mostRecent', function(medleys) {
-                            eventEmitter.removeAllListeners('mostRecent');
-                            medleys.sort(function(obj1, obj2) {
-                                return obj2.created - obj1.created;
-                            });
-                            res.jsonp(medleys);
-                        });
-                        // Add Voted Attribute
-                        var medleys_with_voted_attribute = [];
-                        medleys.forEach(function(m){
-                            add_voted_attribute(req.user, m, function(medley){
-                                medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length == medleys.length) { 
-                                    eventEmitter.emit('mostRecent', medleys_with_voted_attribute); 
-                                };
-                            });
-                        });
-                    } else {
-                        res.jsonp(medleys);
-                    }; // if user logged in
+                    medleys.sort(function(obj1, obj2) {
+                        return obj2.created - obj1.created;
+                    });
+                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_viewed
 
     exports.getByFeatured = function(req, res) {
         var allMedleys                   = [];
-        var medleys_with_voted_attribute = [];
-        // Event Listener
-        eventEmitter.on('featuredMedleysProcessed', function(medleys) {
-            eventEmitter.removeAllListeners('featuredMedleysProcessed');
-            function randOrd(){
-                return (Math.round(Math.random())-0.5); 
-            };
-            allMedleys.sort( randOrd );
-            var finalMedleys = _.uniq(allMedleys, function (item) {
-                return item._id + item._id;
-            });
-            res.jsonp(finalMedleys);
-        });
         // Get By Votes
-        Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {
-            allMedleys = allMedleys.concat(medleysByVotes);
-            // Get By Date
-            Medley.find().sort({created: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByDate) {
-                allMedleys = allMedleys.concat(medleysByDate);
-                // Get By Views
-                Medley.find().sort({views: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
-                    allMedleys = allMedleys.concat(medleysByViews);
-                    if (req.user) {
-                        // Add Voted Attribute
-                        allMedleys.forEach(function(m){
-                            add_voted_attribute(req.user, m, function(medley){
-                                medleys_with_voted_attribute.push(medley);
-                                if (medleys_with_voted_attribute.length == allMedleys.length) { 
-                                    eventEmitter.emit('featuredMedleysProcessed', medleys_with_voted_attribute); 
-                                };
-                            });
-                        });
-                    } else {
-                        eventEmitter.emit('featuredMedleysProcessed', allMedleys);
-                    };
+        Medley.find().sort({votes: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
+            // Get By Views
+            Medley.find().sort({views: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
+                allMedleys = allMedleys.concat(medleysByVotes);
+                allMedleys = allMedleys.concat(medleysByViews);
+                // Randomize Order
+                function randOrd(){
+                    return (Math.round(Math.random())-0.5); 
+                };
+                allMedleys.sort( randOrd );
+                // Strip Unique Medleys
+                var finalMedleys = _.uniq(allMedleys, function (item) {
+                    return item._id + item._id;
                 });
+                process_and_render_medleys(req.user, res, finalMedleys);
             });
         });
     };

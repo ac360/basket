@@ -33,6 +33,23 @@ app.directive("medleyItem", function() {
     };
 });
 
+// Directive - Load Account Popup
+app.directive("accountPopup", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
+            $element.click(function() {
+                if ( Global.getCurrentUser() ) {
+                    Modals.account();
+                } else {
+                    Modals.signIn();
+                };
+            })
+        }
+    };
+});
+
 // Directive - Share Facebook Link
 app.directive("shareFacebookLink", function() {  
     return {

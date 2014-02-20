@@ -1,0 +1,17 @@
+<p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
+<div class="modal-content-container">
+	<h1 class="st-centered">Account Options</h1>
+	<p class="notice-success st-centered" style="color:#57bf56!important;" ng-show="success">User Successfully Updated!</p>
+	<!-- Affiliate Code Form -->
+	<form class="form" role="form" ng-submit="updateAffiliateCode()">
+        <div class="form-group">
+            <label>Amazon Affiliate Code</label>
+            <div class="input-group">
+		        <input type="text" class="form-control affiliate-input" ng-model="user.affiliate">
+		        <span class="input-group-btn">
+		        	<input type="submit" class="btn btn-primary" value="Update">
+		        </span>
+		    </div><!-- /input-group -->
+        </div>
+    </form>
+</div>

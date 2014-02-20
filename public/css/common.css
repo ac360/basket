@@ -10,6 +10,7 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .disabled {opacity:0.3!important;}
 .btn-danger				{background:#f57b7b!important;border:1px solid #f57b7b!important;letter-spacing:0px;-webkit-box-shadow: 0 2px 0 0 #cd7373;box-shadow: 0 2px 0 0 #cd7373;color:#fff!important;}
 .btn-danger:hover 		{background:#fa9999!important;border:1px solid #fa9999!important;cursor:pointer;color:#fff;}
+label {font-weight:400;}
 
 .st-centered {text-align:center!important;}
 .st-no-margin {margin:0px;}
@@ -20,7 +21,8 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .st-blur {-webkit-filter: blur(1px); -moz-filter: blur(1px); -o-filter: blur(1px); -ms-filter: blur(1px); filter: blur(1px);}
 .st-center-element {margin:0px auto!important;}
 .m-link {color:#7bb4f5;}
-.m-link:hover {cursor:pointer;color:#93c4fc;}
+.m-link:hover   {cursor:pointer;color:#93c4fc;}
+.notice-success {color:#a6c776!important;}
 
 /* Header */
 .logo img {max-width:160px;}
@@ -91,8 +93,8 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 .folders-side-container li i        {color:rgba(0,0,0,0.2);margin-right:5px;}
 .folders-side-container li .fa-times       {margin-top:2px;}
 .folders-side-container li .fa-times:hover {color:#ff7e7b;}
+
 /* Right Side Container */
-#right-side-container				{display:block;position:fixed;min-height:300px;max-height:500px;width:200px;padding:10px;background:rgba(0,0,0,0.04);-webkit-border-radius: 6px;border-radius: 6px;-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);}
 
 /* Folder Page */
 #folder-page .medleys-list   		{padding-top:40px;min-height:600px;}                
@@ -145,6 +147,17 @@ hr {border-top:1px solid rgba(0,0,0,0.1);}
 	.folder-modal .modal-content h5 {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
 	.folder-modal .modal-content #folder-input {max-width:300px;text-align:center;border-top:1px solid rgba(0,0,0,0.08);border-right:1px solid rgba(0,0,0,0.08);border-left:1px solid rgba(0,0,0,0.08);padding-top:5px;padding-bottom:5px;margin: 0 auto;height:45px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.folder-modal .modal-content #folder-input span {color:#7bb4f5;}
+
+	/* Account */
+	.account-modal .modal-content       {background:#f6f6f6;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}
+	.account-modal .close-container     {height:30px;padding-right:8px;padding-top:3px;}
+	.account-modal .modal-content-container {padding:0px 30px 50px 30px;}	
+	.account-modal .modal-content h1    {font-weight:300!important;color:#666;}
+	.account-modal .modal-content h5    {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
+	.account-modal .modal-content .affiliate-input {max-width:300px;text-align:center;overflow:auto;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
+	.account-modal .modal-content #folder-input span {color:#7bb4f5;}
+	.account-modal .input-group-btn     {padding:0px;}
+	.account-modal form 			    {max-width:250px;margin:0px auto;text-align:center;}
 
 	/* Published Success */
 	.published-share-modal .modal-content {background:#f6f6f6;height:auto;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}

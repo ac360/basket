@@ -30,7 +30,6 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
     $scope.initializeShow = function() {
         var self = this;
         Global.showMedley( $stateParams.basketId, function(medley) {
-            console.log(medley)
             if(!medley.items) {
                 $timeout(function(){ 
                     $scope.load_error = true;

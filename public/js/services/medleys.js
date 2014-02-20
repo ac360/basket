@@ -41,7 +41,7 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
         },
         show:    {
             method:  'GET',
-            isArray: false,
+            isArray: true,
             url:     'api/m/short_id/:shortId'
         },
         updateViewCount: {

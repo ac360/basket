@@ -22,6 +22,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		},
     		showMedley: function(medleyId, callback) {
     			 Medleys.show({ shortId: medleyId }, function(medley) {
+    			 	medley = medley[0];
     			 	if(callback){ callback(medley) };
     			 });
     		},
@@ -81,6 +82,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		// ---------- SHARE FUNCTIONS ----------
     		shareFacebook: function(medleyId) {
     			Medleys.show({ shortId: medleyId }, function(medley) {
+    				medley = medley[0];
     			 	if(medley) { 
     			 		FB.ui({
 			              method: 'feed',
