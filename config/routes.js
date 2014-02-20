@@ -21,6 +21,7 @@ module.exports = function(app, passport, auth) {
     // Admin API - Internal
         var admin = require('../app/controllers/admin');
         app.get('/api/a/users',                         admin.getUsers);
+        app.get('/api/a/delete_tests',                  admin.deleteTests);
 
     // Medley API - Internal
         var medleys = require('../app/controllers/medleys');

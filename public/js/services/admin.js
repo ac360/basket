@@ -5,6 +5,11 @@ angular.module('mean.medleys').factory("Admin", ['$resource', function($resource
             method:  'GET',
             isArray: true,
             url:     'api/a/users'
+        },
+        deleteTestMedleys: {
+            method:  'GET',
+            isArray: false,
+            url:     'api/a/delete_tests'
         }
     });
 }]);

@@ -10,6 +10,12 @@ angular.module('mean.system').controller('AdminController', ['$scope', 'Global',
     	});
     };
 
+    $scope.deleteTestMedleys = function() {
+        Admin.deleteTestMedleys(function(response){
+            console.log("Tests Deleted!", response);
+        });
+    };
+
     // Initialize
     if ($scope.user.admin) {
         $scope.InitializeAdmin();

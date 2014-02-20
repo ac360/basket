@@ -22,5 +22,18 @@ var mongoose        = require('mongoose'),
     	};
     };
 
+    exports.deleteTests = function(req, res) {
+        if (req.user && req.user.admin === true){
+            Medley.find({ hashtags: '#devtest'}).sort({created: -1}).limit(40).exec(function(err, medleys) {
+                medleys.forEach(function(m){
+                    m.remove(function(){
+                        console.log("A Test Medley was successfully Deleted!");
+                    });
+                })
+                res.jsonp("done!");
+            });
+        };
+    };
+
 
 
