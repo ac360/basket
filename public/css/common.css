@@ -151,7 +151,7 @@ label {font-weight:400;}
 	.account-modal .modal-content       {background:#f6f6f6;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}
 	.account-modal .close-container     {height:30px;padding-right:8px;padding-top:3px;}
 	.account-modal .modal-content-container {padding:0px 30px 50px 30px;}	
-	.account-modal .modal-content h3    {font-weight:300!important;color:#666;margin-bottom:25px;}
+	.account-modal .modal-content h3    {font-weight:300!important;color:#666;margin-bottom:15px;}
 	.account-modal .modal-content h5    {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
 	.account-modal .modal-content .affiliate-input {max-width:300px;text-align:center;overflow:auto;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.account-modal .modal-content #folder-input span {color:#7bb4f5;}
