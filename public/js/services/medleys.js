@@ -18,7 +18,6 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
             isArray: true,
             url:     'api/m/by_views'
         },
-        // Not hooked up yet
         getMostRecent:    {
             method:  'GET',
             isArray: true,
@@ -56,6 +55,11 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
         },
         update: {
             method:  'PUT',
+            isArray: false,
+            url:     'api/m/short_id/:shortId'
+        },
+        delete: {
+            method:  'DELETE',
             isArray: false,
             url:     'api/m/short_id/:shortId'
         }

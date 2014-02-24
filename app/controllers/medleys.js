@@ -162,15 +162,10 @@ var mongoose        = require('mongoose'),
 
     // Delete A Medley
     exports.destroy = function(req, res) {
-        var medley = req.medley;
+        var medley  = req.medley;
         medley.remove(function(err) {
-            if (err) {
-                res.render('error', {
-                    status: 500
-                });
-            } else {
-                res.jsonp(medley);
-            }
+            if (err) { return next(new Error('The Medley could not be deleted')) };
+            res.jsonp(medley);
         });
     };
 

@@ -33,6 +33,19 @@ app.directive("medleyItem", function() {
     };
 });
 
+// Directive - Delete Medley
+app.directive("deleteMedley", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
+            $element.click(function() {
+                Global.deleteMedley($attrs.deleteMedley);
+            })
+        }
+    };
+});
+
 // Directive - Load Account Popup
 app.directive("accountPopup", function() {  
     return {
