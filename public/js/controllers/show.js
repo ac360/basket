@@ -44,8 +44,10 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 // Check Share Option
                 if ($scope.share == true) {
                     $timeout(function() {
-                        Modals.publishedShare($scope.show_medley.short_id);
-                        $scope.$parent.$parent.share = false;
+                        if ($state.current.name === 'show') {
+                            Modals.publishedShare($scope.show_medley.short_id);
+                            $scope.$parent.$parent.share = false;
+                        };
                     }, 4000);
                 };
                 // Update View Count

@@ -43,7 +43,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		},
     		deleteMedley: function(shortId) {
     			Medleys.delete({ shortId: shortId }, function(medley) {
-    				console.log("Medley Deleted!", medley);
+    				console.log("Medley Deleted From Global:", medley);
+    				$rootScope.$broadcast('MedleyDeleted', medley);
     			});
     		},
 

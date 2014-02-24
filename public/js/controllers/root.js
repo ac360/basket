@@ -30,23 +30,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.medleys                    = false;
     $scope.profile                    = null;
     $scope.feed                       = 'Featured Medleys'
-
-    // FEED --------------------------------------------
-    $scope.setFeed = function(type) {
-        if (type === 'featured') {
-            $scope.feed = "Featured Medleys"
-            $scope.MedleysByFeatured(); 
-        } else if (type === 'voted') {
-            $scope.feed = "Most Voted Medleys"
-            $scope.MedleysByVotes();
-        } else if (type === 'viewed') {
-            $scope.feed = "Most Viewed Medleys"
-            $scope.MedleysByViews();
-        } else if (type === 'recent') {
-            $scope.feed = "Most Recent Medleys"
-            $scope.MedleysByMostRecent();
-        };
-    };
+    
     // FOLDERS -----------------------------------------
     $scope.addMedleyToFolder = function(event, data) {
         if (Global.getCurrentUser()) {
@@ -102,6 +86,21 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     };
 
     // MEDLEY FEEDS ------------------------------------
+    $scope.setFeed = function(type) {
+        if (type === 'featured') {
+            $scope.feed = "Featured Medleys"
+            $scope.MedleysByFeatured(); 
+        } else if (type === 'voted') {
+            $scope.feed = "Most Voted Medleys"
+            $scope.MedleysByVotes();
+        } else if (type === 'viewed') {
+            $scope.feed = "Most Viewed Medleys"
+            $scope.MedleysByViews();
+        } else if (type === 'recent') {
+            $scope.feed = "Most Recent Medleys"
+            $scope.MedleysByMostRecent();
+        };
+    };
     $scope.MedleysByFeatured = function(cb){
         $scope.medleys = [];
         Medleys.getFeatured({}, function(medleys) {
@@ -355,14 +354,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
 
             });
         });
-        // Listeners - Medley Updated
-        $scope.$on('MedleyUpdated', function(e, medley){
-            angular.forEach($scope.medleys, function(m) {
-                if (m._id  == medley._id) { 
-                    m.votes = medley.votes
-                };
-            });
-        });
         // Listener - Folders Loaded
         $scope.$on('FoldersLoaded', function(e, folders){
             // Set Folders
@@ -388,6 +379,22 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
               Global.resetMedley();
               $scope.basket = Global.getMedley();
               $scope.share = true;
+        });
+        // Listeners - Medley Updated
+        $scope.$on('MedleyUpdated', function(e, medley){
+            angular.forEach($scope.medleys, function(m) {
+                if (m._id  == medley._id) { 
+                    m.votes = medley.votes
+                };
+            });
+        });
+        // Listener - Medley Deleted
+        $scope.$on('MedleyDeleted', function(e, medley) {
+             angular.forEach($scope.medleys, function(m, index) {
+                if (m._id  == medley._id) { 
+                    $scope.medleys.splice(index, 1);
+                };
+            }); 
         });
         // Listener - Remove Body Classes
         $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){

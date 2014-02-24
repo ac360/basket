@@ -40,7 +40,10 @@ app.directive("deleteMedley", function() {
         replace: true,
         controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
             $element.click(function() {
-                Global.deleteMedley($attrs.deleteMedley);
+                var c = confirm("Are you sure you want to delete this medley?  It can never be recovered...");
+                if (c) {
+                    Global.deleteMedley($attrs.deleteMedley);
+                };
             })
         }
     };
