@@ -48,17 +48,17 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
               windowClass: 'account-modal',
               templateUrl: 'views/modals/account_modal.html',
               controller:  function ($scope, $modalInstance, $timeout, Global, Users) {
-                  $scope.user    = Global.getCurrentUser();
-                  $scope.success = false;
+                  $scope.user         = Global.getCurrentUser();
+                  $scope.success      = false;
+                  $scope.descriptionA = true;
                   $scope.updateAffiliateCode = function(code) {
-                    console.log($scope.user);
-                    Users.updateCurrentUser($scope.user, function(user) {
-                      console.log("User Updated: ", user);
-                      $scope.success = true;
-                      $timeout(function(){
-                        $scope.success = false;
-                      }, 3000)
-                    });
+                      Users.updateCurrentUser($scope.user, function(user) {
+                        console.log("User Updated: ", user);
+                        $scope.success = true;
+                        $timeout(function(){
+                          $scope.success = false;
+                        }, 3000)
+                      });
                   };
                   // $('.container').addClass('st-blur');
                   $scope.close = function() {

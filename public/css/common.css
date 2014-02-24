@@ -104,7 +104,6 @@ label {font-weight:400;}
 #profile-page .medleys-list 		{padding-top:35px;}
 .user-profile-name       			{font-size:25px;color:#555;margin-top:5px;}
 .user-profile-image         		{max-width:100px;max-height:100px;background:#fff;padding:4px;border-top:1px solid rgba(0,0,0,0.15);border-right:1px solid rgba(0,0,0,0.15);border-left:1px solid rgba(0,0,0,0.15);-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);box-shadow: 0 2px 0 0 rgba(0,0,0,0.25);}
-#account-options form               {padding-top:10px;}
 /* User Page */
 #user-page .medleys-list 			{padding-top:35px;}
 /* Admin */
@@ -152,12 +151,15 @@ label {font-weight:400;}
 	.account-modal .modal-content       {background:#f6f6f6;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}
 	.account-modal .close-container     {height:30px;padding-right:8px;padding-top:3px;}
 	.account-modal .modal-content-container {padding:0px 30px 50px 30px;}	
-	.account-modal .modal-content h1    {font-weight:300!important;color:#666;}
+	.account-modal .modal-content h3    {font-weight:300!important;color:#666;margin-bottom:25px;}
 	.account-modal .modal-content h5    {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
 	.account-modal .modal-content .affiliate-input {max-width:300px;text-align:center;overflow:auto;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.account-modal .modal-content #folder-input span {color:#7bb4f5;}
 	.account-modal .input-group-btn     {padding:0px;}
 	.account-modal form 			    {max-width:250px;margin:0px auto;text-align:center;}
+	.account-modal .form-group          {margin:0px;}
+	.account-modal label                {font-size:16px;padding-bottom:5px;}
+	.account-modal .form-description    {font-size:12px;text-align: center;}
 
 	/* Published Success */
 	.published-share-modal .modal-content {background:#f6f6f6;height:auto;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}

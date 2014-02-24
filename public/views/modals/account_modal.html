@@ -1,6 +1,6 @@
 <p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
 <div class="modal-content-container">
-	<h1 class="st-centered">Account Options</h1>
+	<h3 class="st-centered">Account Options</h3>
 	<p class="notice-success st-centered" style="color:#57bf56!important;" ng-show="success">User Successfully Updated!</p>
 	<!-- Affiliate Code Form -->
 	<form class="form" role="form" ng-submit="updateAffiliateCode()">
@@ -12,6 +12,15 @@
 		        	<input type="submit" class="btn btn-primary" value="Update">
 		        </span>
 		    </div><!-- /input-group -->
-        </div>
+		</div>
     </form>
+    <p class="st-centered st-no-padding" style="margin-top:8px;"><a ng-click="descriptionA = !descriptionA" ng-show="descriptionA">What's this?</a></p>
+	<div collapse="descriptionA">
+		<div class="well well-sm" style="background:rgba(0,0,0,0.03)">
+			<p class="form-description st-no-padding">
+				At Medley we insert your Amazon Affiliate ID into the URL of every product in your medley. Not an Amazon Affiliate but interested in monetizing your medleys? <a href="https://affiliate-program.amazon.com/gp/associates/join/landing/main.html/190-6537444-2363845" target="_blank">Click here!</a>
+			</p>
+			<p class="st-centered st-no-padding"><button class="btn btn-primary btn-xs" ng-click="descriptionA = !descriptionA">Close</button></p>
+		</div> 
+	</div>
 </div>
