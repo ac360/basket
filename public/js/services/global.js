@@ -93,7 +93,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     			 	if(medley) { 
     			 		FB.ui({
 			              method: 'feed',
-			              link: 'http://mdly.co/'+medleyId,
+			              link: 'http://mdly.co/'+medley.short_id,
 			              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
 			              display: 'iframe',
 			              picture: medley.items[0].images.medium,
