@@ -107,8 +107,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         };
     };
     $scope.MedleysByFeatured = function(cb){
-        $scope.medleys = [];
         Medleys.getFeatured({}, function(medleys) {
+            $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -118,8 +118,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByMostRecent = function(cb){
-        $scope.medleys = [];
         Medleys.getMostRecent({}, function(medleys) {
+            $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -140,8 +140,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByViews = function(cb){
-        $scope.medleys = [];
         Medleys.getMostViewed({}, function(medleys) {
+            $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -156,9 +156,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         } else {
             username = $stateParams.username;
         };
-        $scope.medleys = [];
         // Fetch Your Medleys
         Medleys.getUserMedleys({ username: username },function(medleys) {
+            $scope.medleys = [];
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
@@ -167,13 +167,13 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         });
     };
     $scope.MedleysByHashtag = function(hashtag) {
-        $scope.medleys = [];
         if (hashtag) {
             $scope.hashtag = hashtag;
         } else {
             $scope.hashtag = $stateParams.hashtag;
         };
         Global.getMedleysByHashtag($scope.hashtag, function(medleys) { 
+            $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
