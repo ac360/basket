@@ -3,6 +3,17 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     // Defaults
     $scope.folderpage = {};
 
+    $scope.initiateFolderPage = function() {
+        if ($scope.user) {
+            $scope.getMedleysByFolder();
+        } else {
+            // Listener - Authetication
+            $scope.$on('SignedInViaFacebook', function(e, user){
+                $scope.getMedleysByFolder();
+            });
+        }
+    };
+
     $scope.removeMedleyFromFolder = function(medleyId, folder) {
         if (Global.getCurrentUser()) {
             // Remove Immediately From Page
@@ -35,14 +46,6 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     };
 
     // Initialize
-        if ($scope.user) {
-            $scope.getMedleysByFolder();
-        } else {
-            // Listener - Authetication
-            $scope.$on('SignedInViaFacebook', function(e, user){
-                $scope.getMedleysByFolder();
-            });
-        };
         // Listener - Folders Updated
         $scope.$on('FoldersUpdated', function(e, folder){
                 $scope.getMedleysByFolder();

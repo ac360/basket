@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row" ng-init="loadHome()">
 	<div id="home-container" class="col-md-12">
 		<div class="row" style="padding:15px 0px;">
 			<div class="col-md-3">
@@ -16,10 +16,10 @@
                             	{{ feed }} <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu feed-menu">
-                              <li ng-click="setFeed('featured')"><i class="fa fa-angle-right"></i>Featured Medleys</li>
-                              <li ng-click="setFeed('voted')"><i class="fa fa-angle-right"></i>Most Voted Medleys</li>
-                              <li ng-click="setFeed('viewed')"><i class="fa fa-angle-right"></i>Most Viewed Medleys</li>
-                              <li ng-click="setFeed('recent')"><i class="fa fa-angle-right"></i>Most Recent Medleys</li>
+                              <li ng-click="setFeed('Featured Medleys')"><i class="fa fa-angle-right"></i>Featured Medleys</li>
+                              <li ng-click="setFeed('Most Voted Medleys')"><i class="fa fa-angle-right"></i>Most Voted Medleys</li>
+                              <li ng-click="setFeed('Most Viewed Medleys')"><i class="fa fa-angle-right"></i>Most Viewed Medleys</li>
+                              <li ng-click="setFeed('Most Recent Medleys')"><i class="fa fa-angle-right"></i>Most Recent Medleys</li>
                             </ul>
                     </div><!-- .dropdown -->
 
@@ -51,7 +51,7 @@
 				</div><!-- #side-container -->
 			</div> <!-- col-md-6 -->
 			<div class="col-md-6">
-				<div class="home-col-left">
+				<div class="home-col-right">
 
 					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
 						<div class="medley-hashtags">
@@ -70,6 +70,8 @@
 						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.name }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a>
 						</div>
 					</div>
+
+					<div id="loading-box" ng-show="!medleys"><i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> Loading Medleys</div>
 
 				</div>
 			</div> <!-- col-md-6 -->

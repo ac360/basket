@@ -14,57 +14,55 @@ var mongoose        = require('mongoose'),
     
     // Add Voted Attribute
     add_voted_attribute = function(user, medley, callback) {
-        if (user) {
-// Add Voted Attribute
-                Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
-                    if (vote.length) {
-                        medley       = medley.toObject();
-                        medley.voted = true;
-                        if (callback) { callback(medley) };
-                    } else {
-                        medley       = medley.toObject();
-                        medley.voted = false;
-                        if (callback) { callback(medley) };
-                    };
-                });
-        } else { if (callback) { callback(medley) } };
+            if (user) {
+                    Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
+                        if (vote.length) {
+                            medley       = medley.toObject();
+                            medley.voted = true;
+                            if (callback) { callback(medley) };
+                        } else {
+                            medley       = medley.toObject();
+                            medley.voted = false;
+                            if (callback) { callback(medley) };
+                        };
+                    });
+            } else { if (callback) { callback(medley) } };
     };
 
-    process_and_render_medleys = function(user, res, medleys) {
-        // Add Affiliate Code
-        medleys.forEach(function(m, index){
-            if (m.user.affilate !== 'medley01-20') {
-                m.items.forEach(function(i){
-                    i.link = i.link.replace("medley01-20", m.user.affiliate);    
-                });
-            };
-        });
-        // Add Voted Attribute
-        if (user) {
-            var processedMedleys = [];
+    process_medleys = function(user, res, medleys, callback) {
+            // Add Affiliate Code
             medleys.forEach(function(m, index){
-                // Find Vote And Process
-                Vote.findOne({ medley: m._id, user: user._id }).exec(function(err, vote) {
-                    if (vote) {
-                        m            = m.toObject();
-                        m.voted      = true;
-                    } else {
-                        m            = m.toObject();
-                        m.voted      = false;
-                    };
-                    processedMedleys.push(m);
-                    if (index + 1 === medleys.length) {
-                        // Render
-                        res.jsonp(processedMedleys);  
-                    };
-                });
+                if (m.user.affilate !== 'medley01-20') {
+                    m.items.forEach(function(i){
+                        i.link = i.link.replace("medley01-20", m.user.affiliate);    
+                    });
+                };
             });
-        } else {
-            // Render
-            res.jsonp(medleys)
-        };
-    };
-
+            // Add Voted Attribute
+            if (user) {
+                var processedMedleys = [];
+                medleys.forEach(function(m, index){
+                    // Find Vote And Process
+                    Vote.findOne({ medley: m._id, user: user._id }).exec(function(err, vote) {
+                        if (vote) {
+                            m            = m.toObject();
+                            m.voted      = true;
+                        } else {
+                            m            = m.toObject();
+                            m.voted      = false;
+                        };
+                        processedMedleys.push(m);
+                        if (index + 1 === medleys.length) {
+                            // Finished
+                            if (callback) { callback(processedMedleys) };
+                        };
+                    });
+                });
+            } else { // No User
+                // Finished
+                if (callback) { callback(medleys) };
+            };
+    };  // process_medleys
 // Actions
 
     // Find Medley by id
@@ -83,7 +81,6 @@ var mongoose        = require('mongoose'),
     // Create a Medley
     exports.create = function(req, res) {
         var medley = new Medley(req.body);
-        console.log("Creating: ", medley);
         medley.user = req.user;
         medley.short_id = shortId(medley._id);
         medley.save(function(err, medley) {
@@ -98,7 +95,7 @@ var mongoose        = require('mongoose'),
                 } else {
                     var medleys = [];
                     medleys.push(medley);
-                    process_and_render_medleys(req.user, res, medleys);
+                    process_medleys(req.user, res, medleys);
                 };
             }
         });
@@ -175,7 +172,9 @@ var mongoose        = require('mongoose'),
     exports.show = function(req, res) {
         var medleys = [];
         medleys.push(req.medley);
-        process_and_render_medleys(req.user, res, medleys);
+        process_medleys(req.user, res, medleys, function(medleys){
+            res.jsonp(medleys);
+        });
     };
 
     // Find Medley by Username
@@ -184,10 +183,10 @@ var mongoose        = require('mongoose'),
             if (err) return next(new Error('Failed to load user' + req.params.username));
             // Find Medleys
             Medley.find({ user: user._id }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
-                medleys.sort(function(obj1, obj2) {
-                    return obj2.votes - obj1.votes;
+                process_medleys(req.user, res, medleys, function(medleys){
+                    medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                    res.jsonp(medleys);
                 });
-                process_and_render_medleys(req.user, res, medleys);
             });
 
         });
@@ -201,10 +200,10 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.votes - obj1.votes;
+                    process_medleys(req.user, res, medleys, function(medleys){
+                        medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                        res.jsonp(medleys);
                     });
-                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
         }); // Medley.find
     }; // getByHashtag
@@ -223,7 +222,10 @@ var mongoose        = require('mongoose'),
                 // Get X Number of Medleys - TODO enable params here
                 var medleyIDs = folder.medleys.slice(0,20);
                 Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username affiliate').exec(function(err, medleys) {
-                    process_and_render_medleys(req.user, res, medleys);
+                    process_medleys(req.user, res, medleys, function(medleys){
+                        medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                        res.jsonp(medleys);
+                    });
                 });
             };
 
@@ -237,10 +239,10 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.votes - obj1.votes;
+                    process_medleys(req.user, res, medleys, function(medleys){
+                        medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                        res.jsonp(medleys);
                     });
-                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_voted
@@ -252,10 +254,10 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.views - obj1.views;
+                    process_medleys(req.user, res, medleys, function(medleys){
+                        medleys.sort( function(obj1, obj2) { return obj2.views - obj1.views });
+                        res.jsonp(medleys);
                     });
-                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_viewed
@@ -267,16 +269,21 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    medleys.sort(function(obj1, obj2) {
-                        return obj2.created - obj1.created;
+                    process_medleys(req.user, res, medleys, function(medleys){
+                        medleys.sort( function(obj1, obj2) { return obj2.created - obj1.created });
+                        res.jsonp(medleys);
                     });
-                    process_and_render_medleys(req.user, res, medleys);
                 }; // if err
             });
     }; // most_viewed
 
     exports.getByFeatured = function(req, res) {
         var allMedleys    = [];
+        // Processed Listener
+        eventEmitter.on('medleysProcessed', function(medleys) {
+            medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes } );
+            res.jsonp(medleys); 
+        });
         // Get By Votes
         Medley.find().sort({votes: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
             // Get By Views
@@ -292,7 +299,11 @@ var mongoose        = require('mongoose'),
                 var finalMedleys = _.uniq(allMedleys, function (item) {
                     return item._id + item._id;
                 });
-                process_and_render_medleys(req.user, res, finalMedleys);
+                // Process
+                process_medleys(req.user, res, finalMedleys, function(medleys){
+                    medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                    res.jsonp(medleys);
+                });
             });
         });
     };

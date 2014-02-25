@@ -40,10 +40,11 @@ label {font-weight:400;}
 #home-container 	{margin-top:5px;}
 #home-container h3  {color:#444;margin-bottom:20px;}
 .home-col-left 		{display:block;float:left;width:545px;height:auto;margin-right:25px;}
-.home-col-right 	{display:block;float:left;width:545px;height:auto;}
+.home-col-right 	{display:block;float:left;width:545px;height:auto;margin-right:25px;}
 .feed-menu          {padding:10px 0px;margin-top:4px!important;}
 .feed-menu li 		{padding:5px 10px 5px 10px!important;border-bottom:1px solid rgba(0,0,0,0.03);margin-bottom:0px!important;}
 .feed-menu li:hover {background:rgba(0,0,0,0.05)!important;color:#666666!important;cursor:pointer;-webkit-border-radius:0px;border-radius:0px;}
+#loading-box {width:50%;color:#bbb;font-size:20px;padding:20px 0px;}
 
 /* Search Page */
 .results-container {margin-top:10px;min-height:550px;}

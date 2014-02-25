@@ -17,4 +17,4 @@ exports.show_redirect = function(req, res) {
         req.medley = medley[0];
         res.redirect('/#!/m/'+req.medley.short_id);
     });
-}
+};

@@ -30,7 +30,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.medleys                    = false;
     $scope.profile                    = null;
     $scope.feed                       = 'Featured Medleys'
-    
+
+
     // FOLDERS -----------------------------------------
     $scope.addMedleyToFolder = function(event, data) {
         if (Global.getCurrentUser()) {
@@ -86,18 +87,22 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     };
 
     // MEDLEY FEEDS ------------------------------------
+    $scope.loadHome = function() {
+        // Timeout gives some time for Facebook Sign In
+        $timeout(function(){
+            if (!$scope.medleys) { $scope.setFeed() };
+        }, 1000)
+    };
     $scope.setFeed = function(type) {
-        if (type === 'featured') {
-            $scope.feed = "Featured Medleys"
+        $scope.medleys = false;
+        if (type) { $scope.feed = type };
+        if ($scope.feed === "Featured Medleys") {
             $scope.MedleysByFeatured(); 
-        } else if (type === 'voted') {
-            $scope.feed = "Most Voted Medleys"
+        } else if ($scope.feed === "Most Voted Medleys") {
             $scope.MedleysByVotes();
-        } else if (type === 'viewed') {
-            $scope.feed = "Most Viewed Medleys"
+        } else if ($scope.feed === "Most Viewed Medleys") {
             $scope.MedleysByViews();
-        } else if (type === 'recent') {
-            $scope.feed = "Most Recent Medleys"
+        } else if ($scope.feed === "Most Recent Medleys") {
             $scope.MedleysByMostRecent();
         };
     };
@@ -321,8 +326,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 xfbml      : true  // parse XFBML
             });
 
-            // Try To Sign In User
-            Global.autoSignIn();
+            Global.checkSignIn();
         };
         // Load the SDK asynchronously
         (function(d){
@@ -338,18 +342,12 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             $scope.$on('SignedInViaFacebook', function(e, user){
                 $scope.user = user;
                 console.log("User Signed In: ", $scope.user);
-                if ($state.current.name === 'home') {
-                    $scope.MedleysByFeatured();
-                };
                 Global.loadFolders(function(folders) {
                     $scope.folders = folders;
                 });
-            });
-            // Listener - Authetication - Guest
-            $scope.$on('GuestUser', function(e, user){
                 if ($state.current.name === 'home') {
-                    $scope.MedleysByFeatured();
-                };
+                    $scope.setFeed();
+                }
             });
             // Listener - Folders Loaded
             $scope.$on('FoldersLoaded', function(e, folders){
@@ -387,7 +385,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             // Listener - Medley Deleted
             $scope.$on('MedleyDeleted', function(e, medley) {
-                 angular.forEach($scope.medleys, function(m, index) {
+                angular.forEach($scope.medleys, function(m, index) {
                     if (m._id  == medley._id) { 
                         $scope.medleys.splice(index, 1);
                     };
