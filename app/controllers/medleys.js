@@ -184,7 +184,7 @@ var mongoose        = require('mongoose'),
             // Find Medleys
             Medley.find({ user: user._id }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 process_medleys(req.user, res, medleys, function(medleys){
-                    medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
+                    medleys.sort( function(obj1, obj2) { return obj2.created - obj1.created });
                     res.jsonp(medleys);
                 });
             });
