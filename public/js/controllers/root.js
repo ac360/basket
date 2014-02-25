@@ -129,8 +129,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByVotes = function(cb){
-        $scope.medleys = [];
         Medleys.getMostVoted({}, function(medleys) {
+            $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
