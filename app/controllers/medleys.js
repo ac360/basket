@@ -170,11 +170,16 @@ var mongoose        = require('mongoose'),
 
     // Show A Medley
     exports.show = function(req, res) {
-        var medleys = [];
-        medleys.push(req.medley);
-        process_medleys(req.user, res, medleys, function(medleys){
-            res.jsonp(medleys);
-        });
+        if (req.medley) {
+            var medleys = [];
+            medleys.push(req.medley);
+            process_medleys(req.user, res, medleys, function(medleys){
+                res.jsonp(medleys);
+            });
+        } else {
+            res.redirect('/');
+        }
+        
     };
 
     // Find Medley by Username
