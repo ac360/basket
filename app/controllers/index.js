@@ -13,8 +13,11 @@ exports.render = function(req, res) {
 exports.show_redirect = function(req, res) {
 	console.log("PARAMS: ", req.params);
 	Medley.find({ short_id: req.params.shortId }, function(err, medley) {
-        if (err) return next(err);
-        req.medley = medley[0];
-        res.redirect('/#!/m/'+req.medley.short_id);
+        if (err) { 
+            res.redirect('/') 
+        } else {
+            req.medley = medley[0];
+            res.redirect('/#!/m/'+req.medley.short_id);
+        };
     });
 };
