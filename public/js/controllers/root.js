@@ -338,14 +338,18 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             $scope.$on('SignedInViaFacebook', function(e, user){
                 $scope.user = user;
                 console.log("User Signed In: ", $scope.user);
-                $scope.MedleysByFeatured();
+                if ($state.current.name === 'home') {
+                    $scope.MedleysByFeatured();
+                };
                 Global.loadFolders(function(folders) {
                     $scope.folders = folders;
                 });
             });
             // Listener - Authetication - Guest
             $scope.$on('GuestUser', function(e, user){
-                $scope.MedleysByFeatured();
+                if ($state.current.name === 'home') {
+                    $scope.MedleysByFeatured();
+                };
             });
             // Listener - Folders Loaded
             $scope.$on('FoldersLoaded', function(e, folders){

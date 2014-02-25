@@ -45,7 +45,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                 if ($scope.share == true) {
                     $timeout(function() {
                         if ($state.current.name === 'show') {
-                            Modals.publishedShare($scope.show_medley.short_id);
+                            Modals.publishedShare($scope.show_medley);
                             $scope.$parent.$parent.share = false;
                         };
                     }, 4000);
