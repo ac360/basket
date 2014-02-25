@@ -212,26 +212,16 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 			    return medley;
     		},
 
-    		autoSignIn: function(callback) {
+    		autoSignIn: function() {
     			// Check if current user
 	            Users.getCurrentUser({}, function(user) {
 	                if (user.email) {
 	                	mData.user = user;
 	                    $rootScope.$broadcast('SignedInViaFacebook', user);
-	                    // Callback
-	                    if (callback) { callback(user) };
 	                } else {
 	                    var self = this;
 	                    FB.getLoginStatus(function(response) {
 	                      if (response.status === 'connected') {
-	                        // TODO:  UPDATE USER EMAIL ADDRESS ON LOGIN!
-	                        // the user is logged in and has authenticated your
-	                        // app, and response.authResponse supplies
-	                        // the user's ID, a valid access token, a signed
-	                        // request, and the time the access token 
-	                        // and signed request each expire
-	                        // var uid = response.authResponse.userID;
-	                        // var accessToken = response.authResponse.accessToken;
 	                        console.log('User is already logged into Facebook: ', response);
 	                        FB.api('/me', function(response) {
 	                            console.log('Successfully Retrieved User Information: ', response);
@@ -252,17 +242,17 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                                  mData.user = user;
 	                                  // Broadcast User when Signed In
 	                                  $rootScope.$broadcast('SignedInViaFacebook', user);
-	                                  // Callback
-	                                  if (callback) { callback(user) };
 	                             });
 	                        });
-	                      } // if response = "connected"
+	                      } else {
+	                      	$rootScope.$broadcast('GuestUser', null);
+	                      } // if response === 
 	                }); // FB.getLoginStatus
 	              }; // if (user.email)
 	            }); // Users.get
     		},
 
-		    authenticateUser: function(callback) {
+		    authenticateUser: function() {
 	            // Check if current user
 	            Users.getCurrentUser({}, function(user) {
 	                if (user.email) {
@@ -290,21 +280,17 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                                  provider:   'facebook'
 	                             });
 	                             newUser.$save(function(user){
-	                                  console.log("Successfully saved new user to database and signed in: ", user);
+	                                  console.log("Successfully updated user i database and signed in: ", user);
 	                                  // Broadcast User when Signed In
 	                                  mData.user = user;
 	                                  $rootScope.$broadcast('SignedInViaFacebook', user);
-	                                  // Callback
-	                                  if (callback) { callback(user) };
 	                             });
 	                        });
 	                      } else {
 	                        // the user is logged in to Facebook, but has not authenticated your app
 	                        FB.login(function(response) {
 	                            if (response.authResponse) {
-	                               console.log('Successfully Authenticated: ', response);
 	                               FB.api('/me', function(response) {
-	                                 console.log('Successfully Retrieved User Information: ', response);
 	                                 var newUser = new Users({
 	                                      email:      response.email,
 	                                      username:   response.username,
@@ -321,16 +307,12 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	                                      // Broadcast User when Signed In
 	                                      mData.user = user;
 	                                      $rootScope.$broadcast('SignedInViaFacebook', user);
-	                                      // Callback
-	                                      if (callback) { callback(user) };
 	                                 });
 	                               });
 	                            } else {
 	                              console.log('User cancelled login or did not fully authorize.');
-	                              var user = null;
+	                              var user   = null;
 	                              mData.user = user;
-	                              // Callback
-	                              if (callback) { callback(user) };
 	                            }
 	                        },{ scope: 'email,user_likes' });
 	                      }; // if response = "connected"

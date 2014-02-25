@@ -178,8 +178,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         });
     };
 
-    
-
     // SEARCH ------------------------------------------
     $scope.setRetailer = function(retailer) {
         $scope.retailer = retailer;
@@ -314,7 +312,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     };
 
     // Initialization Methods
-
         // Get Current User Or Try To Log Them In Via Facebook
         window.fbAsyncInit = function() {
             FB.init({
@@ -323,17 +320,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 cookie     : false, // enable cookies to allow the server to access the session
                 xfbml      : true  // parse XFBML
             });
-            // Here we subscribe to the auth.authResponseChange JavaScript event. This event is fired
-            // for any authentication related change, such as login, logout or session refresh. This means that
-            // whenever someone who was previously logged out tries to log in again, the correct case below
-            // will be handled.
-            FB.Event.subscribe('auth.authResponseChange', function(response) {
-                // Here we specify what we do with the response anytime this event occurs.
-                if (response.status === 'connected') {
-                    Global.autoSignIn();
-                } else if (response.status === 'not_authorized') {
-                } else {}
-            });
+
+            // Try To Sign In User
+            Global.autoSignIn();
         };
         // Load the SDK asynchronously
         (function(d){
@@ -345,88 +334,92 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }(document));
 
         // LISTENERS ---------------
-        // Listener - Authetication
-        $scope.$on('SignedInViaFacebook', function(e, user){
-            $scope.user = user;
-            console.log("User Signed In: ", $scope.user);
-            Global.loadFolders(function(folders) {
-                $scope.folders = folders;
-
-            });
-        });
-        // Listener - Folders Loaded
-        $scope.$on('FoldersLoaded', function(e, folders){
-            // Set Folders
-            $scope.folders = folders;
-            // Set Folder if Folder Page
-            if ($state.current.name === 'folder') {
-                angular.forEach($scope.folders, function(f) {
-                    if (f._id == $stateParams.folderId) { 
-                        $scope.folder = f;
-                    };
+            // Listener - Authetication - User
+            $scope.$on('SignedInViaFacebook', function(e, user){
+                $scope.user = user;
+                console.log("User Signed In: ", $scope.user);
+                $scope.MedleysByFeatured();
+                Global.loadFolders(function(folders) {
+                    $scope.folders = folders;
                 });
-            };
-        });
-        // Listener - Folders Updated
-        $scope.$on('FoldersUpdated', function(e, folder){
-              Global.loadFolders(function(folders) {
-                  $scope.folders = folders;
-                  $rootScope.$broadcast('FoldersLoaded', $scope.folders);
-              });
-        });
-        // Listener - Medley Published
-        $scope.$on('MedleyPublished', function(e, medley) {
-              Global.resetMedley();
-              $scope.basket = Global.getMedley();
-              $scope.share = true;
-        });
-        // Listeners - Medley Updated
-        $scope.$on('MedleyUpdated', function(e, medley){
-            angular.forEach($scope.medleys, function(m) {
-                if (m._id  == medley._id) { 
-                    m.votes = medley.votes
-                };
             });
-        });
-        // Listener - Medley Deleted
-        $scope.$on('MedleyDeleted', function(e, medley) {
-             angular.forEach($scope.medleys, function(m, index) {
-                if (m._id  == medley._id) { 
-                    $scope.medleys.splice(index, 1);
-                };
-            }); 
-        });
-        // Listener - Remove Body Classes
-        $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-              if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
-              if (toState.name === 'create') { 
-                    if ($scope.basket && $scope.basket.template) {
-                        $('body').removeClass().addClass($scope.basket.template); 
-                        $('.logo').html('<img ng-src="img/logo_'+$scope.basket.template+'.png" draggable="false">');
-                    } else {
-                        $('body').removeClass().addClass('a1'); 
-                        $('.logo').html('<img ng-src="img/logo_a1.png" draggable="false">');
-                    };
-              };
-              if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };
-              // Set Folder if Folder Page
-              if (toState.name === 'folder') {
+            // Listener - Authetication - Guest
+            $scope.$on('GuestUser', function(e, user){
+                $scope.MedleysByFeatured();
+            });
+            // Listener - Folders Loaded
+            $scope.$on('FoldersLoaded', function(e, folders){
+                // Set Folders
+                $scope.folders = folders;
+                // Set Folder if Folder Page
+                if ($state.current.name === 'folder') {
                     angular.forEach($scope.folders, function(f) {
-                        if (f._id == toParams.folderId) { 
+                        if (f._id == $stateParams.folderId) { 
                             $scope.folder = f;
                         };
                     });
-              };
-        });
-        // Listener - Search Infinite Scroll 
-        $(window).scroll(function() {
-            if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
-              // Make Sure you have listings...
-              if ($scope.search_results.length > 9) {
-                  if ($scope.scrollsearch_in_progress === false) {
-                      $scope.scrollSearch();
+                };
+            });
+            // Listener - Folders Updated
+            $scope.$on('FoldersUpdated', function(e, folder){
+                  Global.loadFolders(function(folders) {
+                      $scope.folders = folders;
+                      $rootScope.$broadcast('FoldersLoaded', $scope.folders);
+                  });
+            });
+            // Listener - Medley Published
+            $scope.$on('MedleyPublished', function(e, medley) {
+                  Global.resetMedley();
+                  $scope.basket = Global.getMedley();
+                  $scope.share  = true;
+            });
+            // Listeners - Medley Updated
+            $scope.$on('MedleyUpdated', function(e, medley){
+                angular.forEach($scope.medleys, function(m) {
+                    if (m._id  == medley._id) { 
+                        m.votes = medley.votes
+                    };
+                });
+            });
+            // Listener - Medley Deleted
+            $scope.$on('MedleyDeleted', function(e, medley) {
+                 angular.forEach($scope.medleys, function(m, index) {
+                    if (m._id  == medley._id) { 
+                        $scope.medleys.splice(index, 1);
+                    };
+                }); 
+            });
+            // Listener - Remove Body Classes
+            $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
+                  if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
+                  if (toState.name === 'create') { 
+                        if ($scope.basket && $scope.basket.template) {
+                            $('body').removeClass().addClass($scope.basket.template); 
+                            $('.logo').html('<img ng-src="img/logo_'+$scope.basket.template+'.png" draggable="false">');
+                        } else {
+                            $('body').removeClass().addClass('a1'); 
+                            $('.logo').html('<img ng-src="img/logo_a1.png" draggable="false">');
+                        };
                   };
-              };
-            };
-        });
+                  if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };
+                  // Set Folder if Folder Page
+                  if (toState.name === 'folder') {
+                        angular.forEach($scope.folders, function(f) {
+                            if (f._id == toParams.folderId) { 
+                                $scope.folder = f;
+                            };
+                        });
+                  };
+            });
+            // Listener - Search Infinite Scroll 
+            $(window).scroll(function() {
+                if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
+                  // Make Sure you have listings...
+                  if ($scope.search_results.length > 9) {
+                      if ($scope.scrollsearch_in_progress === false) {
+                          $scope.scrollSearch();
+                      };
+                  };
+                };
+            });
 }]);

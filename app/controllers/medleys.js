@@ -15,7 +15,7 @@ var mongoose        = require('mongoose'),
     // Add Voted Attribute
     add_voted_attribute = function(user, medley, callback) {
         if (user) {
-                // Add Voted Attribute
+// Add Voted Attribute
                 Vote.find({ medley: medley._id, user: user._id }).exec(function(err, vote) {
                     if (vote.length) {
                         medley       = medley.toObject();
@@ -41,6 +41,7 @@ var mongoose        = require('mongoose'),
         });
         // Add Voted Attribute
         if (user) {
+            var processedMedleys = [];
             medleys.forEach(function(m, index){
                 // Find Vote And Process
                 Vote.findOne({ medley: m._id, user: user._id }).exec(function(err, vote) {
@@ -51,9 +52,10 @@ var mongoose        = require('mongoose'),
                         m            = m.toObject();
                         m.voted      = false;
                     };
+                    processedMedleys.push(m);
                     if (index + 1 === medleys.length) {
                         // Render
-                        res.jsonp(medleys)  
+                        res.jsonp(processedMedleys);  
                     };
                 });
             });
@@ -274,7 +276,7 @@ var mongoose        = require('mongoose'),
     }; // most_viewed
 
     exports.getByFeatured = function(req, res) {
-        var allMedleys                   = [];
+        var allMedleys    = [];
         // Get By Votes
         Medley.find().sort({votes: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
             // Get By Views
