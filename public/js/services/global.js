@@ -92,18 +92,17 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	    				medley = medley[0];
 	    				console.log("Facebook Share Medley Activated:  ", medley);
 	    			 	if(medley) { 
-	    			 		FB.ui({
-				              method: 'feed',
-				              link: 'http://mdly.co/'+medley.short_id,
+	    			 		FB.ui({ 
+				              method:  'feed',
+				              link:    'http://mdly.co/'+medley.short_id,
 				              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
 				              display: 'iframe',
-				              picture: medley.items[0].images.medium,
-				              name: 'Medley - ' + medley.hashtags.join(" ")
+				              picture:  medley.items[0].images.medium,
+				              name:    'Medley - ' + medley.hashtags.join(" ")
 				            },  function(response){
-				                	console.log(response);
+				                	console.log("facebook share response: ", response);
 				                	// Hide Modals?
 				            });
-				            console.log(FB)
 	    			 	} else {
 	    			 		console.log("Medley could not be found for sharing...")
 	    			 	}
