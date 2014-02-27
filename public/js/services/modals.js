@@ -26,7 +26,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                     $scope.shareFacebook = function() {
                       FB.ui({
                         method:  'feed',
-                        link:    'http://mdly.co/'+$scope.medley.short_id,
+                        link:    'http://mdly.co/#!/m/'+$scope.medley.short_id,
                         caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.medley.user.name,
                         display: 'iframe',
                         picture: $scope.medley.items[0].images.medium,
