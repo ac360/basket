@@ -258,25 +258,25 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	            // Check if current user
                 FB.login(function(response) {
                     if (response.authResponse) {
-                       FB.api('/me', function(response) {
-                         var newUser = new Users({
-                              email:      response.email,
-                              username:   response.username,
-                              name:       response.name,
-                              first_name: response.first_name,
-                              last_name:  response.last_name,
-                              gender:     response.gender,
-                              locale:     response.locale,
-                              timezone:   response.timezone,
-                              fb_id:      response.id,
-                              provider:   'facebook'
-                         });
-                         newUser.$save(function(user){
-                              // Broadcast User when Signed In
-                              mData.user = user;
-                              $rootScope.$broadcast('SignedInViaFacebook', user);
-                         });
-                       });
+                        FB.api('/me', function(response) {
+                            var newUser = new Users({
+	                            email:      response.email,
+	                            username:   response.username,
+	                            name:       response.name,
+	                            first_name: response.first_name,
+	                            last_name:  response.last_name,
+	                            gender:     response.gender,
+	                            locale:     response.locale,
+	                            timezone:   response.timezone,
+	                            fb_id:      response.id,
+	                            provider:   'facebook'
+	                        });
+	                        newUser.$save(function(user){
+	                            // Broadcast User when Signed In
+	                            mData.user = user;
+	                            $rootScope.$broadcast('SignedInViaFacebook', user);
+	                        });
+                        }); 
                     } else {
                       console.log('User cancelled login or did not fully authorize.');
                       var user   = null;
