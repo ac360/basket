@@ -103,6 +103,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 				                	console.log(response);
 				                	// Hide Modals?
 				            });
+				            console.log(FB)
 	    			 	} else {
 	    			 		console.log("Medley could not be found for sharing...")
 	    			 	}
