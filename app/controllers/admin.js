@@ -35,5 +35,11 @@ var mongoose        = require('mongoose'),
         };
     };
 
+    exports.deleteSessions = function(req, res) {
+        if (req.user && req.user.admin === true){
+            
+        };
+    };
+
 
 

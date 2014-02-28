@@ -2,6 +2,7 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
 
     // Defaults
     $scope.folderpage = {};
+    $scope.folderpage.medleys = false;
 
     $scope.initializeFolderPage = function() {
         if ($scope.user) {

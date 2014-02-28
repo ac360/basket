@@ -2,6 +2,7 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
 
     // Defaults
     $scope.profilepage = {};
+    $scope.profilepage.medleys = false;
 
     $scope.initializeProfilePage = function() {
         Users.getUser({ username: $stateParams.username }, function(profile) {

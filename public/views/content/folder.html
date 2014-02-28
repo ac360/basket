@@ -59,9 +59,11 @@
                             </div>
                         </div>
 
+                        <div id="loading-box" ng-show="folderpage.medleys === false"><i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> Loading Medleys</div>
+
                     </div>
                 </div> <!-- col-md-6 -->
-                <div class="col-md-6 medleys-list" ng-hide="folderpage.medleys">
+                <div class="col-md-6 medleys-list" ng-show="folderpage.medleys.length == 0">
                     <h4 style="margin-top:40px;">This folder has no Medleys...</h4>
                 </div>
             </div><!-- row -->

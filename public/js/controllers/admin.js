@@ -16,6 +16,12 @@ angular.module('mean.system').controller('AdminController', ['$scope', 'Global',
         });
     };
 
+    $scope.deleteSessions = function() {
+        Admin.deleteSessions(function(response){
+            console.log(response);
+        })
+    };
+
     // Initialize
     if ($scope.user.admin) {
         $scope.InitializeAdmin();
