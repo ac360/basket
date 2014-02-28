@@ -3,17 +3,35 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     // Defaults
     $scope.folderpage = {};
 
-    $scope.initiateFolderPage = function() {
+    $scope.initializeFolderPage = function() {
+        console.log("INITIALIZED")
         if ($scope.user) {
-            $scope.getMedleysByFolder();
-        } else {
-            // Listener - Authetication
-            $scope.$on('SignedInViaFacebook', function(e, user){
+            if ($scope.folders) {
+                console.log("HEREREHERE")
+                angular.forEach($scope.folders,function(f){
+                    if (f._id === $stateParams.folderId) {
+                        $scope.folder = f;
+                    };
+                });
                 $scope.getMedleysByFolder();
-            });
-        }
+            } else {
+                // Listener - Folders Loaded
+                $scope.$on('FoldersLoaded', function(e, folders){
+                    $scope.folders = folders;
+                    angular.forEach($scope.folders,function(f){
+                        if (f._id === $stateParams.folderId) {
+                            $scope.folder = f;
+                        };
+                    }); // angular.forEach
+                    $scope.getMedleysByFolder();
+                });
+            } // if $scope.folders
+        } else {
+        };
     };
-
+    $scope.loadFolder = function() {
+        Global.loadFolders();
+    };
     $scope.removeMedleyFromFolder = function(medleyId, folder) {
         if (Global.getCurrentUser()) {
             // Remove Immediately From Page
@@ -33,7 +51,6 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
             Modals.signIn();
         }
     };
-
     $scope.getMedleysByFolder = function() {
         Global.getMedleysByFolder($stateParams.folderId, function(medleys) {
             $scope.folderpage.medleys = [];
@@ -48,7 +65,8 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     // Initialize
         // Listener - Folders Updated
         $scope.$on('FoldersUpdated', function(e, folder){
-                $scope.getMedleysByFolder();
+            console.log("FIRED")
+            $scope.getMedleysByFolder();
         });
         // Listeners - Medley Updated
         $scope.$on('MedleyUpdated', function(e, medley){

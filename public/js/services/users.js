@@ -10,6 +10,14 @@ angular.module('mean.users').factory("Users", ['$resource', function($resource) 
         	method: 'POST',
         	url:    'api/users/me'
         },
+        signUpManual: {
+            method: 'POST',
+            url:    'api/users/register/manual'
+        },
+        signInManual: {
+            method: 'POST',
+            url:    'api/users/login/manual'
+        },
         updateCurrentUser: {
             method: 'PUT',
             url:    'api/users/me'

@@ -57,15 +57,15 @@ module.exports = function(passport) {
     ));
 
     // Use basic strategy for OAuth Authentication of Client's Users
-    passport.use(new BasicStrategy(function (clientKey, clientSecret, done) {
-        debug('BaS: clientKey: %s, clientSecret: %s', clientKey, clientSecret);
-        OAuthClient.findOne({ clientKey: clientKey, clientSecret: clientSecret }, function (err, client) {
-            debug('BaS: clientKey: %s, clientToken: %s, err: %s, client: %s', clientKey, clientSecret, err, client);
-            if (err) return done(err);
-            if (!client) return done(null, false);
-            return done(null, client);
-        });
-    }));
+    // passport.use(new BasicStrategy(function (clientKey, clientSecret, done) {
+    //     debug('BaS: clientKey: %s, clientSecret: %s', clientKey, clientSecret);
+    //     OAuthClient.findOne({ clientKey: clientKey, clientSecret: clientSecret }, function (err, client) {
+    //         debug('BaS: clientKey: %s, clientToken: %s, err: %s, client: %s', clientKey, clientSecret, err, client);
+    //         if (err) return done(err);
+    //         if (!client) return done(null, false);
+    //         return done(null, client);
+    //     });
+    // }));
 
     // Use client password strategy for OAuth2 clients
             // passport.use(new ClientPasswordStrategy(function (clientKey, clientToken, done) {

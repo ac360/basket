@@ -2,12 +2,15 @@
     <div id="user-container" class="row">
         <div class="col-md-12">
 
-            <div class="row" ng-show="{{ medleys.length > -1 }}">
+            <div class="row">
                 <div class="col-md-3 hidden-sm hidden-xs" style="padding-top:50px;">
 
                         <div id="side-container" class="folders-side-container">
-                            <h6>Medleys with this hashtag:</h6>
-                            <h1 class="user-profile-name">#{{ hashtag }}</h1>
+                            <p class="st-centered">
+                                <img class="page-image" draggable="false" ng-src="img/hashtag_image.png">
+                            </p>
+                            <h6 class="st-centered">Medleys with this hashtag:</h6>
+                            <h1 class="st-centered user-profile-name">#{{ hashtag }}</h1>
                             <h4>Your Saved Medleys</h4>
                             <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
                             <ul class="list-unstyled">
@@ -52,7 +55,7 @@
                             <button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
                             <a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
                             <a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
-                            <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.name }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a>
+                            <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.username }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a>
                         </div>
                     </div>
 

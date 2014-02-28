@@ -3,8 +3,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.global                     = Global;
     $scope.status                     = false;
+    $scope.loading                    = true;
+    $scope.guest                      = false;
     $scope.user                       = false;
     $scope.basket                     = {};
     $scope.basket.hashtags            = [];
@@ -29,7 +30,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.draggable                  = true;
     $scope.medleys                    = false;
     $scope.profile                    = null;
-    $scope.feed                       = 'Featured Medleys'
+    $scope.feed                       = 'Featured Medleys';
 
 
     // FOLDERS -----------------------------------------
@@ -55,7 +56,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             Modals.signIn();
         }
     };
-    $scope.noUserFolder = function() {
+    $scope.encourageSignIn = function() {
         Modals.signIn();
     };
     $scope.deleteFolder = function(folder) {
@@ -87,11 +88,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     };
 
     // MEDLEY FEEDS ------------------------------------
-    $scope.loadHome = function() {
-        // Timeout gives some time for Facebook Sign In
-        $timeout(function(){
-            if (!$scope.medleys) { $scope.setFeed() };
-        }, 1000)
+    $scope.initializeMedleys = function() {
+        if ( !$scope.medleys || !$scope.medleys.length == 0 ) { $scope.setFeed() };
     };
     $scope.setFeed = function(type) {
         $scope.medleys = false;
@@ -316,57 +314,36 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
       $scope.product_preview = false;
     };
 
-    // Initialization Methods
-        // Get Current User Or Try To Log Them In Via Facebook
-        window.fbAsyncInit = function() {
-            FB.init({
-                appId      : facebookKey,
-                status     : true, // check login status
-                cookie     : false, // enable cookies to allow the server to access the session
-                xfbml      : true  // parse XFBML
-            });
+    // INITIALIZATION METHODS ---------------
 
-            Global.checkSignIn();
-        };
-        // Load the SDK asynchronously
-        (function(d){
-            var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
-            if (d.getElementById(id)) {return;}
-            js = d.createElement('script'); js.id = id; js.async = true;
-            js.src = "//connect.facebook.net/en_US/all.js";
-            ref.parentNode.insertBefore(js, ref);
-        }(document));
-
+        Global.loadCurrentUser();
+        
         // LISTENERS ---------------
-            // Listener - Authetication - User
-            $scope.$on('SignedInViaFacebook', function(e, user){
-                $scope.user = user;
-                console.log("User Signed In: ", $scope.user);
-                Global.loadFolders(function(folders) {
-                    $scope.folders = folders;
-                });
-                if ($state.current.name === 'home') {
-                    $scope.setFeed();
-                }
+            $scope.$on('UserAuthenticated', function(e, user){
+                $scope.user  = user;
+                $scope.guest = false;
+                $scope.initializeMedleys();
+                // Get User's Folders:
+                Global.loadFolders();
+            });
+            $scope.$on('GuestUser', function(e){ 
+                $scope.guest = true;
+                $scope.initializeMedleys();
+            });
+            $scope.$on('UserUpdated', function(e, user){
+                $scope.user  = user;
+                $scope.guest = false;
             });
             // Listener - Folders Loaded
             $scope.$on('FoldersLoaded', function(e, folders){
-                // Set Folders
                 $scope.folders = folders;
-                // Set Folder if Folder Page
-                if ($state.current.name === 'folder') {
-                    angular.forEach($scope.folders, function(f) {
-                        if (f._id == $stateParams.folderId) { 
-                            $scope.folder = f;
-                        };
-                    });
-                };
             });
             // Listener - Folders Updated
             $scope.$on('FoldersUpdated', function(e, folder){
+                console.log("Dragged")
+                  // Reload All Folders
                   Global.loadFolders(function(folders) {
                       $scope.folders = folders;
-                      $rootScope.$broadcast('FoldersLoaded', $scope.folders);
                   });
             });
             // Listener - Medley Published
@@ -391,9 +368,13 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                     };
                 }); 
             });
-            // Listener - Remove Body Classes
+            // Listeners - State Changes
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-                  if (toState.name !== 'show' && toState.name !== 'create') { $('body').removeClass().addClass('a1') };
+                  // Adjust Page Title
+                  if (toState.name !== 'show' && toState.name !== 'create') { 
+                    $('body').removeClass().addClass('a1') 
+                  };
+                  // Adjust Template on Create Page
                   if (toState.name === 'create') { 
                         if ($scope.basket && $scope.basket.template) {
                             $('body').removeClass().addClass($scope.basket.template); 
@@ -403,15 +384,8 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                             $('.logo').html('<img ng-src="img/logo_a1.png" draggable="false">');
                         };
                   };
-                  if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };
-                  // Set Folder if Folder Page
-                  if (toState.name === 'folder') {
-                        angular.forEach($scope.folders, function(f) {
-                            if (f._id == toParams.folderId) { 
-                                $scope.folder = f;
-                            };
-                        });
-                  };
+                  // Adjust Template
+                  if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };                  
             });
             // Listener - Search Infinite Scroll 
             $(window).scroll(function() {

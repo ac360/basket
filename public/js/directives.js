@@ -80,15 +80,15 @@ app.directive("shareFacebookLink", function() {
 });
 
 // Directive - Facebook Sign In
-app.directive("facebookSignInLink", function() {  
+app.directive("signInLink", function() {  
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Users){
+        controller: function($scope, $element, $attrs, $rootScope, Global, Users, Modals){
             $element.click(function() {
                 console.log("clicked!");
                 // Check if user is logged in
-                Global.authenticateUser();
+                Modals.signIn();
             }) // element.click()
         } // controller
     }; //return

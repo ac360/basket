@@ -1,31 +1,32 @@
 // Module dependencies.
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema,
-    crypto = require('crypto'),
-    _ = require('underscore'),
+var mongoose  = require('mongoose'),
+    Schema    = mongoose.Schema,
+    crypto    = require('crypto'),
+    _         = require('underscore'),
     authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 
 // User Schema
 var UserSchema = new Schema({
-    created:    { type: Date, default: Date.now },
-    email:      { type: String, unique: true },
-    username:   { type: String, unique: true },
-    name:       String,
-    first_name: String,
-    last_name:  String,
-    gender:     String,
-    locale:     String,
-    timezone:   String,
-    fb_id:      String,
-    admin:      { type: Boolean, default: false },
-    affiliate:  { type: String, default: 'medley01-20', trim: true },
-    provider:   String
+    created:            { type: Date, default: Date.now },
+    email:              { type: String, unique: true },
+    username:           { type: String, unique: true },
+    name:               String,
+    first_name:         String,
+    last_name:          String,
+    gender:             String,
+    locale:             String,
+    timezone:           String,
+    fb_id:              String,
+    provider:           String,
+    hashed_password:    String,
+    salt:               String,
+    admin:              { type: Boolean, default: false },
+    affiliate:          { type: String, default: 'medley01-20', trim: true },
+    provider:           String
 });
 
-/**
- * Virtuals
- */
+// Virtuals
 UserSchema.virtual('password').set(function(password) {
     this._password = password;
     this.salt = this.makeSalt();
@@ -34,9 +35,7 @@ UserSchema.virtual('password').set(function(password) {
     return this._password;
 });
 
-/**
- * Validations
- */
+// Validations
 var validatePresenceOf = function(value) {
     return value && value.length;
 };

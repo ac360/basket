@@ -67,7 +67,7 @@ var mongoose        = require('mongoose'),
 
     // Find Medley by id
     exports.medley = function(req, res, next, id) {
-        Medley.find({ short_id: req.params.shortId }).populate('user', 'name username affiliate').exec(function(err, medleys) {
+        Medley.find({ short_id: req.params.shortId }).populate('user', 'name username affiliate provider').exec(function(err, medleys) {
             if (err) return next(err);
             if (medleys[0] && medleys[0].short_id) {
                 req.medley = medleys[0];

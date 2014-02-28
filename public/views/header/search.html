@@ -8,7 +8,8 @@
                     <ul class="list-inline pull-right menu">
                         <!-- Authenticated -->
                         <li ng-if="user">
-                            <img class="img-circle profile-image" draggable="false" ng-src="http://graph.facebook.com/{{user.username}}/picture?type=large" ng-if="user" ui-sref="profile"> <a ui-sref="user({ username: user.username })">{{user.name}}</a>
+                            <img class="img-circle profile-image" draggable="false" ng-src="img/default_profile.png" ng-if="user" ui-sref="profile">
+                            <a ui-sref="user({ username: user.username })"> {{ user.username }}</a>
                         </li>
                         <li ng-if="user">
                             <a account-popup>Account</a> 
@@ -21,7 +22,7 @@
                         </li>
                         <!-- UnAuthenticated -->
                         <li ng-if="!user">
-                            <a facebook-sign-in-link>Sign In With Facebook</a>
+                            <a sign-in-link>Register Or Sign In</a>
                         </li>
                     </ul>
                 </div>

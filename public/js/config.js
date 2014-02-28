@@ -32,7 +32,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('show', {
           url: "/m/:basketId",
           views: {
-            "header":    { templateUrl: "views/header/show.html"        },
+            "header":    { templateUrl: "views/header/blank.html"       },
             "content":   { templateUrl: "views/content/show.html"       },
             "footer":    { templateUrl: "views/footer/show.html"        },
           }
@@ -40,7 +40,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('folder', {
           url: "/f/:folderId",
           views: {
-            "header":    { templateUrl: "views/header/folder.html"      },
+            "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/folder.html"     },
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
@@ -56,7 +56,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('user', {
           url: "/user/:username",
           views: {
-            "header":    { templateUrl: "views/header/user.html"        },
+            "header":    { templateUrl: "views/header/search.html"        },
             "content":   { templateUrl: "views/content/user.html"       },
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
@@ -64,7 +64,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('admin', {
           url: "/admin",
           views: {
-            "header":    { templateUrl: "views/header/admin.html"       },
+            "header":    { templateUrl: "views/header/default.html"       },
             "content":   { templateUrl: "views/content/admin.html"      },
             "footer":    { templateUrl: "views/footer/admin.html"       },
           }

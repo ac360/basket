@@ -7,8 +7,42 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           	var modalInstance = $modal.open({
             		windowClass: 'signin-modal',
   		          templateUrl: 'views/modals/sign_in_modal.html',
-            		controller:  function ($scope, $modalInstance, Global) {
-              			$scope.close = function() {
+            		controller:  function ($scope, $modalInstance, Global, $timeout, Users) {
+              			$scope.signUp = function() {
+                        if (this.email && this.password && this.username){
+                            Users.signUpManual({ email: this.email, password: this.password, username: this.username }, function(response) {
+                                if (response.error) {
+                                    $scope.signUpError(response.error);
+                                } else if (response.email) {
+                                    Global.loadCurrentUser();
+                                    $modalInstance.close();
+                                };
+                            });
+                        } else {
+                            $scope.signUpError("Please Don't Leave Any Fields Blank"); 
+                        };
+                    };
+                    $scope.signIn = function() {
+                        if (this.email && this.password){
+                            Users.signInManual({ email: this.email, password: this.password }, function(response) {
+                                if (response.error) {
+                                    $scope.signUpError(response.error);
+                                } else if (response.email) {
+                                    Global.loadCurrentUser();
+                                    $modalInstance.close();
+                                };
+                            });
+                        } else {
+                            $scope.signUpError("Please Don't Leave Any Fields Blank"); 
+                        };
+                    };
+                    $scope.signUpError = function(error) {
+                        $scope.signup_error = error;
+                        $timeout(function(){
+                            $scope.signup_error = false;
+                        }, 8000)
+                    };
+                    $scope.close = function() {
               				$modalInstance.close();
               			};
               			$scope.$on('SignedInViaFacebook', function(e, user){
@@ -62,18 +96,36 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
               templateUrl: 'views/modals/account_modal.html',
               controller:  function ($scope, $modalInstance, $timeout, Global, Users) {
                   $scope.user         = Global.getCurrentUser();
+                  $scope.$on('UserUpdated', function(e, user){
+                      $scope.user     = user;
+                  });
+                  $scope.$on('UserAuthenticated', function(e, user){
+                      $scope.user     = user;
+                  });
                   $scope.success      = false;
                   $scope.descriptionA = true;
-                  $scope.updateAffiliateCode = function(code) {
-                      Users.updateCurrentUser($scope.user, function(user) {
-                        console.log("User Updated: ", user);
-                        $scope.success = true;
-                        $timeout(function(){
-                          $scope.success = false;
-                        }, 3000)
-                      });
+                  $scope.updateUser   = function() {
+                      if ($scope.user.current_password) {
+                          Global.updateUser($scope.user, function(user){
+                              if ( user.error ) { 
+                                  return $scope.updateError(user.error) 
+                              };
+                              $scope.success     = true;
+                              $timeout(function() {
+                                  $scope.success = false;
+                              }, 3000);
+                          });
+                      } else {
+                          return $scope.updateError("Please Enter Your Current Password To Update Your Account"); 
+                      };
                   };
-                  // $('.container').addClass('st-blur');
+                  $scope.updateError = function(error) {
+                        Global.loadCurrentUser();
+                        $scope.update_error = error;
+                        $timeout(function(){
+                            $scope.update_error = false;
+                        }, 6000)
+                  };
                   $scope.close = function() {
                     $modalInstance.close();
                   };

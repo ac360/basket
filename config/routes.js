@@ -6,10 +6,12 @@ module.exports = function(app, passport, auth) {
     app.get('/signout', users.signout);
 
     // Users API - Internal
-        app.get('/api/users/me',        users.me);
-        app.put('/api/users/me',        users.updateCurrent);
-        app.post('/api/users/me',       users.session);
-        app.get('/api/users/:username', users.show);
+        app.get('/api/users/me',                        users.me);
+        app.put('/api/users/me',                        users.updateCurrent);
+        app.post('/api/users/me',                       users.session);
+        app.get('/api/users/:username',                 users.show);
+        app.post('/api/users/register/manual',          users.registerManual);
+        app.post('/api/users/login/manual',             users.loginManual);
 
         //Finish with setting up the userId param
         app.param('username', users.user);

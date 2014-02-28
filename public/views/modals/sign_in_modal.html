@@ -1,7 +1,63 @@
 <p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
 <div class="modal-content-container">
-	<h1 class="st-centered">Please Sign In</h1>
-	<h5 class="st-centered" style="margin-bottom:0px;">We'll never post to your wall.</h5>
-	<h5 class="st-centered">We offer this because it's simply the fastest way to sign up!</h5>
-	<p class="st-centered"><button class="btn btn-primary btn-lg" facebook-sign-in-link>Sign In With Facebook</button></p>
+
+	<tabset>
+	    <tab heading="Sign Up">
+
+	    		<h3 class="st-centered">Sign Up</h3>
+				<form id="signup-form" class="form" ng-submit="signUp()">
+					<div class="alert alert-danger st-centered" ng-show="signup_error"> {{ signup_error }} </div>
+					<div class="form-group">
+						<input type="text" class="form-control st-centered" name="name" placeholder="Username" value="" 
+						ng-model="username">
+					</div>
+					<div class="form-group">
+						<input id="email" class="form-control st-centered" type="email" name="email" placeholder="Email" value="" 
+						ng-model="email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control st-centered" name="password" placeholder="Password" value="" 
+						ng-model="password">
+					</div>
+					<div class="form-actions st-centered" style="padding-top:5px;">
+						<input class="btn btn-primary" type="submit" value="Sign Up">
+					</div>
+				</form>
+
+				<!-- <hr style="margin:25px auto 20px auto;width:60%;">
+				<p class="st-centered" style="margin:0px0px8px0px;">Or, If You Don't Like Remembering Passwords You Can...</p>
+				<p class="st-centered" style="margin:5px 0px 15px 0px"><button class="btn btn-primary" facebook-sign-in-link><i class="fa fa-facebook" style="margin-right:5px;"></i> Sign Up With Facebook</button></p>
+				<p class="st-centered" style="margin-bottom:0px;font-size:12px;">We Promise to Never Post to your Wall Without Permission :)</p> -->
+
+	    </tab>
+	    <tab heading="Sign In">
+
+	    		<h3 class="st-centered">Sign In</h3>
+
+				<form id="signin-form" class="form" ng-submit="signIn()">
+					<div class="alert alert-danger st-centered" ng-show="signup_error">
+						{{ signup_error }}
+					</div>
+					<div class="form-group">
+						<input id="email" class="form-control st-centered" type="email" name="email" placeholder="Email" value="" 
+						ng-model="email">
+					</div>
+					<div class="form-group">
+						<input type="password" class="form-control st-centered" name="password" placeholder="Password" value="" 
+						ng-model="password">
+					</div>
+					<div class="form-actions st-centered" style="padding-top:5px;">
+						<input class="btn btn-primary" type="submit" value="Sign In">
+					</div>
+				</form>
+
+				<!-- <hr style="margin:25px auto 20px auto;width:60%;">
+				<p class="st-centered" style="margin:0px0px8px0px;">Or, If You Don't Like Remembering Passwords You Can...</p>
+				<p class="st-centered" style="margin:5px 0px 15px 0px"><button class="btn btn-primary" facebook-sign-in-link><i class="fa fa-facebook" style="margin-right:5px;"></i> Sign In With Facebook</button></p>
+				<p class="st-centered" style="margin-bottom:0px;font-size:12px;">We Promise to Never Post to your Wall Without Permission :)</p> -->
+
+	    </tab>
+
+
+  	</tabset>
 </div>

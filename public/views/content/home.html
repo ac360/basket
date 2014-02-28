@@ -1,4 +1,4 @@
-<div class="row" ng-init="loadHome()">
+<div class="row" ng-init="initializeHome()">
 	<div id="home-container" class="col-md-12">
 		<div class="row" style="padding:15px 0px;">
 			<div class="col-md-3">
@@ -29,7 +29,7 @@
 					<ul class="list-unstyled">
 
 						<!-- UnAuthenticated -->
-						<li ng-if="!user" ng-click="noUserFolder()" ui-on-Drop="addMedleyToFolder($event,$data)" drop-target>
+						<li ng-if="!user" ng-click="encourageSignIn()" ui-on-Drop="addMedleyToFolder($event,$data)" drop-target>
 							<div class="folder-link">
 								<i class="fa fa-folder"></i> Favorites
 							</div>
@@ -41,6 +41,7 @@
 							</div>
 							<i class="fa fa-times pull-right" ng-click="deleteFolder(folder)"></i>
 						</li>
+
 						<li ng-click="newFolderModal()">
 							<div class="folder-link">
 								<i class="fa fa-plus"></i> Create New Folder
@@ -67,7 +68,7 @@
 							<button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
 							<a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
 							<a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
-						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.name }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a>
+						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.username }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a>
 						</div>
 					</div>
 

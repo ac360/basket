@@ -35,6 +35,7 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
                     $scope.load_error = true;
                 },1000);
             } else {
+                console.log("show medley: ", medley)
                 $scope.show_medley = Global.sizeMedleyMedium(medley);
                 // Update Page Title
                 var pageTitle = "Medley - " + $scope.show_medley.hashtags.join(" ");

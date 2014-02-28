@@ -37,7 +37,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		},
     		getMedleysByFolder: function(folderId, callback) {
     			Medleys.getByFolder({ folderId: folderId }, function(medleys) {
-    				console.log("Folder Medleys found in Global:", medleys)
+    				console.log("Folder Medleys Loaded in Global:", medleys)
 	    			if (callback) { callback(medleys) };
 		        });
     		},
@@ -47,18 +47,43 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     				$rootScope.$broadcast('MedleyDeleted', medley);
     			});
     		},
+    		updateMedleyViewCount: function(medleyId) {
+	            Medleys.updateViewCount({ medleyId: medleyId }, function(medley){
+	                $rootScope.$broadcast('MedleyUpdated', medley); 
+	            })
+	        },
+
+	        getMedleyVoteStatus: function(medleyId, callback) {
+	            Votes.findByMedleyAndUserId({ medley: medleyId }, function(vote){
+	                if (vote.errors) { vote = null    };
+	                if (callback)    { callback(vote) };
+	            })
+	        },
+
+	        voteMedley: function(medleyId, callback) {
+                Medleys.updateVoteCount({ medleyId: medleyId }, function(medley) {
+                	if (medley.error){
+                		console.log(medley);
+                	} else {
+                		$rootScope.$broadcast('MedleyUpdated', medley);
+                    	if (callback) { callback(medley) };
+                	};
+                });
+	        },
 
     		// ---------- FOLDERS ----------
-    		loadFolders: function(callback) {
+    		loadFolders: function() {
     			var self = this;
     			if ( mData.user ) {
 		            Folders.getByUser(function(folders) {
 		            	mData.folders = folders;
-		            	console.log("Global - User's Folders Loaded: ", folders);
+		            	console.log("Current User Folders Loaded from Global: ", folders);
 		            	$rootScope.$broadcast('FoldersLoaded', folders);
-		            	if (callback) { callback(mData.folders) };
 		            });
 		        }; 
+    		},
+    		getFolders: function() {
+    			if ( mData.folders ) { return mData.folders } else { return "No Folders Available, User May Not Be Logged In"}
     		},
     		createNewFolder: function(title, callback) {
     			var self = this;
@@ -111,39 +136,11 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	    			Modals.signIn();
 	    		};
     		},
-
-    		updateMedleyViewCount: function(medleyId) {
-	            Medleys.updateViewCount({ medleyId: medleyId }, function(medley){
-	                $rootScope.$broadcast('MedleyUpdated', medley); 
-	            })
-	        },
-
-	        getMedleyVoteStatus: function(medleyId, callback) {
-	            Votes.findByMedleyAndUserId({ medley: medleyId }, function(vote){
-	                if (vote.errors) { vote = null    };
-	                if (callback)    { callback(vote) };
-	            })
-	        },
-
-	        voteMedley: function(medleyId, callback) {
-                Medleys.updateVoteCount({ medleyId: medleyId }, function(medley) {
-                	if (medley.error){
-                		console.log(medley);
-                	} else {
-                		$rootScope.$broadcast('MedleyUpdated', medley);
-                    	if (callback) { callback(medley) };
-                	};
-                });
-	        },
+    		
 
     		showProductModal: function(product, callback) {
     			Modals.product(product);
     		},
-
-    		getCurrentUser: function(callback) {
-    			return mData.user;
-    		},
-
     		sizeMedleySmall: function(medley) {
     			var rowHeightsObj = {};
 			    // Resize Items
@@ -216,44 +213,31 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 			    return medley;
     		},
 
-    		checkSignIn: function() {
-    			// Check if current user
-	            Users.getCurrentUser({}, function(user) {
-	                if (user.email) {
+    		// ------------ USERS -------------
+    		loadCurrentUser: function() {
+    			Users.getCurrentUser(function(user) {
+    				console.log("Current User Profile Loaded From Global:", user);
+    				if (user.username) {
+    					mData.user = user;
+    					$rootScope.$broadcast('UserAuthenticated', mData.user);
+    				} else {
+    					mData.user = null;
+    					$rootScope.$broadcast('GuestUser');
+    				};
+    			});
+    		},
+    		getCurrentUser: function(callback) {
+    			return mData.user;
+    		},
+    		updateUser: function(updatedUser, callback) {
+    			Users.updateCurrentUser(updatedUser, function(user) {
+	                if (callback)    { callback(user) };
+	                if (!user.error) { 
 	                	mData.user = user;
-	                    $rootScope.$broadcast('SignedInViaFacebook', user);
-	                } else {
-	                    var self = this;
-	                    FB.getLoginStatus(function(response) {
-	                      if (response.status === 'connected') {
-	                        console.log('User is already logged into Facebook: ', response);
-	                        FB.api('/me', function(response) {
-	                            console.log('Successfully Retrieved User Information: ', response);
-	                            var newUser = new Users({
-	                                email:      response.email,
-	                                username:   response.username,
-	                                name:       response.name,
-	                                first_name: response.first_name,
-	                                last_name:  response.last_name,
-	                                gender:     response.gender,
-	                                locale:     response.locale,
-	                                timezone:   response.timezone,
-	                                fb_id:      response.id,
-	                                provider:   'facebook'
-	                            });
-	                            newUser.$save(function(user){
-	                                console.log("Successfully updated user in database and signed in: ", user);
-	                                mData.user = user;
-	                                // Broadcast User when Signed In
-	                                $rootScope.$broadcast('SignedInViaFacebook', user);
-	                            });
-	                        });
-	                       } // if response === 
-	                    }); // FB.getLoginStatus
-	                }; // if (user.email)
-	            }); // Users.get
-    		}, // checkSignIn
-
+	                	$rootScope.$broadcast('UserUpdated', user); 
+	                };
+	            });
+    		},
 		    authenticateUser: function() {
 	            // Check if current user
                 FB.login(function(response) {
