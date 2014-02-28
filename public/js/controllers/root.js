@@ -56,9 +56,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             Modals.signIn();
         }
     };
-    $scope.encourageSignIn = function() {
-        Modals.signIn();
-    };
     $scope.deleteFolder = function(folder) {
         var r = confirm("Are you sure you want to delete this folder?  You will lose all of the medleys in it!")
         if (r === true) {
@@ -70,26 +67,13 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     };
 
     // USERS --------------------------------------------
-    $scope.loadProfile = function(username) {
-        if (username) { 
-            username: username;
-        } else {
-            username: $stateParams.username
-        }
-        Users.getUser({ username: $stateParams.username }, function(profile) {
-            if (profile) {
-                $scope.profile = profile;
-                console.log("Profile Loaded: ", $scope.profile);
-            } else {
-                $scope.profile = null;
-                console.log("User Not Found: ", $scope.profile);
-            };
-        });
+    $scope.encourageSignIn = function() {
+        Modals.signIn();
     };
 
     // MEDLEY FEEDS ------------------------------------
-    $scope.initializeMedleys = function() {
-        if ( !$scope.medleys || !$scope.medleys.length == 0 ) { $scope.setFeed() };
+    $scope.initializeHome = function() {
+        $scope.setFeed();
     };
     $scope.setFeed = function(type) {
         $scope.medleys = false;
@@ -322,13 +306,11 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             $scope.$on('UserAuthenticated', function(e, user){
                 $scope.user  = user;
                 $scope.guest = false;
-                $scope.initializeMedleys();
                 // Get User's Folders:
                 Global.loadFolders();
             });
             $scope.$on('GuestUser', function(e){ 
                 $scope.guest = true;
-                $scope.initializeMedleys();
             });
             $scope.$on('UserUpdated', function(e, user){
                 $scope.user  = user;

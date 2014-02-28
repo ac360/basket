@@ -20,8 +20,8 @@ label {font-weight:400;}
 .st-shadow {-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);}
 .st-blur {-webkit-filter: blur(1px); -moz-filter: blur(1px); -o-filter: blur(1px); -ms-filter: blur(1px); filter: blur(1px);}
 .st-center-element {margin:0px auto!important;}
-.m-link {color:#4a92e4;}
-.m-link:hover   {cursor:pointer;color:#93c4fc;}
+.m-link {color:#69a8ef!important;}
+.m-link:hover   {cursor:pointer;color:#93c4fc!important;}
 .notice-success {color:#a6c776!important;}
 
 /* Header */

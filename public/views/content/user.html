@@ -1,14 +1,16 @@
-<div id="user-page" ng-init="MedleysByProfile()">
+<div id="user-page" ng-controller="ProfileController" ng-init="initializeProfilePage()">
 	<div id="user-container" class="row">
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-3 hidden-sm hidden-xs" style="padding-top:40px;">
 
-                    <div id="side-container" class="folders-side-container" ng-init="loadProfile()">
+                    <div id="side-container" class="folders-side-container">
                         <p class="st-centered">
                             <img class="page-image" draggable="false" ng-src="img/user_image.png">
                         </p>
-                        <h1 class="user-profile-name st-centered">{{ profile.username }}</h1>
+                        <h1 class="user-profile-name st-centered">
+                            {{ profilepage.profile.username }}
+                        </h1>
                         <h4>Your Saved Medleys</h4>
                         <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
                         <ul class="list-unstyled">
@@ -38,7 +40,7 @@
 				</div> <!-- col-md-3 -->
 				<div id="user-profile-medleys" class="medleys-list col-md-6"> 
 
-					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
+					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in profilepage.medleys">
 						<div class="medley-hashtags">
 							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
 						</div>

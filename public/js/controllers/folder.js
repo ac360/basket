@@ -4,10 +4,8 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     $scope.folderpage = {};
 
     $scope.initializeFolderPage = function() {
-        console.log("INITIALIZED")
         if ($scope.user) {
             if ($scope.folders) {
-                console.log("HEREREHERE")
                 angular.forEach($scope.folders,function(f){
                     if (f._id === $stateParams.folderId) {
                         $scope.folder = f;
@@ -65,7 +63,6 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
     // Initialize
         // Listener - Folders Updated
         $scope.$on('FoldersUpdated', function(e, folder){
-            console.log("FIRED")
             $scope.getMedleysByFolder();
         });
         // Listeners - Medley Updated
