@@ -13,7 +13,7 @@
                         	<a ui-sref="user({ username: user.username })"> {{ user.username }}</a>
 		                </li>
 		                <li ng-if="user.admin">
-                            <a href="/signout">Admin</a>
+                            <a ui-sref="admin">Admin</a>
                         </li>
 		                <li ng-if="user">
 		                    <a href="/signout">Sign Out</a>
