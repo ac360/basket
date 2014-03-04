@@ -112,29 +112,25 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 
     		// ---------- SHARE FUNCTIONS ----------
     		shareFacebook: function(medleyId) {
-    			if ( mData.user ) {
-	    			Medleys.show({ shortId: medleyId }, function(medley) {
-	    				medley = medley[0];
-	    				console.log("Facebook Share Medley Activated:  ", medley);
-	    			 	if(medley) { 
-	    			 		FB.ui({ 
-				              method:  'feed',
-				              link:    'http://mdly.co/#!/m/'+medley.short_id,
-				              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
-				              display: 'iframe',
-				              picture:  medley.items[0].images.medium,
-				              name:    'Medley - ' + medley.hashtags.join(" ")
-				            },  function(response){
-				                	console.log("facebook share response: ", response);
-				                	// Hide Modals?
-				            });
-	    			 	} else {
-	    			 		console.log("Medley could not be found for sharing...")
-	    			 	}
-	    			});
-	    		} else {
-	    			Modals.signIn();
-	    		};
+    			Medleys.show({ shortId: medleyId }, function(medley) {
+    				medley = medley[0];
+    				console.log("Facebook Share Medley Activated:  ", medley);
+    			 	if(medley) { 
+    			 		FB.ui({ 
+			              method:  'feed',
+			              link:    'http://mdly.co/#!/m/'+medley.short_id,
+			              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
+			              display: 'iframe',
+			              picture:  medley.items[0].images.medium,
+			              name:    'Medley - ' + medley.hashtags.join(" ")
+			            },  function(response){
+			                	console.log("facebook share response: ", response);
+			                	// Hide Modals?
+			            });
+    			 	} else {
+    			 		console.log("Medley could not be found for sharing...")
+    			 	}
+    			});
     		},
     		
 
