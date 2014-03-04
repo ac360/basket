@@ -33,6 +33,19 @@ app.directive("medleyItem", function() {
     };
 });
 
+// Directive - Contact Modal
+app.directive("contactLink", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Modals){
+            $element.click(function() {
+                Modals.contact();
+            })
+        }
+    };
+});
+
 // Directive - Delete Medley
 app.directive("deleteMedley", function() {  
     return {

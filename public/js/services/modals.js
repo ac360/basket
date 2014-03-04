@@ -76,6 +76,17 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
     				    }
 		        });
         },
+        contact: function(medley) {
+            var modalInstance = $modal.open({
+                windowClass: 'contact-modal',
+                templateUrl: 'views/modals/contact_modal.html',
+                controller:  function ($scope, $modalInstance, Global) {
+                    $scope.close = function() {
+                      $modalInstance.close();
+                    };
+                }
+            });
+        },
         product: function(product) {
         	var modalInstance = $modal.open({
           		windowClass: 'product-modal',

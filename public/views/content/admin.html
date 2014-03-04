@@ -5,8 +5,7 @@
     			<h1>Users (Newest 40)</h1>
     			<ul class="users-list list-unstyled">
     				<li ng-repeat="user in admin.users" ui-sref="user({ username: user.username })">
-    					<span style="font-weight:bold">{{ user.name }}</span><br/>
-    					{{ user.email }}<br/>
+    					<span style="font-weight:bold">{{ user.email }}</span><br/>
     					<span style="font-size:8px!important">{{ user.created | date:'medium' }}</span>
     				</li>
     			</ul>
