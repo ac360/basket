@@ -183,8 +183,8 @@ label {font-weight:400;}
 	.published-share-modal .modal-content {background:#f6f6f6;height:auto;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}
 	.published-share-modal .modal-content-container {padding:0px 30px 50px 30px;}							   
 	.published-share-modal .close-container {height:30px;padding-right:8px;padding-top:3px;}
-	.published-share-modal h1 {font-weight:300!important;color:#666;}
-	.published-share-modal h5 {font-weight:300!important;color:#888;margin-bottom:20px;font-size:18px;}
+	.published-share-modal h1 {font-weight:300!important;color:#666!important;}
+	.published-share-modal h5 {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
 
 	/* Product */
 	.product-modal {background:transparent;}
