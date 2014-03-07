@@ -79,6 +79,19 @@ app.directive("accountPopup", function() {
     };
 });
 
+// Directive - Share Link
+app.directive("shareLink", function() {  
+    return {
+        restrict: "A",
+        replace: true,
+        controller: function($scope, $element, $attrs, $rootScope, Global, Modals, Medleys){
+            $element.click(function() {
+                Modals.share($attrs.shareLink);
+            })
+        }
+    };
+});
+
 // Directive - Share Facebook Link
 app.directive("shareFacebookLink", function() {  
     return {

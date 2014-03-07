@@ -1,11 +1,10 @@
-/**
- * Module dependencies.
- */
-var express = require('express'),
-    mongoStore = require('connect-mongo')(express),
-    flash = require('connect-flash'),
-    helpers = require('view-helpers'),
-    config = require('./config');
+// Module dependencies.
+var express         = require('express'),
+    mongoStore      = require('connect-mongo')(express),
+    flash           = require('connect-flash'),
+    helpers         = require('view-helpers'),
+    subdomains      = require('express-subdomains'),
+    config          = require('./config');
 
 module.exports = function(app, passport) {
     app.set('showStackError', true);
@@ -60,6 +59,13 @@ module.exports = function(app, passport) {
         //use passport session
         app.use(passport.initialize());
         app.use(passport.session());
+
+        subdomains
+          .use('api1')
+
+        // Place this line before
+        // app.use(app.router)
+        app.use(subdomains.middleware);
 
         //routes should be at the last
         app.use(app.router);

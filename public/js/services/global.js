@@ -119,7 +119,7 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     			 		FB.ui({ 
 			              method:  'feed',
 			              link:    'http://mdly.co/#!/m/'+medley.short_id,
-			              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.name,
+			              caption: "This Medley is a collection of awesome, hand-picked products created by " + medley.user.username,
 			              display: 'iframe',
 			              picture:  medley.items[0].images.medium,
 			              name:    'Medley - ' + medley.hashtags.join(" ")

@@ -298,6 +298,11 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
       $scope.product_preview = false;
     };
 
+    // SHARE MODAL --------------------------
+    $scope.shareMedley = function(medley) {
+        Modals.share(medley);
+    };
+
     // INITIALIZATION METHODS ---------------
 
         Global.loadCurrentUser();

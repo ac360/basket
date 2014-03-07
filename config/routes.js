@@ -1,4 +1,5 @@
-var async = require('async');
+var async           = require('async');
+var subdomains      = require('express-subdomains');
 
 module.exports = function(app, passport, auth) {
     //User Routes
@@ -40,6 +41,12 @@ module.exports = function(app, passport, auth) {
         app.get('/api/m/by_views',                                  medleys.getByViews);
         app.get('/api/m/by_date',                                   medleys.getByDate);
         app.get('/api/m/by_featured',                               medleys.getByFeatured);
+ 
+        //Finish with setting up the shortId param
+        app.param('shortId', medleys.medley);
+
+    // Medley API - External
+        app.get('/api1/m/short_id/:shortId',                        medleys.show);
  
         //Finish with setting up the shortId param
         app.param('shortId', medleys.medley);

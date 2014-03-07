@@ -15,16 +15,22 @@
 		                <li ng-if="user">
                             <a account-popup>Account</a> 
                         </li>
-		                <li ng-if="user.admin">
+                        <li ng-if="user.admin">
                             <a ui-sref="admin">Admin</a>
                         </li>
-		                <li ng-if="user">
-		                    <a href="/signout">Sign Out</a>
-		                </li>
-		            	<!-- UnAuthenticated -->
-		                <li ng-if="!user">
-		                    <a sign-in-link>Register Or Sign In</a>
-		                </li>
+                        <li ng-if="user">
+                            <a contact-link>Contact Us</a> 
+                        </li>
+                        <li ng-if="user">
+                            <a href="/signout">Sign Out</a>
+                        </li>
+                        <!-- UnAuthenticated -->
+                        <li ng-if="!user">
+                            <a sign-in-link>Register Or Sign In</a>
+                        </li>
+                        <li ng-if="!user">
+                            <a contact-link>Contact Us</a> 
+                        </li>
 		            </ul>
 		        </div>
 		    </div> <!-- row -->

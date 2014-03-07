@@ -76,6 +76,31 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
     				    }
 		        });
         },
+        share: function(medley) {
+            var modalInstance = $modal.open({
+                windowClass: 'share-modal',
+                templateUrl: 'views/modals/share_modal.html',
+                controller:  function ($scope, $modalInstance, Global) {
+                    $scope.medley = medley;
+                    $scope.shareFacebook = function() {
+                      FB.ui({
+                        method:  'feed',
+                        link:    'http://mdly.co/#!/m/'+$scope.medley.short_id,
+                        caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.medley.user.name,
+                        display: 'iframe',
+                        picture: $scope.medley.items[0].images.medium,
+                        name: 'Medley - ' + $scope.medley.hashtags.join(" ")
+                      },  function(response){
+                            console.log(response);
+                            // Hide Modals?
+                      });
+                    };
+                    $scope.close = function() {
+                      $modalInstance.close();
+                    };
+                }
+            });
+        },
         contact: function(medley) {
             var modalInstance = $modal.open({
                 windowClass: 'contact-modal',

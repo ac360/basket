@@ -1,0 +1,237 @@
+/*  CleanSlate v0.9.2 */
+/* == BLANKET RESET RULES == */
+.cleanslate, .cleanslate h1, .cleanslate h2, .cleanslate h3, .cleanslate h4, .cleanslate h5, .cleanslate h6, .cleanslate p, .cleanslate td, .cleanslate dl, .cleanslate tr, .cleanslate dt, .cleanslate ol, .cleanslate form, .cleanslate select, .cleanslate option, .cleanslate pre, .cleanslate div, .cleanslate table,  .cleanslate th, .cleanslate tbody, .cleanslate tfoot, .cleanslate caption, .cleanslate thead, .cleanslate ul, .cleanslate li, .cleanslate address, .cleanslate blockquote, .cleanslate dd, .cleanslate fieldset, .cleanslate li, .cleanslate iframe, .cleanslate strong, .cleanslate legend, .cleanslate em, .cleanslate s, .cleanslate cite, .cleanslate span, .cleanslate input, .cleanslate sup, .cleanslate label, .cleanslate dfn, .cleanslate object, .cleanslate big, .cleanslate q, .cleanslate font, .cleanslate samp, .cleanslate acronym, .cleanslate small, .cleanslate img, .cleanslate strike, .cleanslate code, .cleanslate sub, .cleanslate ins, .cleanslate textarea, .cleanslate var, .cleanslate a, .cleanslate abbr, .cleanslate applet, .cleanslate del, .cleanslate kbd, .cleanslate tt, .cleanslate b, .cleanslate i, .cleanslate hr, /* HTML5 */ .cleanslate article, .cleanslate aside, .cleanslate dialog, .cleanslate figure, .cleanslate footer, .cleanslate header, .cleanslate hgroup, .cleanslate menu, .cleanslate nav, .cleanslate section, .cleanslate time, .cleanslate mark, .cleanslate audio, .cleanslate video {background-attachment:scroll !important; background-color:transparent !important; background-image:none !important; /* This rule affects the use of pngfix JavaScript http://dillerdesign.com/experiment/DD_BelatedPNG for IE6, which is used to force the browser to recognise alpha-transparent PNGs files that replace the IE6 lack of PNG transparency. (The rule overrides the VML image that is used to replace the given CSS background-image). If you don't know what that means, then you probably haven't used the pngfix script, and this comment may be ignored :) */ background-position:0 0 !important; background-repeat:repeat !important; border-color:black !important; border-color:currentColor !important; /* `border-color` should match font color. Modern browsers (incl. IE9) allow the use of "currentColor" to match the current font 'color' value <http://www.w3.org/TR/css3-color/#currentcolor>. For older browsers, a default of 'black' is given before this rule. Guideline to support older browsers: if you haven't already declared a border-color for an element, be sure to do so, e.g. when you first declare the border-width. */ border-radius:0 !important; border-style:none !important; border-width:medium !important; bottom:auto !important; clear:none !important; clip:auto !important; color:inherit !important; counter-increment:none !important; counter-reset:none !important; cursor:auto !important; direction:inherit !important; display:inline !important; float:none !important; font-family: inherit !important; /* As with other inherit values, this needs to be set on the root container element */ font-size: inherit !important; font-style:inherit !important; font-variant:normal !important; font-weight:inherit !important; height:auto !important; left:auto !important; letter-spacing:normal !important; line-height:inherit !important; list-style-type: inherit !important; /* Could set list-style-type to none */ list-style-position: outside !important; list-style-image: none !important; margin:0 !important; max-height:none !important; max-width:none !important; min-height:0 !important; min-width:0 !important; opacity:1; outline:invert none medium !important; overflow:visible !important; padding:0 !important; position:static !important; quotes: "" "" !important; right:auto !important; table-layout:auto !important; text-align:inherit !important; text-decoration:inherit !important; text-indent:0 !important; text-transform:none !important; top:auto !important; unicode-bidi:normal !important; vertical-align:baseline !important; visibility:inherit !important; white-space:normal !important; width:auto !important; word-spacing:normal !important; z-index:auto !important; /* Proprietary and draft rules */ /* This section needs extending */ -moz-border-radius:0 !important; -webkit-border-radius:0 !important; -moz-box-sizing: content-box !important; -webkit-box-sizing: content-box !important; box-sizing: content-box !important; text-shadow: none !important; } /* == BLOCK-LEVEL == */ /* Actually, some of these should be inline-block and other values, but block works fine (TODO: rigorously verify this) */ /* HTML 4.01 */ .cleanslate, .cleanslate h3, .cleanslate h5, .cleanslate p, .cleanslate h1, .cleanslate dl, .cleanslate dt, .cleanslate h6, .cleanslate ol, .cleanslate form, .cleanslate select, .cleanslate option, .cleanslate pre, .cleanslate div, .cleanslate h2, .cleanslate caption, .cleanslate h4, .cleanslate ul, .cleanslate address, .cleanslate blockquote, .cleanslate dd, .cleanslate fieldset, .cleanslate textarea, .cleanslate hr, /* HTML5 new elements */ .cleanslate article, .cleanslate aside, .cleanslate dialog, .cleanslate figure, .cleanslate footer, .cleanslate header, .cleanslate hgroup, .cleanslate menu, .cleanslate nav, .cleanslate section {display:block !important; } .cleanslate table {display: table !important; } .cleanslate thead {display: table-header-group !important; } .cleanslate tbody {display: table-row-group !important; } .cleanslate tfoot {display: table-footer-group !important; } .cleanslate tr {display: table-row !important; } .cleanslate th, .cleanslate td {display: table-cell !important; } /* == SPECIFIC ELEMENTS == */ /* Some of these are browser defaults; some are just useful resets */ .cleanslate nav ul, .cleanslate nav ol {list-style-type:none !important; } .cleanslate ul, .cleanslate menu {list-style-type:disc !important; } .cleanslate ol {list-style-type:decimal !important; } .cleanslate ol ul, .cleanslate ul ul, .cleanslate menu ul, .cleanslate ol menu, .cleanslate ul menu, .cleanslate menu menu {list-style-type:circle !important; } .cleanslate ol ol ul, .cleanslate ol ul ul, .cleanslate ol menu ul, .cleanslate ol ol menu, .cleanslate ol ul menu, .cleanslate ol menu menu, .cleanslate ul ol ul, .cleanslate ul ul ul, .cleanslate ul menu ul, .cleanslate ul ol menu, .cleanslate ul ul menu, .cleanslate ul menu menu, .cleanslate menu ol ul, .cleanslate menu ul ul, .cleanslate menu menu ul, .cleanslate menu ol menu, .cleanslate menu ul menu, .cleanslate menu menu menu {list-style-type:square !important; } .cleanslate li {display:list-item !important; /* Fixes IE7 issue with positioning of nested bullets */ min-height:auto !important; min-width:auto !important; } .cleanslate strong {font-weight:bold !important; } .cleanslate em {font-style:italic !important; } .cleanslate kbd, .cleanslate samp, .cleanslate code {font-family:monospace !important; } .cleanslate a, .cleanslate a *, .cleanslate input[type=submit], .cleanslate input[type=radio], .cleanslate input[type=checkbox], .cleanslate select {cursor:pointer !important; } .cleanslate a:hover {text-decoration:underline !important; } .cleanslate button, .cleanslate input[type=submit] {text-align: center !important; } .cleanslate input[type=hidden] {display:none !important; } .cleanslate abbr[title], .cleanslate acronym[title], .cleanslate dfn[title] {cursor:help !important; border-bottom-width:1px !important; border-bottom-style:dotted !important; } .cleanslate ins {background-color:#ff9 !important; color:black !important; } .cleanslate del {text-decoration: line-through !important; } .cleanslate blockquote, .cleanslate q  {quotes:none !important; /* HTML5 */ } .cleanslate blockquote:before, .cleanslate blockquote:after, .cleanslate q:before, .cleanslate q:after, .cleanslate li:before, .cleanslate li:after  {content:"" !important; } .cleanslate input, .cleanslate select {vertical-align:middle !important; } .cleanslate select, .cleanslate textarea, .cleanslate input {border:1px solid #ccc !important; } .cleanslate table {border-collapse:collapse !important; border-spacing:0 !important; } .cleanslate hr {display:block !important; height:1px !important; border:0 !important; border-top:1px solid #ccc !important; margin:1em 0 !important; } .cleanslate *[dir=rtl] {direction: rtl !important; } .cleanslate mark {background-color:#ff9 !important; color:black !important; font-style:italic !important; font-weight:bold !important; }
+/* == ROOT CONTAINER ELEMENT == */
+/* This contains default values for child elements to inherit  */
+.cleanslate {
+        font-size: medium !important;
+        line-height: 1 !important;
+        direction:ltr !important;
+        text-align:left !important;
+        font-family:  sans-serif !important;
+        color: black !important;
+        font-style:normal !important;
+        font-weight:normal !important;
+        text-decoration:none !important;
+        list-style-type:disc !important;
+        -webkit-font-smoothing: antialiased !important;
+}
+
+ @font-face {font-family: 'nexa_boldregular'; src: url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.eot'); src: url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.eot?#iefix') format('embedded-opentype'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.woff') format('woff'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.ttf') format('truetype'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.svg#nexa_boldregular') format('svg'); font-weight: normal; font-style: normal; }
+
+.MDLYa1 {
+	display:block !important;
+	position:relative !important;
+	min-height:300px !important;
+	width:390px !important;
+	background: transparent !important;
+}
+.MDLYa1 .MDLYa1-title-box {
+	display:block !important;
+	height:30px !important;
+	width:100% !important;
+	background: #222222 !important;
+	text-align: center  !important;
+	color: #ffffff  !important;
+	overflow: hidden !important;
+	border-color: #222 #222 #000  !important;
+	border-width: 1px !important;
+	border-style: solid !important;
+	-webkit-border-radius: 3px 3px 0px 0px !important;
+	border-radius: 3px 3px 0px 0px !important;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.54902) 0px 1px 3px 0px !important;
+	box-shadow: rgba(0, 0, 0, 0.54902) 0px 1px 3px 0px !important;
+}
+
+.MDLYa1 .MDLYa1-title-box h1 {
+	font-weight: bold !important;
+	color: #ffffff !important;
+	font-size: 11px !important;
+	margin-top: 10px !important;
+	font-family: nexa_boldregular, sans-serif !important;
+	text-transform: uppercase !important;
+	letter-spacing: 1px !important;
+}
+
+.MDLYa1 .MDLYa1-items-box {
+	display: block !important;
+	position: relative !important;
+	width:390px !important;
+	min-height: 280px !important;
+	background-color:#f6f6f6 !important;
+	-webkit-border-radius: 0px 0px 3px 3px !important;
+	border-radius: 0px 0px 3px 3px !important;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 3px 0px !important;
+	box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 3px 0px !important;
+	border-color: #FFF #DDD #BBB !important;
+	border-width: 1px !important;
+	border-style: solid !important;
+	overflow: hidden !important;
+}
+
+.MDLYa1 .MDLYa1-item, .MDLYa1-item-info-container img { 
+	position:absolute !important;
+	display:block !important;
+	text-align: center !important;
+	background:#ffffff !important;
+	text-align:center !important;
+	-webkit-border-radius: 3px !important;
+	border-radius: 3px !important;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px !important;
+	box-shadow: rgba(0, 0, 0, 0.14902) 0px 1px 1px 0px !important;
+	border-color: #EEE #DDD #BBB !important;
+	border-width: 1px !important;
+	border-style: solid !important;
+}
+.MDLYa1 .MDLYa1-item:hover {
+	cursor: pointer !important;
+	-webkit-box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px 0px !important;
+	box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px 0px !important;
+	border-bottom: 1px solid #777 !important;
+}
+.MDLYa1 .MDLYa1-item:active {
+	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px !important;
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px !important;
+	border-bottom: 1px solid #ccc !important;
+}
+
+.MDLYa1 .MDLYa1-link-box {
+	position:absolute !important;
+	bottom: 0px !important;
+	display: block !important;
+	height:auto !important;
+	max-height: 20px !important;
+	width: 100% !important;
+	background: transparent !important;
+	padding:0px 0px 5px 0px !important;
+}
+
+.MDLYa1 .MDLYa1-items-box .widthx1  { width: 85px  !important;   }
+.MDLYa1 .MDLYa1-items-box .widthx2  { width: 180px !important;   }
+.MDLYa1 .MDLYa1-items-box .heighty1 { height: 85px !important;   }
+.MDLYa1 .MDLYa1-items-box .heighty2 { height: 180px !important;  }
+
+.MDLYa1 .MDLYa1-items-box .widthx1 img  { max-width: 75px  !important;   }
+.MDLYa1 .MDLYa1-items-box .widthx2 img  { max-width: 160px !important;   }
+.MDLYa1 .MDLYa1-items-box .heighty1 img { max-height: 75px !important;margin-top:5px !important;   }
+.MDLYa1 .MDLYa1-items-box .heighty2 img { max-height: 160px !important;margin-top:10px !important;   }
+
+.MDLYa1 .MDLYa1-item img { 
+	
+}
+.MDLYa1 .MDLYa1-item img:hover { cursor: pointer !important; }
+
+.MDLYa1 .MDLYa1-items-box .widthx1 img   { left:12px !important; }
+.MDLYa1 .MDLYa1-items-box .widthx2 img   { left:20px !important; }
+.MDLYa1 .MDLYa1-items-box .heighty1 img  { top:10px !important;  }
+.MDLYa1 .MDLYa1-items-box .heighty2 img  { top:15px !important; }
+.MDLYa1 .row1 {  top:10px   !important; }
+.MDLYa1 .row2 {  top:105px  !important; }
+.MDLYa1 .row3 {  top:200px  !important; }
+.MDLYa1 .row4 {  top:295px  !important; }
+.MDLYa1 .row5 {  top:390px  !important; }
+.MDLYa1 .row6 {  top:485px  !important; }
+.MDLYa1 .row7 {  top:580px  !important; }
+.MDLYa1 .row8 {  top:675px  !important; }
+.MDLYa1 .row9 {  top:770px  !important; }
+.MDLYa1 .row10 { top:865px  !important; }
+.MDLYa1 .row11 { top:960px  !important; }
+.MDLYa1 .row12 { top:1055px !important; }
+.MDLYa1 .row13 { top:1150px !important; }
+.MDLYa1 .row14 { top:1245px !important; }
+.MDLYa1 .row15 { top:1340px !important; }
+.MDLYa1 .row16 { top:1435px !important; }
+.MDLYa1 .row17 { top:1530px !important; }
+.MDLYa1 .row18 { top:1625px !important; }
+.MDLYa1 .row19 { top:1720px !important; }
+.MDLYa1 .row20 { top:1815px !important; }
+.MDLYa1 .row21 { top:1910px !important; }
+.MDLYa1 .row22 { top:2005px !important; }
+.MDLYa1 .row23 { top:2100px !important; }
+.MDLYa1 .row24 { top:2195px !important; }
+
+.MDLYa1 .col1 {  left:10px   !important; }
+.MDLYa1 .col2 {  left:105px  !important; }
+.MDLYa1 .col3 {  left:200px  !important; }
+.MDLYa1 .col4 {  left:295px  !important; }
+
+.MDLYa1 .height1   {  height:145px !important;}
+.MDLYa1 .height2   {  height:240px !important;}
+.MDLYa1 .height3   {  height:335px !important;}
+.MDLYa1 .height4   {  height:430px !important;}
+.MDLYa1 .height5   {  height:525px !important;}
+.MDLYa1 .height6   {  height:620px !important;}
+.MDLYa1 .height7   {  height:715px !important;}
+.MDLYa1 .height8   {  height:810px !important;}
+.MDLYa1 .height9   {  height:905px !important;}
+.MDLYa1 .height10 {  height:1000px !important;}
+.MDLYa1 .height11 {  height:1095px !important;}
+.MDLYa1 .height12 {  height:1190px !important;}
+.MDLYa1 .height13 {  height:1285px !important;}
+.MDLYa1 .height14 {  height:1380px !important;}
+.MDLYa1 .height15 {  height:1475px !important;}
+.MDLYa1 .height16 {  height:1570px !important;}
+.MDLYa1 .height17 {  height:1665px !important;}
+.MDLYa1 .height18 {  height:1560px !important;}
+.MDLYa1 .height19 {  height:1655px !important;}
+.MDLYa1 .height20 {  height:1750px !important;}
+.MDLYa1 .height21 {  height:1845px !important;}
+.MDLYa1 .height22 {  height:1740px !important;}
+.MDLYa1 .height23 {  height:1835px !important;}
+.MDLYa1 .height24 {  height:1930px !important;}
+
+.MDLYa1 .height-outer1   {  height:195px !important;}
+.MDLYa1 .height-outer2   {  height:290px !important;}
+.MDLYa1 .height-outer3   {  height:385px !important;}
+.MDLYa1 .height-outer4   {  height:430px !important;}
+.MDLYa1 .height-outer5   {  height:525px !important;}
+.MDLYa1 .height-outer6   {  height:620px !important;}
+.MDLYa1 .height-outer7   {  height:715px !important;}
+.MDLYa1 .height-outer8   {  height:810px !important;}
+.MDLYa1 .height-outer9   {  height:905px !important;}
+.MDLYa1 .height-outer10  {  height:1000px !important;}
+.MDLYa1 .height-outer11  {  height:1095px !important;}
+.MDLYa1 .height-outer12  {  height:1190px !important;}
+.MDLYa1 .height-outer13  {  height:1285px !important;}
+.MDLYa1 .height-outer14  {  height:1380px !important;}
+.MDLYa1 .height-outer15  {  height:1475px !important;}
+.MDLYa1 .height-outer16  {  height:1570px !important;}
+.MDLYa1 .height-outer17  {  height:1665px !important;}
+.MDLYa1 .height-outer18  {  height:1560px !important;}
+.MDLYa1 .height-outer19  {  height:1655px !important;}
+.MDLYa1 .height-outer20  {  height:1750px !important;}
+.MDLYa1 .height-outer21  {  height:1845px !important;}
+.MDLYa1 .height-outer22  {  height:1740px !important;}
+.MDLYa1 .height-outer23  {  height:1835px !important;}
+.MDLYa1 .height-outer24  {  height:1930px !important;}
+
+.MDLYa1-item-info-box img {
+	position: absolute !important;
+	max-width:80%  !important;
+	height:auto    !important;
+	max-height:80% !important;
+}
+
+.MDLYa1-item-info-container img {
+	padding:10px !important;
+	background: #ffffff !important;
+	position: absolute !important;
+	top: 10px !important;
+	left: 10px !important;
+	max-width: 130px !important;
+	max-height: 130px !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
