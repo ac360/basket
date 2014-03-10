@@ -41,7 +41,7 @@
 			    			$(self).append('<div class="MDLYa1-items-box" data-medleyid="'+m.short_id+'"></div>');
 						  	// Define Functions
 						  	var addItem = function(item) {
-								var image    = '<img src="' + item.images.small + '" draggable="false" />'
+								var image    = '<img src="' + item.images.medium + '" draggable="false" />'
 								var itemHtml = "<div class='MDLYa1-item widthx" + item.size_x + " heighty" + item.size_y + " row" + item.row + " " + "col" + item.col + "' data-itemid='" + item.short_id + "'>" + image + "</div>"
 								$(self).find('.MDLYa1-items-box').append(itemHtml)
 						  	};
