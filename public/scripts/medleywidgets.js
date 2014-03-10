@@ -51,7 +51,7 @@
 						  	var rowHeightsObj = {};
 						  	// Append each item to the parent div and collect the row numbers
 						  	// TODO ----- FIND Y VALUES OF EACH ROW AND FACTOR THOSE IN TO GT CORRECT HEIGHT
-						  	$(itemArray).each(function(index, item) {
+						  	$(m.items).each(function(index, item) {
 						  		if( !rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 }
 						  		if ( rowHeightsObj[item.row] < item.y ) { 
 						  			 rowHeightsObj[item.row] = item.y
@@ -122,7 +122,7 @@
 						window.open('http://mdly.co', '_blank');
 					});
 
-	}; // / Mobile Device Check
+	        }; // / Mobile Device Check
 		}; // / window.mdlywidgets Check
 	}); //jQuery End Document Ready
 });
