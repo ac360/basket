@@ -28,12 +28,13 @@
 }
 
 .MDLYa1 .MDLYa1-title-box {
-	display:block !important;
-	height:30px !important;
-	width:100% !important;
+	display:block    !important;
+	min-height: 30px !important;
+	height:auto !important;
+	width:100%  !important;
 	background: #7bb4f5 !important;
 	text-align: center  !important;
-	color: #ffffff  !important;
+	color: #ffffff   !important;
 	overflow: hidden !important;
 	-webkit-border-radius: 3px 3px 0px 0px !important;
 	border-radius: 3px 3px 0px 0px !important;
