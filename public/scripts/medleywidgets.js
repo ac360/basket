@@ -53,8 +53,8 @@
 						  	// TODO ----- FIND Y VALUES OF EACH ROW AND FACTOR THOSE IN TO GT CORRECT HEIGHT
 						  	$(m.items).each(function(index, item) {
 						  		if( !rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 }
-						  		if ( rowHeightsObj[item.row] < item.y ) { 
-						  			 rowHeightsObj[item.row] = item.y
+						  		if ( rowHeightsObj[item.row] < item.size_y ) { 
+						  			 rowHeightsObj[item.row] = item.size_y
 						  		};
 								addItem(item);
 							});
@@ -76,7 +76,7 @@
 							$(self).addClass('height-outer' + rowHeightsTotal );
 							$(self).children('.MDLYa1-items-box').addClass('height' + rowHeightsTotal );
 							// Set Title
-							$(self).find('.MDLYa1-title-box').append('<h1>' + m.hashtags + '</h1>');
+							$(self).find('.MDLYa1-title-box').append('<h1>' + m.hashtags.join(" "); + '</h1>');
 						}); // /getJSON
 					}) // /.each for each Medley on the page
 
