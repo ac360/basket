@@ -21,7 +21,7 @@
 		  	var MW = window.mdlywidgets;
 		  	// Add the style tag into the head
 	        $('head').append('<'+'link rel="stylesheet" href="http://mdly.co/scripts/medleywidgets.css" type="text/css"/'+'>'); 
-		  	// Check to See if is a mobile device
+		  	// Check width to see if is a mobile device
 		  	var pw = $( ".MDLYa1" ).parent().width();
 		  	if (pw < 420) {	
 		  	} else {
@@ -30,7 +30,7 @@
 			    		var self = e;
 			    		// Call Medley API
 			    		var id = $(self).attr('data-id');
-			    		var mAPI = "http://api.mdly.co/v1/medley/" + id
+			    		var mAPI = "http://api1.mdly.co/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
 			    			// Attach Medley to Global Namespace
 			    			if (!MW[m.id]) { MW[m.id] = m };
