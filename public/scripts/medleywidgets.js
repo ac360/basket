@@ -20,7 +20,7 @@
     		window.mdlywidgets = {};
 		  	var MW = window.mdlywidgets;
 		  	// Add the style tag into the head
-	        $('head').append('<'+'link rel="stylesheet" href="http://mdly.co/scripts/medleywidgets.css" type="text/css"/'+'>'); 
+	        $('head').append('<link rel="stylesheet" href="http://mdly.co/scripts/medleywidgets.css" type="text/css"/>'); 
 		  	// Check width to see if is a mobile device
 		  	var pw = $( ".MDLYa1" ).parent().width();
 		  	if (pw < 420) {	
@@ -32,13 +32,14 @@
 			    		var id = $(self).attr('data-id');
 			    		var mAPI = "http://mdly.co/api/1/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
+			    			console.log("External Medley Loaded: ", m);
 			    			// Attach Medley to Global Namespace
 			    			if (!MW[m.id]) { MW[m.id] = m };
 			    			// Append Containers
 			    			$(self).append('<div class="MDLYa1-title-box"></div>');
 			    			$(self).append('<div class="MDLYa1-items-box" data-medleyid="' + m.id + '"></div>');
 						  	// Remove Null Items from results
-						  	var itemArray = []
+						  	var itemArray = [];
 						  	$.grep(m.items, function(i, index){ if (i.id) {itemArray.push(i)} });
 
 						  	// Define Functions
