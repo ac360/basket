@@ -42,7 +42,8 @@
 }
 
 .MDLYa1 .MDLYa1-title-box h1 {
-	margin: 0px        !important;
+	width: 90%         !important;
+	margin: 0px auto   !important;
 	font-weight: bold  !important;
 	font-size:   14px  !important;
 	line-height: 18px  !important;
