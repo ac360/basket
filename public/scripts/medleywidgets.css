@@ -42,8 +42,9 @@
 }
 
 .MDLYa1 .MDLYa1-title-box h1 {
-	margin: 0px       !important;
-	font-weight: bold !important;
+	margin: 0px        !important;
+	font-weight: bold  !important;
+	line-height: 20px  !important;
 	color: #ffffff !important;
 	font-size: 11px !important;
 	letter-spacing: 1px !important;
@@ -51,7 +52,6 @@
 
 .MDLYa1 .MDLYa1-items-box {
 	background:#f6f6f6 !important;
-	line-height: 20px  !important;
 	display: block !important;
 	position: relative !important;
 	width:390px !important;
