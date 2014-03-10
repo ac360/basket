@@ -30,7 +30,7 @@
 			    		var self = e;
 			    		// Call Medley API
 			    		var id = $(self).attr('data-id');
-			    		var mAPI = "http://api1.mdly.co/m/short_id/" + id
+			    		var mAPI = "http://mdly.co/api/1/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
 			    			// Attach Medley to Global Namespace
 			    			if (!MW[m.id]) { MW[m.id] = m };

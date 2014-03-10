@@ -1,5 +1,4 @@
 var async           = require('async');
-var subdomains      = require('express-subdomains');
 
 module.exports = function(app, passport, auth) {
     
@@ -51,11 +50,10 @@ module.exports = function(app, passport, auth) {
         app.get('/api/m/by_featured',                               medleys.getByFeatured);
 
     // Medley API - External
-        app.get('/api1/m/short_id/:shortId',                        medleys.show);
+        app.get('/api/1/m/short_id/:shortId',                        medleys.show);
 
         //Finish with setting up the shortId param
         app.param('shortId', medleys.medley);
-
 
     // Vote API - Internal
         var votes = require('../app/controllers/votes');
