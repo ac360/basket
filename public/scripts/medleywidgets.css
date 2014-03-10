@@ -4,7 +4,6 @@
 /* == ROOT CONTAINER ELEMENT == */
 /* This contains default values for child elements to inherit  */
 .cleanslate {
-        font-size: medium !important;
         line-height: 1 !important;
         direction:ltr !important;
         text-align:left !important;
@@ -25,6 +24,16 @@
 	background: transparent !important;
 	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important; 
     font-weight: 300 !important;
+    	/* Cleanslate Defaults */
+        line-height: 1 !important;
+        direction:ltr !important;
+        text-align:left !important;
+        color: rgba(0,0,0,0.4) !important;
+        font-style:normal !important;
+        font-weight:normal !important;
+        text-decoration:none !important;
+        list-style-type:disc !important;
+        -webkit-font-smoothing: antialiased !important;
 }
 
 .MDLYa1 .MDLYa1-title-box {
