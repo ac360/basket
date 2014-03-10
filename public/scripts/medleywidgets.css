@@ -17,14 +17,14 @@
         -webkit-font-smoothing: antialiased !important;
 }
 
- @font-face {font-family: 'nexa_boldregular'; src: url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.eot'); src: url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.eot?#iefix') format('embedded-opentype'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.woff') format('woff'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.ttf') format('truetype'), url('http://mdly.co/fonts/Nexa_Free_Bold-webfont.svg#nexa_boldregular') format('svg'); font-weight: normal; font-style: normal; }
-
 .MDLYa1 {
 	display:block !important;
 	position:relative !important;
 	min-height:300px !important;
 	width:390px !important;
 	background: transparent !important;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !important; 
+    font-weight: 300 !important;
 }
 .MDLYa1 .MDLYa1-title-box {
 	display:block !important;
@@ -48,7 +48,6 @@
 	color: #ffffff !important;
 	font-size: 11px !important;
 	margin-top: 10px !important;
-	font-family: nexa_boldregular, sans-serif !important;
 	text-transform: uppercase !important;
 	letter-spacing: 1px !important;
 }
@@ -78,7 +77,6 @@
 	cursor: pointer !important;
 	-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.4) !important; 
 	box-shadow: 0 2px 0 0 rgba(0,0,0,0.4) !important;
-	border-bottom: 1px solid #777 !important;
 }
 .MDLYa1 .MDLYa1-item:active {
 	-webkit-box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 1px 0px !important;
