@@ -46,7 +46,7 @@
 								$(self).find('.MDLYa1-items-box').append(itemHtml)
 						  	};
 						  	// Add Medley Title
-						  	$(self).find('.MDLYa1-items-box').append('<div class="MDLYa1-link-box"><h1 class="MDLYa1-home-link" style="text-align:center !important;font-size:14px !important;cursor:pointer !important;color:#999 !important;font-family: nexa_boldregular, sans-serif !important;margin-top:0px!important;text-transform:uppercase !important;letter-spacing:4px !important;">MEDLEY</h1></div>');
+						  	$(self).find('.MDLYa1-items-box').append('<div class="MDLYa1-link-box"><h1 class="MDLYa1-home-link" style="text-align:center !important;font-size:14px !important;cursor:pointer !important;color:#999 !important;margin-top:0px!important;text-transform:uppercase !important;letter-spacing:4px !important;">MEDLEY</h1></div>');
 						  	// Set Object to keep row numbers and determine highest row value
 						  	var rowHeightsObj = {};
 						  	// Append each item to the parent div and collect the row numbers
