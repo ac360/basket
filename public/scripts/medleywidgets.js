@@ -76,7 +76,7 @@
 							$(self).addClass('height-outer' + rowHeightsTotal );
 							$(self).children('.MDLYa1-items-box').addClass('height' + rowHeightsTotal );
 							// Set Title
-							$(self).find('.MDLYa1-title-box').append('<h1>' + m.hashtags.join(" "); + '</h1>');
+							$(self).find('.MDLYa1-title-box').append('<h1>' + m.hashtags.join(" ") + '</h1>');
 						}); // /getJSON
 					}) // /.each for each Medley on the page
 
