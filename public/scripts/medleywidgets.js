@@ -33,31 +33,28 @@
 			    		var mAPI = "http://mdly.co/api/1/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
 			    			console.log("External Medley Loaded: ", m);
+			    			m = m[0];
 			    			// Attach Medley to Global Namespace
-			    			if (!MW[m.id]) { MW[m.id] = m };
+			    			if (!MW[m.short_id]) { MW[m.short_id] = m };
 			    			// Append Containers
 			    			$(self).append('<div class="MDLYa1-title-box"></div>');
-			    			$(self).append('<div class="MDLYa1-items-box" data-medleyid="' + m.id + '"></div>');
-						  	// Remove Null Items from results
-						  	var itemArray = [];
-						  	$.grep(m.items, function(i, index){ if (i.id) {itemArray.push(i)} });
-
+			    			$(self).append('<div class="MDLYa1-items-box" data-medleyid="'+m.short_id+'"></div>');
 						  	// Define Functions
 						  	var addItem = function(item) {
-								var image    = '<img src="' + item.img_small + '" draggable="false" />'
-								var itemHtml = "<div class='MDLYa1-item widthx" + item.x + " heighty" + item.y + " row" + item.r + " " + "col" + item.c + "' data-itemid='" + item.id + "'>" + image + "</div>"
+								var image    = '<img src="' + item.images.small + '" draggable="false" />'
+								var itemHtml = "<div class='MDLYa1-item widthx" + item.size_x + " heighty" + item.size_y + " row" + item.row + " " + "col" + item.col + "' data-itemid='" + item.short_id + "'>" + image + "</div>"
 								$(self).find('.MDLYa1-items-box').append(itemHtml)
 						  	};
+						  	// Add Medley Title
 						  	$(self).find('.MDLYa1-items-box').append('<div class="MDLYa1-link-box"><h1 class="MDLYa1-home-link" style="text-align:center !important;font-size:14px !important;cursor:pointer !important;color:#999 !important;font-family: nexa_boldregular, sans-serif !important;margin-top:0px!important;text-transform:uppercase !important;letter-spacing:4px !important;">MEDLEY</h1></div>');
-
 						  	// Set Object to keep row numbers and determine highest row value
 						  	var rowHeightsObj = {};
 						  	// Append each item to the parent div and collect the row numbers
 						  	// TODO ----- FIND Y VALUES OF EACH ROW AND FACTOR THOSE IN TO GT CORRECT HEIGHT
 						  	$(itemArray).each(function(index, item) {
-						  		if(!rowHeightsObj[item.r]) { rowHeightsObj[item.r] = 0 }
-						  		if ( rowHeightsObj[item.r] < item.y ) { 
-						  			rowHeightsObj[item.r] = item.y
+						  		if( !rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 }
+						  		if ( rowHeightsObj[item.row] < item.y ) { 
+						  			 rowHeightsObj[item.row] = item.y
 						  		};
 								addItem(item);
 							});
@@ -79,7 +76,7 @@
 							$(self).addClass('height-outer' + rowHeightsTotal );
 							$(self).children('.MDLYa1-items-box').addClass('height' + rowHeightsTotal );
 							// Set Title
-							$(self).find('.MDLYa1-title-box').append('<h1>' + m.title + '</h1>');
+							$(self).find('.MDLYa1-title-box').append('<h1>' + m.hashtags + '</h1>');
 						}); // /getJSON
 					}) // /.each for each Medley on the page
 
