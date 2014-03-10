@@ -29,7 +29,7 @@
 
 .MDLYa1 .MDLYa1-title-box {
 	display:block    !important;
-	min-height: 30px !important;
+	min-height: 20px !important;
 	height:auto !important;
 	padding: 10px 0px  !important;
 	width:100%  !important;
@@ -44,7 +44,7 @@
 .MDLYa1 .MDLYa1-title-box h1 {
 	margin: 0px        !important;
 	font-weight: bold  !important;
-	line-height: 20px  !important;
+	line-height: 15px  !important;
 	color: #ffffff !important;
 	font-size: 11px !important;
 	letter-spacing: 1px !important;
