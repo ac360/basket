@@ -43,6 +43,7 @@
 			    			var rowHeightsObj = {};
 						    // Resize Items
 						    $.each(m.items, function(item) {
+						    	console.log(item)
 						            // Set Item Dimensions
 						            if (item.size_y == 1){ item.width  = 85  };
 						            if (item.size_y == 2){ item.width  = 175 };
@@ -50,9 +51,9 @@
 						            if (item.size_x == 2){ item.height = 175 };
 						            // Set Item Position
 						            if (item.row == 1 ){ item.top  = 5 };
-						            if (item.row >  1 ){ item.top  = (item.row * 90) + 5 - 90 };
+						            if (item.row >  1 ){ item.top  = (item.row * 90) + 5 - 90  };
 						            if (item.col == 1) { item.left = 5 };
-						            if (item.col >  1 ){ item.left = (item.col * 90) + 5 - 90 };
+						            if (item.col >  1 ){ item.left = (item.col * 90) + 5 - 90  };
 						            // Keep Row Count for Container Height
 						            if(!rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 };
 						            if( rowHeightsObj[item.row] < item.size_y ) { 
