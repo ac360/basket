@@ -32,8 +32,8 @@
 			    		var id = $(self).attr('data-id');
 			    		var mAPI = "http://mdly.co/api/1/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
-			    			console.log("External Medley Loaded: ", m);
 			    			m = m[0];
+			    			console.log("External Medley Loaded: ", m);
 			    			// Attach Medley to Global Namespace
 			    			if (!MW[m.short_id]) { MW[m.short_id] = m };
 			    			// Append Containers
@@ -42,7 +42,7 @@
 						  	// Size Medley
 			    			var rowHeightsObj = {};
 						    // Resize Items
-						    $.each(m.items, function(item) {
+						    $.each(m.items, function(index, item) {
 						    	console.log(item)
 						            // Set Item Dimensions
 						            if (item.size_y == 1){ item.width  = 85  };
