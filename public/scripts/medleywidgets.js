@@ -42,7 +42,7 @@
 						  	// Size Medley
 			    			var rowHeightsObj = {};
 						    // Resize Items
-						    $.each(medley.items, function(item) {
+						    $.each(m.items, function(item) {
 						            // Set Item Dimensions
 						            if (item.size_y == 1){ item.width  = 85  };
 						            if (item.size_y == 2){ item.width  = 175 };
