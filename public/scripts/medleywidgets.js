@@ -39,39 +39,47 @@
 			    			// Append Containers
 			    			$(self).append('<div class="MDLYa1-title-box"></div>');
 			    			$(self).append('<div class="MDLYa1-items-box" data-medleyid="'+m.short_id+'"></div>');
-						  	// Define Functions
-						  	var addItem = function(item) {
-								var image    = '<img src="' + item.images.medium + '" draggable="false" />'
-								var itemHtml = "<div class='MDLYa1-item widthx" + item.size_x + " heighty" + item.size_y + " row" + item.row + " " + "col" + item.col + "' data-itemid='" + item.short_id + "'>" + image + "</div>"
-								$(self).find('.MDLYa1-items-box').append(itemHtml)
-						  	};
+						  	// Size Medley
+			    			var rowHeightsObj = {};
+						    // Resize Items
+						    angular.forEach(medley.items, function(item) {
+						            // Set Item Dimensions
+						            if (item.size_y == 1){ item.width  = 85  };
+						            if (item.size_y == 2){ item.width  = 175 };
+						            if (item.size_x == 1){ item.height = 85  };
+						            if (item.size_x == 2){ item.height = 175 };
+						            // Set Item Position
+						            if (item.row == 1 ){ item.top  = 5 };
+						            if (item.row >  1 ){ item.top  = (item.row * 90) + 5 - 90 };
+						            if (item.col == 1) { item.left = 5 };
+						            if (item.col >  1 ){ item.left = (item.col * 90) + 5 - 90 };
+						            // Keep Row Count for Container Height
+						            if(!rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 };
+						            if( rowHeightsObj[item.row] < item.size_y ) { 
+						                rowHeightsObj[item.row] = item.size_y;
+						            };
+						            // Add Medley Items
+								    var image    = '<img src="' + item.images.medium + '" draggable="false" />'
+									var itemHtml = "<div class='MDLYa1-item' style='top:"+item.top+";left:"+item.left+";height:"+item.height+";width:"+item.width+";' data-itemid='" + item.short_id + "'>" + image + "</div>"
+									$(self).find('.MDLYa1-items-box').append(itemHtml)
+						    });
+						    // Resize Container
+						    $.each(rowHeightsObj, function(key, value) {
+						          previousRow = rowHeightsObj[key - 1]
+						          if (previousRow == 2) {
+						            rowHeightsObj[key] = 0
+						          }
+						    });
+						    // Iterate through object and pull values
+						    rowHeightsTotal = 0
+						    $.each(rowHeightsObj, function(key, value) { 
+						          rowHeightsTotal = rowHeightsTotal + value; 
+						    });
+						    medley.height = rowHeightsTotal * 90 + 8;
+
+
 						  	// Add Medley Title
 						  	$(self).find('.MDLYa1-items-box').append('<div class="MDLYa1-link-box"><h1 class="MDLYa1-home-link" style="text-align:center !important;font-size:14px !important;cursor:pointer !important;color:#999 !important;margin-top:0px!important;text-transform:uppercase !important;letter-spacing:4px !important;">MEDLEY</h1></div>');
-						  	// Set Object to keep row numbers and determine highest row value
-						  	var rowHeightsObj = {};
-						  	// Append each item to the parent div and collect the row numbers
-						  	// TODO ----- FIND Y VALUES OF EACH ROW AND FACTOR THOSE IN TO GT CORRECT HEIGHT
-						  	$(m.items).each(function(index, item) {
-						  		if( !rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 }
-						  		if ( rowHeightsObj[item.row] < item.size_y ) { 
-						  			 rowHeightsObj[item.row] = item.size_y
-						  		};
-								addItem(item);
-							});
-
-							$.each(rowHeightsObj, function(key, value) {
-								previousRow = rowHeightsObj[key - 1]
-								if (previousRow == 2) {
-									rowHeightsObj[key] = 0
-								}
-							});
-
-							// ITERATE THROUGH OBJECT AN PULL VALUES!
-							rowHeightsTotal = 0
-							$.each(rowHeightsObj, function(key, value) { 
-								rowHeightsTotal = rowHeightsTotal + value 
-							});
-
 							// Setting Height Of Container.  Start by finding the largest row number.  We use this to find total height.
 							$(self).addClass('height-outer' + rowHeightsTotal );
 							$(self).children('.MDLYa1-items-box').addClass('height' + rowHeightsTotal );
