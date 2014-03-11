@@ -45,10 +45,10 @@
 						    $.each(m.items, function(index, item) {
 						    	console.log(item)
 						            // Set Item Dimensions
-						            if (item.size_y == 1){ item.width  = 85  };
-						            if (item.size_y == 2){ item.width  = 175 };
-						            if (item.size_x == 1){ item.height = 85  };
-						            if (item.size_x == 2){ item.height = 175 };
+						            if (item.size_y == 1){ item.width  = 58  };
+						            if (item.size_y == 2){ item.width  = 116 };
+						            if (item.size_x == 1){ item.height = 58  };
+						            if (item.size_x == 2){ item.height = 116 };
 						            // Set Item Position
 						            if (item.row == 1 ){ item.top  = 5 };
 						            if (item.row >  1 ){ item.top  = (item.row * 90) + 5 - 90  };
