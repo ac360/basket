@@ -45,15 +45,15 @@
 						    $.each(m.items, function(index, item) {
 						    	console.log(item)
 						            // Set Item Dimensions
-						            if (item.size_y == 1){ item.width  = 58  };
-						            if (item.size_y == 2){ item.width  = 116 };
-						            if (item.size_x == 1){ item.height = 58  };
-						            if (item.size_x == 2){ item.height = 116 };
+						            if (item.size_y == 1){ item.width  = 55  };
+						            if (item.size_y == 2){ item.width  = 115 };
+						            if (item.size_x == 1){ item.height = 55  };
+						            if (item.size_x == 2){ item.height = 115 };
 						            // Set Item Position
 						            if (item.row == 1 ){ item.top  = 5 };
-						            if (item.row >  1 ){ item.top  = (item.row * 90) + 5 - 90  };
-						            if (item.col == 1) { item.left = 5 };
-						            if (item.col >  1 ){ item.left = (item.col * 90) + 5 - 90  };
+						            if (item.row >  1 ){ item.top  = (item.row * 50) + 5 - 50  };
+						            if (item.col == 1 ){ item.left = 5 };
+						            if (item.col >  1 ){ item.left = (item.col * 50) + 5 - 50  };
 						            // Keep Row Count for Container Height
 						            if(!rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 };
 						            if( rowHeightsObj[item.row] < item.size_y ) { 
