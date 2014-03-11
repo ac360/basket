@@ -63,7 +63,7 @@
 								    var image    = '<img src="' + item.images.medium + '" draggable="false" />'
 									var itemHtml = "<div class='MDLYa1-item' style='top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + item.short_id + "'>" + image + "</div>"
 									$(self).find('.MDLYa1-items-box').append(itemHtml)
-						    });
+						    }); // $.each
 						    // Resize Container
 						    $.each(rowHeightsObj, function(key, value) {
 						          previousRow = rowHeightsObj[key - 1]
@@ -76,8 +76,9 @@
 						    $.each(rowHeightsObj, function(key, value) { 
 						          rowHeightsTotal = rowHeightsTotal + value; 
 						    });
-						    medley.height = rowHeightsTotal * 90 + 8;
+						    m.height = rowHeightsTotal * 90 + 8;
 
+						    $(self).find('.MDLYa1-items-box').height(m.height);
 
 						  	// Add Medley Title
 						  	$(self).find('.MDLYa1-items-box').append('<div class="MDLYa1-link-box"><h1 class="MDLYa1-home-link" style="text-align:center !important;font-size:14px !important;cursor:pointer !important;color:#999 !important;margin-top:0px!important;text-transform:uppercase !important;letter-spacing:4px !important;">MEDLEY</h1></div>');
