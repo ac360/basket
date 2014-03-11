@@ -61,7 +61,7 @@
 						            };
 						            // Add Medley Items
 								    var image    = '<img src="' + item.images.medium + '" draggable="false" />'
-									var itemHtml = "<div class='MDLYa1-item' style='top:"+item.top+";left:"+item.left+";height:"+item.height+";width:"+item.width+";' data-itemid='" + item.short_id + "'>" + image + "</div>"
+									var itemHtml = "<div class='MDLYa1-item' style='top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + item.short_id + "'>" + image + "</div>"
 									$(self).find('.MDLYa1-items-box').append(itemHtml)
 						    });
 						    // Resize Container
