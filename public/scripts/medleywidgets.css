@@ -112,7 +112,10 @@
 .MDLYa1 .MDLYa1-items-box .heighty2 img { max-height: 160px !important;margin-top:10px !important;   }
 
 .MDLYa1 .MDLYa1-item img { 
-	
+	position:absolute;
+    top:0;
+    bottom:0;
+    margin:auto;
 }
 .MDLYa1 .MDLYa1-item img:hover { cursor: pointer !important; }
 

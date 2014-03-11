@@ -69,7 +69,7 @@
 						          previousRow = rowHeightsObj[key - 1]
 						          if (previousRow == 2) {
 						            rowHeightsObj[key] = 0
-						          }
+						          };
 						    });
 						    // Iterate through object and pull values
 						    rowHeightsTotal = 0
