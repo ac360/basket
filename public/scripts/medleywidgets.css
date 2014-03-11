@@ -113,9 +113,10 @@
 
 .MDLYa1 .MDLYa1-item img { 
 	position: absolute !important;
-	left:12px !important;
+	left:          6px !important;
     top: 10px          !important;
     max-width: 90%     !important;
+    max-height: 90%     !important;
 }
 .MDLYa1 .MDLYa1-item img:hover { cursor: pointer !important; }
 
