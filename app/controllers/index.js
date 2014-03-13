@@ -10,6 +10,10 @@ exports.render = function(req, res) {
     });
 };
 
+exports.testWidget = function(req, res) {
+    res.render('test');
+};
+
 exports.show_redirect = function(req, res) {
 	console.log("PARAMS: ", req.params);
 	Medley.find({ short_id: req.params.shortId }, function(err, medley) {

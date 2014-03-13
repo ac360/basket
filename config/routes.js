@@ -9,11 +9,9 @@ module.exports = function(app, passport, auth) {
         next();
     });
 
-    //User Routes
-    var users = require('../app/controllers/users');
-    app.get('/signout', users.signout);
-
     // Users API - Internal
+        var users = require('../app/controllers/users');
+        app.get('/signout',                             users.signout);
         app.get('/api/users/me',                        users.me);
         app.put('/api/users/me',                        users.updateCurrent);
         app.post('/api/users/me',                       users.session);
@@ -90,11 +88,10 @@ module.exports = function(app, passport, auth) {
     //Finish with setting up the clientId param
     app.param('clientId', clients.client);
 
-    // External API V1 Endpoints
-
     //Home route
     var index = require('../app/controllers/index');
-    app.get('/:shortId', index.show_redirect);
-    app.get('/'        , index.render);
+    app.get('/:shortId',        index.show_redirect);
+    app.get('/test/widget'    , index.testWidget);
+    app.get('/'          , index.render);
 
 };
