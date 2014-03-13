@@ -19,7 +19,7 @@
     	if(!window.mdlywidgets) { 
     		window.mdlywidgets = {};
 		  	// Add the style tag into the head
-	        $('head').append('<link rel="stylesheet" href="http://localhost:3000/scripts/medleywidgets.css" type="text/css"/>'); 
+	        $('head').append('<link rel="stylesheet" href="/scripts/medleywidgets.css" type="text/css"/>'); 
 		  	// Check width to see if is a mobile device
 		  	var pw = $( ".MDLY" ).parent().width();
 		  	if (pw < 420) {	
@@ -30,7 +30,7 @@
 			    		var self = e;
 			    		// Call Medley API
 			    		var id = $(self).attr('data-id');
-			    		var mAPI = "http://localhost:3000/api/1/m/short_id/" + id
+			    		var mAPI = "/api/1/m/short_id/" + id
 			    		$.getJSON( mAPI, function( m ) {
 			    			m = m[0];
 			    			console.log("External Medley Loaded: ", m);
