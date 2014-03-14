@@ -57,7 +57,7 @@
 						            if(!rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 };
 						            if( rowHeightsObj[item.row] < item.size_y ) {  rowHeightsObj[item.row] = item.size_y }; // Check to see if item takes up two rows
 						            // Add Medley Items
-								    var image    = '<img src="' + item.images.medium + '" draggable="false" />'
+								    var image    = '<img class="MDLY-item-image" src="' + item.images.medium + '" draggable="false" />'
 									var itemHtml = "<div class='MDLY-item' style='top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + index + "'>" + image + "</div>"
 									$(self).find('.MDLY-items-box').append(itemHtml)
 						    }); // $.each
@@ -90,23 +90,23 @@
 						    // Find Item in Global Variable
 						    var item = window.mdlywidgets[medleyId].items[itemId]
 						    // Build Item Info View Based Off of item
-							var closingDiv = '</div>'
-							var infoContainer = '<div class="MDLY-item-info-container" style="display: block !important;height:250px !important;width:370px !important;text-align: center !important;margin:10px auto 0px auto !important;">'
-							var infoLeftContainer = '<div class="MDLY-item-info-container-left" style="display: block !important;float:left !important;height:250px !important;width:45% !important;">'
-							var infoRightContainer = '<div class="MDLY-item-info-container-right" style="display: block !important;float:left !important;height:250px !important;width:55% !important;">'
-							var infoImage    = '<img src="' + item.images.medium + '" draggable="false" />'
-							var infoTitle = '<h2 style="text-align:left !important;font-size:14px !important;line-height: 20px !important;margin:3px 0px 4px 0px !important;font-family: nexa_boldregular, sans-serif !important;text-transform:uppercase !important;color:#333 !important;">' + item.title + '</h2>'
-							var infoCategory = '<p style="text-align:left !important;font-size:12px !important;line-height:18px !important;margin:0px !important;font-family: sans-serif !important;color:#555 !important;">Category: ' + item.category + '</p>'
-							var infoPrice = '<p style="text-align:left !important;font-size:12px !important;line-height:18px !important;margin:0px !important;font-family: sans-serif !important;color:#555 !important;">Best Price: $' + item.price_new + '</p>'
-							var infoSource   = '<p style="text-align:left !important;font-size:12px !important;line-height:18px !important;margin:0px !important;font-family: sans-serif !important;color:#555 !important;text-transform:capitalize !important;">Best Price Found On: ' + item.retailer + '</p>'
-							var buyButton = '<div class="MDLY-buy-button" data-link="' + item.link + '">View</div>' 
-							var backButton = '<div class="MDLY-back-button">Back</div>' 
+							var closingDiv 	  		= '</div>'
+							var infoContainer 		= '<div class="MDLY-item-full-container">'
+							var infoLeftContainer   = '<div class="MDLY-item-full-container-left">'
+							var infoRightContainer  = '<div class="MDLY-item-full-container-right">'
+							var infoImage    		= '<img class="MDLY-item-full-image" src="' + item.images.medium + '" draggable="false" />'
+							var infoTitle    		= '<h2  class="MDLY-product-title">' + item.title.substring(0, 50) + '</h2>'
+							var infoCategory 		= '<p   class="MDLY-product-category">Category: ' + item.category + '</p>'
+							var infoPrice 			= '<p   class="MDLY-product-price">Best Price: $' + item.price_new + '</p>'
+							var infoSource   		= '<p   class="MDLY-product-source">Best Price Found On: ' + item.retailer + '</p>'
+							var buyButton 			= '<div class="MDLY-buy-button" data-link="' + item.link + '">View</div>' 
+							var backButton 			= '<div class="MDLY-back-button">Back</div>' 
 							$(itemsContainer).append( infoContainer + infoLeftContainer + infoImage + closingDiv + infoRightContainer + infoTitle + infoCategory + infoPrice + infoSource + buyButton + backButton + closingDiv + closingDiv );
 					});                  
 					$('.MDLY').on('click', '.MDLY-back-button', function (e) {
 						var parent = $(e.currentTarget).parent().parent().parent();
 						console.log( parent );
-						$(parent).find('.MDLY-item-info-container').attr('style', 'display: none !important');
+						$(parent).find('.MDLY-item-full-container').attr('style', 'display: none !important');
 						$(parent).find('.MDLY-item').removeClass('MDLY-hide')
 					});
 					$('.MDLY').on('click', '.MDLY-buy-button', function (e) {
