@@ -38,7 +38,7 @@
 			    			if (!window.mdlywidgets[m.short_id]) { window.mdlywidgets[m.short_id] = m };
 			    			// Append Title, Append Items Container, Append Medley Brand @ Bottom
 			    			$(self).append('<div class="MDLY-title-box"><h1>' + m.hashtags.join(" ") + '</h1></div>');
-			    			$(self).append('<div class="MDLY-items-box" data-medleyid="'+m.short_id+'"></div>');
+			    			$(self).append('<div class="MDLY-items-box" style="display:none;" data-medleyid="'+m.short_id+'"></div>');
 			    			$(self).find('.MDLY-items-box').append('<div class="MDLY-link-box"><h1 class="MDLY-home-link">medley</h1></div>');
 						    // Set Medley Item Sizes
 						    var rowHeightsObj = {};
@@ -58,7 +58,7 @@
 						            if( rowHeightsObj[item.row] < item.size_y ) {  rowHeightsObj[item.row] = item.size_y }; // Check to see if item takes up two rows
 						            // Add Medley Items
 								    var image    = '<img class="MDLY-item-image" src="' + item.images.medium + '" draggable="false" />'
-									var itemHtml = "<div class='MDLY-item' style='top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + index + "'>" + image + "</div>"
+									var itemHtml = "<div class='MDLY-item' style='display:none;top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + index + "'>" + image + "</div>"
 									$(self).find('.MDLY-items-box').append(itemHtml)
 						    }); // $.each
 						    // Find Items that contain 2 rows / are size_y = 2
@@ -74,8 +74,16 @@
 						            rowHeightsTotal = rowHeightsTotal + value; 
 						    });
 						    // Resize Container
-						    m.height = rowHeightsTotal * 75 + 15;
+						    m.height = rowHeightsTotal * 75 + 10;
 						    $(self).find('.MDLY-items-box').height(m.height);
+						    $(self).find('.MDLY-items-box').slideDown('slow');
+						    var time = 300;
+						    $( ".MDLY-item" ).each(function(i,e) {
+						    	time = time + 200
+						    	setTimeout(function(){
+						    		$(e).fadeIn('slow');
+						    	},time);
+						    });
 						}); // /getJSON
 
 					}) // /.each for each Medley on the page
