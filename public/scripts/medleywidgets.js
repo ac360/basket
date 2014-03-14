@@ -74,7 +74,7 @@
 						            rowHeightsTotal = rowHeightsTotal + value; 
 						    });
 						    // Resize Container
-						    m.height = rowHeightsTotal * 75;
+						    m.height = rowHeightsTotal * 75 + 15;
 						    $(self).find('.MDLY-items-box').height(m.height);
 						}); // /getJSON
 
