@@ -27,65 +27,65 @@
 		  	} else {
 		  			// Go Through Each Medley On The Page
 			    	$( ".MDLY" ).each(function(i,e) {
-			    		var self = e;
-			    		// Call Medley API
-			    		var id = $(self).attr('data-id');
-			    		var mAPI = "/api/1/m/short_id/" + id
-			    		$.getJSON( mAPI, function( m ) {
-			    			m = m[0];
-			    			console.log("External Medley Loaded: ", m);
-			    			// Attach Medley to Global Namespace
-			    			if (!window.mdlywidgets[m.short_id]) { window.mdlywidgets[m.short_id] = m };
-			    			// Append Title, Append Items Container, Append Medley Brand @ Bottom
-			    			$(self).append('<div class="MDLY-title-box"><h1>' + m.hashtags.join(" ") + '</h1></div>');
-			    			$(self).append('<div class="MDLY-items-box" style="display:none;" data-medleyid="'+m.short_id+'"></div>');
-			    			$(self).find('.MDLY-items-box').append('<div class="MDLY-link-box"><h1 class="MDLY-home-link">medley</h1></div>');
-						    // Set Medley Item Sizes
-						    var rowHeightsObj = {};
-						    $.each(m.items, function(index, item) {
-						            // Set Item Dimensions
-						            if (item.size_y == 1){ item.width  = 60  };
-						            if (item.size_y == 2){ item.width  = 125 };
-						            if (item.size_x == 1){ item.height = 60  };
-						            if (item.size_x == 2){ item.height = 125 };
+				    		var self = e;
+				    		// Call Medley API
+				    		var id = $(self).attr('data-id');
+				    		var mAPI = "/api/1/m/short_id/" + id
+				    		$.getJSON( mAPI, function( m ) {
+				    			m = m[0];
+				    			console.log("External Medley Loaded: ", m);
+				    			// Attach Medley to Global Namespace
+				    			if (!window.mdlywidgets[m.short_id]) { window.mdlywidgets[m.short_id] = m };
+				    			// Append Title, Append Items Container, Append Medley Brand @ Bottom
+				    			$(self).append('<div class="MDLY-title-box"><h1>' + m.hashtags.join(" ") + '</h1></div>');
+				    			$(self).append('<div class="MDLY-items-box" style="display:none;" data-medleyid="'+m.short_id+'"></div>');
+				    			$(self).find('.MDLY-items-box').append('<div class="MDLY-link-box"><h1 class="MDLY-home-link">medley</h1></div>');
+							    // Set Medley Item Sizes
+							    var rowHeightsObj = {};
+								for (var i = 0; i < m.items.length; i++) {
+								    // Set Item Dimensions
+						            if (m.items[i].size_y == 1){ m.items[i].width  = 60  };
+						            if (m.items[i].size_y == 2){ m.items[i].width  = 125 };
+						            if (m.items[i].size_x == 1){ m.items[i].height = 60  };
+						            if (m.items[i].size_x == 2){ m.items[i].height = 125 };
 						            // Set Item Position
-						            if (item.row == 1 ){ item.top  = 5 };
-						            if (item.row >  1 ){ item.top  = (item.row * 65) - 60  };
-						            if (item.col == 1 ){ item.left = 5 };
-						            if (item.col >  1 ){ item.left = (item.col * 65) - 60  };
+						            if (m.items[i].row == 1 ){ m.items[i].top  = 5 };
+						            if (m.items[i].row >  1 ){ m.items[i].top  = (m.items[i].row * 65) - 60  };
+						            if (m.items[i].col == 1 ){ m.items[i].left = 5 };
+						            if (m.items[i].col >  1 ){ m.items[i].left = (m.items[i].col * 65) - 60  };
 						            // Keep Row Count for Container Height
-						            if(!rowHeightsObj[item.row]) { rowHeightsObj[item.row] = 0 };
-						            if( rowHeightsObj[item.row] < item.size_y ) {  rowHeightsObj[item.row] = item.size_y }; // Check to see if item takes up two rows
-						            // Add Medley Items
-								    var image    = '<img class="MDLY-item-image" src="' + item.images.medium + '" draggable="false" />'
-									var itemHtml = "<div class='MDLY-item' style='display:none;top:"+item.top+"px;left:"+item.left+"px;height:"+item.height+"px;width:"+item.width+"px;' data-itemid='" + index + "'>" + image + "</div>"
-									$(self).find('.MDLY-items-box').append(itemHtml)
-						    }); // $.each
-						    // Find Items that contain 2 rows / are size_y = 2
-						    $.each(rowHeightsObj, function(key, value) {
-						            previousRow = rowHeightsObj[key - 1]
-						            if (previousRow == 2) {
-						            	rowHeightsObj[key] = 0
+						            if(!rowHeightsObj[m.items[i].row]) { 
+						            	rowHeightsObj[m.items[i].row] = 0 
 						            };
-						    });
-						    // Find total rows
-						    rowHeightsTotal = 0;
-						    $.each(rowHeightsObj, function(key, value) { 
-						            rowHeightsTotal = rowHeightsTotal + value; 
-						    });
-						    // Resize Container
-						    m.height = rowHeightsTotal * 75 + 10;
-						    $(self).find('.MDLY-items-box').height(m.height);
-						    $(self).find('.MDLY-items-box').slideDown('slow');
-						    var time = 300;
-						    $( ".MDLY-item" ).each(function(i,e) {
-						    	time = time + 200
-						    	setTimeout(function(){
-						    		$(e).fadeIn('slow');
-						    	},time);
-						    });
-						}); // /getJSON
+						            if( rowHeightsObj[m.items[i].row] < m.items[i].size_y ) {  
+						            	rowHeightsObj[m.items[i].row] = m.items[i].size_y 
+						            }; // Try to get largest Y sizes
+						            // Add Medley Items
+								    var image    = '<img class="MDLY-item-image" src="' + m.items[i].images.medium + '" draggable="false" />'
+									var itemHtml = "<div class='MDLY-item' style='display:none;top:"+m.items[i].top+"px;left:"+m.items[i].left+"px;height:"+m.items[i].height+"px;width:"+m.items[i].width+"px;' data-itemid='" + i + "'>" + image + "</div>"
+									$(self).find('.MDLY-items-box').append(itemHtml);
+								};
 
+								console.log("Row Heights Object: ", rowHeightsObj);
+							    // Find Items that contain 2 rows / are size_y = 2
+							    // Find total rows
+							    rowHeightsTotal = 0;
+							    for (var key in rowHeightsObj) {
+								  	rowHeightsTotal = rowHeightsTotal + 1
+								};
+								console.log("Row Height:s", rowHeightsTotal)
+							    // Resize Container
+							    m.height = rowHeightsTotal * 75 + 10;
+							    $(self).find('.MDLY-items-box').height(m.height);
+							    $(self).find('.MDLY-items-box').slideDown('slow');
+							    var time = 300;
+							    $( ".MDLY-item" ).each(function(i,e) {
+							    	time = time + 200
+							    	setTimeout(function(){
+							    		$(e).fadeIn('slow');
+							    	},time);
+							    });
+							}); // /getJSON
 					}) // /.each for each Medley on the page
 
 					// Set Event Listener for Clicking A Medley Item

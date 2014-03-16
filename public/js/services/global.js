@@ -157,17 +157,10 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 			              rowHeightsObj[item.row] = item.size_y;
 			          };
 			    });
-			    // Resize Container
-			    $.each(rowHeightsObj, function(key, value) {
-			          previousRow = rowHeightsObj[key - 1]
-			          if (previousRow == 2) {
-			            rowHeightsObj[key] = 0
-			          }
-			    });
 			    // Iterate through object and pull values
 			    rowHeightsTotal = 0
 			    $.each(rowHeightsObj, function(key, value) { 
-			          rowHeightsTotal = rowHeightsTotal + value; 
+			          rowHeightsTotal = rowHeightsTotal + 1; 
 			    });
 			    medley.height = rowHeightsTotal * 90 + 8;
 			    return medley;
@@ -193,17 +186,10 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 			              rowHeightsObj[item.row] = item.size_y;
 			          };
 			    });
-			    // Resize Container
-			    $.each(rowHeightsObj, function(key, value) {
-			          previousRow = rowHeightsObj[key - 1]
-			          if (previousRow == 2) {
-			            rowHeightsObj[key] = 0
-			          }
-			    });
 			    // Iterate through object and pull values
 			    rowHeightsTotal = 0
 			    $.each(rowHeightsObj, function(key, value) { 
-			          rowHeightsTotal = rowHeightsTotal + value; 
+			          rowHeightsTotal = rowHeightsTotal + 1; 
 			    });
 			    medley.height = rowHeightsTotal * 105 + 8;
 			    return medley;
