@@ -83,17 +83,33 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                 controller:  function ($scope, $modalInstance, Global) {
                     $scope.medley = medley;
                     $scope.shareFacebook = function() {
-                      FB.ui({
-                        method:  'feed',
-                        link:    'http://mdly.co/#!/m/'+$scope.medley.short_id,
-                        caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.medley.user.name,
-                        display: 'iframe',
-                        picture: $scope.medley.items[0].images.medium,
-                        name: 'Medley - ' + $scope.medley.hashtags.join(" ")
-                      },  function(response){
-                            console.log(response);
-                            // Hide Modals?
-                      });
+
+                        FB.getLoginStatus(function(response) {
+                            if (response.status === 'connected' || response.status === 'not_authorized') {
+                                $scope.showShareDialog();
+                            } else {
+                                FB.login(function(response) {
+                                    if (response.authResponse) {
+                                        $scope.showShareDialog();
+                                    } else {
+                                        console.log('User cancelled login or did not fully authorize.');
+                                    }
+                                });
+                            } // if statement
+                        }); // FB.getLoginStatus
+
+                    }; // shareFacebook
+                    $scope.showShareDialog = function() {
+                        FB.ui({
+                            method:  'feed',
+                            link:    'http://mdly.co/#!/m/'+$scope.medley.short_id,
+                            caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.medley.user.name,
+                            display: 'iframe',
+                            picture: $scope.medley.items[0].images.medium,
+                            name: 'Medley - ' + $scope.medley.hashtags.join(" ")
+                        },  function(response){
+                              console.log(response);
+                        });
                     };
                     $scope.close = function() {
                       $modalInstance.close();

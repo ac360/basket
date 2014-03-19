@@ -25,6 +25,7 @@
 		  	if (pw < 420) {	
 		  		// Mobile Device
 		  	} else {
+		  		console.log("here")
 		  			// Go Through Each Medley On The Page
 			    	$( ".MDLY" ).each(function(i,e) {
 				    		var self = e;
