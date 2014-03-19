@@ -106,7 +106,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                             caption: "This Medley is a collection of awesome, hand-picked products created by " + $scope.medley.user.name,
                             display: 'iframe',
                             picture: $scope.medley.items[0].images.medium,
-                            name: 'Medley - ' + $scope.medley.hashtags.join(" ")
+                            name:    'Medley - ' + $scope.medley.hashtags.join(" ")
                         },  function(response){
                               console.log(response);
                         });

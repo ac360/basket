@@ -52,9 +52,12 @@
 						</div>
 						<div class="medley-info" style="margin-bottom:40px;">
 							<button ui-sref="show({ basketId: medley.short_id })" class="view-button btn btn-primary btn-xs" style="margin-right:5px;">View Medley</button>
+                            <button class="btn btn-danger btn-xs" delete-medley="{{ medley.short_id }}" ng-show="medley.user._id == user._id || user.admin == true">Delete</button>
+                            &nbsp;
 							<a class="views"> <i class="fa fa-eye"></i> {{ medley.views }}</a> 
 							<a class="votes {{ medley.short_id }}" vote-link="{{ medley.short_id }}"><i class="fa fa-heart" ng-if="medley.voted"></i><i class="fa fa-heart-o" ng-if="!medley.voted"></i> {{medley.votes}}</a>
-						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.username }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a> <a class="btn btn-danger btn-xs pull-right" delete-medley="{{ medley.short_id }}" ng-show="medley.user._id == user._id || user.admin == true">Delete</a>
+						    <a class="author" ui-sref="user({ username: medley.user.username })"><i class="fa fa-user"></i> {{ medley.user.username }}</a> <a class="created"><i class="fa fa-calendar"></i> {{ medley.created  | date:'short' }}</a> 
+                            <a class="share" ng-click="shareMedley(medley)"><i class="fa fa-globe"></i> Share</a>
 						</div>
 					</div>
 

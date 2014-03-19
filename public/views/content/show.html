@@ -50,8 +50,8 @@
 								<div class="medley-info">
 									<a class="views"> <i class="fa fa-eye"></i> {{ show_medley.views }}</a> 
 									<a class="votes {{ show_medley.short_id }}" vote-link="{{ show_medley.short_id }}"><i class="fa fa-heart" ng-if="show_medley.voted"></i><i class="fa fa-heart-o" ng-if="!show_medley.voted"></i> {{ show_medley.votes}}</a>
-								    <a class="share" share-facebook-link="{{ show_medley.short_id }}">
-										<i class="fa fa-facebook"></i> Share
+								    <a class="share" ng-click="shareMedley(show_medley)">
+										<i class="fa fa-globe"></i> Share
 									</a>
 								</div>
 							</div>
