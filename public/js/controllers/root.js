@@ -32,7 +32,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.profile                    = null;
     $scope.feed                       = 'Featured Medleys';
     $scope.fetchingmedleys_inprogress = false;
-    $scope.medleyfeed_offset          = 0;
+    $scope.medley_offset              = 0;
 
 
     // FOLDERS -----------------------------------------
@@ -359,7 +359,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             // Listener - Watch Feed Type Change
             $scope.$watch('feed', function(oldvariable, newvariable) {
-                if (oldvariable !== newvariable){
+                if (oldvariable !== newvariable) {
                     $scope.medleys       = [];
                     $scope.medley_offset =  0;
                 };
