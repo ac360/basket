@@ -283,6 +283,7 @@ var mongoose        = require('mongoose'),
     }; // most_viewed
 
     exports.getByFeatured = function(req, res) {
+        console.log(req.query.offset)
         var allMedleys    = [];
         // Processed Listener
         eventEmitter.on('medleysProcessed', function(medleys) {

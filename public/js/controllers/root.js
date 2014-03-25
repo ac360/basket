@@ -91,7 +91,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         $scope.medley_offset =  $scope.medley_offset + 20;
     };
     $scope.MedleysByFeatured = function(cb){
-        Medleys.getFeatured({ offset: $scope.medleyfeed_offset }, function(medleys) {
+        Medleys.getFeatured({ offset: $scope.medley_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -102,7 +102,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByMostRecent = function(cb){
-        Medleys.getMostRecent({ offset: $scope.medleyfeed_offset }, function(medleys) {
+        Medleys.getMostRecent({ offset: $scope.medley_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -110,11 +110,10 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             console.log("Medleys by most recent loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
-            $scope.medleyfeed_offset = $scope.medleyfeed_offset + 5;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByVotes = function(cb){
-        Medleys.getMostVoted({ offset: $scope.medleyfeed_offset }, function(medleys) {
+        Medleys.getMostVoted({ offset: $scope.medley_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
@@ -125,7 +124,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByViews = function(cb){
-        Medleys.getMostViewed({ offset: $scope.medleyfeed_offset }, function(medleys) {
+        Medleys.getMostViewed({ offset: $scope.medley_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
