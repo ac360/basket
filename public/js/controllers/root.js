@@ -388,6 +388,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
                     // Browse Medleys Infinite Scroll
                     if ($scope.fetchingmedleys_inprogress === false) {
+                        console.log("infinite scroll activated")
                         $scope.fetchingmedleys_inprogress = true;
                         $scope.getFeed();
                     };
