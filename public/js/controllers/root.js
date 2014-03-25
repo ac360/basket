@@ -28,9 +28,11 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.status.status              = false;
     $scope.share                      = false;
     $scope.draggable                  = true;
-    $scope.medleys                    = false;
+    $scope.medleys                    = [];
     $scope.profile                    = null;
     $scope.feed                       = 'Featured Medleys';
+    $scope.fetchingmedleys_inprogress = false;
+    $scope.medleyfeed_offset          = 0;
 
 
     // FOLDERS -----------------------------------------
@@ -73,10 +75,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
 
     // MEDLEY FEEDS ------------------------------------
     $scope.initializeHome = function() {
-        $scope.setFeed();
+        $scope.getFeed();
     };
-    $scope.setFeed = function(type) {
-        $scope.medleys = false;
+    $scope.getFeed = function(type) {
         if (type) { $scope.feed = type };
         if ($scope.feed === "Featured Medleys") {
             $scope.MedleysByFeatured(); 
@@ -87,49 +88,51 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         } else if ($scope.feed === "Most Recent Medleys") {
             $scope.MedleysByMostRecent();
         };
+        $scope.medley_offset =  $scope.medley_offset + 20;
     };
     $scope.MedleysByFeatured = function(cb){
-        Medleys.getFeatured({}, function(medleys) {
-            $scope.medleys = [];
+        Medleys.getFeatured({ offset: $scope.medleyfeed_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
             console.log("Medleys by featured loaded:", $scope.medleys);
+            $scope.fetchingmedleys_inprogress = false;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByMostRecent = function(cb){
-        Medleys.getMostRecent({}, function(medleys) {
-            $scope.medleys = [];
+        Medleys.getMostRecent({ offset: $scope.medleyfeed_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
             console.log("Medleys by most recent loaded:", $scope.medleys);
+            $scope.fetchingmedleys_inprogress = false;
+            $scope.medleyfeed_offset = $scope.medleyfeed_offset + 5;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByVotes = function(cb){
-        Medleys.getMostVoted({}, function(medleys) {
-            $scope.medleys = [];
+        Medleys.getMostVoted({ offset: $scope.medleyfeed_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
             console.log("Medleys by most voted loaded:", $scope.medleys);
+            $scope.fetchingmedleys_inprogress = false;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByViews = function(cb){
-        Medleys.getMostViewed({}, function(medleys) {
-            $scope.medleys = [];
+        Medleys.getMostViewed({ offset: $scope.medleyfeed_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
             console.log("Medleys by most views loaded:", $scope.medleys);
+            $scope.fetchingmedleys_inprogress = false;
         }); // Medleys.getMostViewed
     };
     $scope.MedleysByProfile = function(username) {
@@ -355,6 +358,13 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                     };
                 }); 
             });
+            // Listener - Watch Feed Type Change
+            $scope.$watch('feed', function(oldvariable, newvariable) {
+                if (oldvariable !== newvariable){
+                    $scope.medleys       = [];
+                    $scope.medley_offset =  0;
+                };
+            });
             // Listeners - State Changes
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
                   // Adjust Page Title
@@ -374,14 +384,19 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                   // Adjust Template
                   if (toState.name !== 'show')   { $(document).attr('title', 'Medley - The New Shopping Cart!')      };                  
             });
-            // Listener - Search Infinite Scroll 
+            // Listener - Scroll for Infinite Loading
             $(window).scroll(function() {
                 if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
-                  // Make Sure you have listings...
-                  if ($scope.search_results.length > 9) {
-                      if ($scope.scrollsearch_in_progress === false) {
-                          $scope.scrollSearch();
-                      };
+                    // Browse Medleys Infinite Scroll
+                    if ($scope.fetchingmedleys_inprogress === false) {
+                        $scope.fetchingmedleys_inprogress = true;
+                        $scope.getFeed();
+                    };
+                    // Search Area Infinite Scroll - Make Sure you have listings...
+                    if ($scope.search_results.length > 9) {
+                        if ($scope.scrollsearch_in_progress === false) {
+                            $scope.scrollSearch();
+                        };
                   };
                 };
             });

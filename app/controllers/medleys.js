@@ -239,7 +239,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Voted Medleys
     exports.getByVotes = function(req, res) {
-            Medley.find().sort({votes: -1}).limit(10).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({votes: -1}).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -254,7 +254,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Viewed Medleys
     exports.getByViews = function(req, res) {
-            Medley.find().sort({views: -1}).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({views: -1}).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -269,7 +269,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Recent Medleys
     exports.getByDate = function(req, res) {
-            Medley.find().sort({created: -1}).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({created: -1}).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -290,9 +290,9 @@ var mongoose        = require('mongoose'),
             res.jsonp(medleys); 
         });
         // Get By Votes
-        Medley.find().sort({votes: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
+        Medley.find().sort({votes: -1}).skip(req.query.offset).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
             // Get By Views
-            Medley.find().sort({views: -1}).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
+            Medley.find().sort({views: -1}).skip(req.query.offset).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
                 allMedleys = allMedleys.concat(medleysByVotes);
                 allMedleys = allMedleys.concat(medleysByViews);
                 // Randomize Order

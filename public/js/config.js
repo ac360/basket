@@ -48,7 +48,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('hashtag', {
           url: "/hashtag/:hashtag",
           views: {
-            "header":    { templateUrl: "views/header/search.html"     },
+            "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/hashtag.html"    },
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
@@ -56,7 +56,7 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('user', {
           url: "/user/:username",
           views: {
-            "header":    { templateUrl: "views/header/search.html"        },
+            "header":    { templateUrl: "views/header/search.html"      },
             "content":   { templateUrl: "views/content/user.html"       },
             "footer":    { templateUrl: "views/footer/footer.html"      },
           }
@@ -64,9 +64,17 @@ window.app.config(function($stateProvider, $urlRouterProvider) {
         .state('admin', {
           url: "/admin",
           views: {
-            "header":    { templateUrl: "views/header/default.html"       },
+            "header":    { templateUrl: "views/header/default.html"     },
             "content":   { templateUrl: "views/content/admin.html"      },
             "footer":    { templateUrl: "views/footer/admin.html"       },
+          }
+        })
+        .state('tos', {
+          url: "/tos",
+          views: {
+            "header":    { templateUrl: "views/header/default.html"     },
+            "content":   { templateUrl: "views/content/tos.html"        },
+            "footer":    { templateUrl: "views/footer/footer.html"      },
           }
         })
 });

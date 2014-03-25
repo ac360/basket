@@ -7,7 +7,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           	var modalInstance = $modal.open({
             		windowClass: 'signin-modal',
   		          templateUrl: 'views/modals/sign_in_modal.html',
-            		controller:  function ($scope, $modalInstance, Global, $timeout, Users) {
+            		controller:  function ($scope, $modalInstance, Global, $timeout, $state, Users) {
               			$scope.signUp = function() {
                         if (this.email && this.password && this.username){
                             Users.signUpManual({ email: this.email, password: this.password, username: this.username }, function(response) {
@@ -41,6 +41,10 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                         $timeout(function(){
                             $scope.signup_error = false;
                         }, 8000)
+                    };
+                    $scope.goToTos = function() {
+                      $state.go('tos')
+                      $modalInstance.close();
                     };
                     $scope.close = function() {
               				$modalInstance.close();

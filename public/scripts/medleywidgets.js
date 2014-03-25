@@ -86,6 +86,7 @@
 							    		$(e).fadeIn('slow');
 							    	},time);
 							    });
+							    
 							}); // /getJSON
 					}) // /.each for each Medley on the page
 

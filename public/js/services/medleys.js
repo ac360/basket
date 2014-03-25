@@ -21,6 +21,9 @@ angular.module('mean.medleys').factory("Medleys", ['$resource', function($resour
         getMostRecent:    {
             method:  'GET',
             isArray: true,
+            params:  { 
+                offset: '@offset'
+            },
             url:     'api/m/by_date'
         },
         getUserMedleys:    {
