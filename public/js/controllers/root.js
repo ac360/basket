@@ -88,7 +88,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         } else if ($scope.feed === "Most Recent Medleys") {
             $scope.MedleysByMostRecent();
         };
-        $scope.medley_offset =  $scope.medley_offset + 5;
     };
     $scope.MedleysByFeatured = function(cb){
         Medleys.getFeatured({ offset: $scope.medley_offset }, function(medleys) {
@@ -99,6 +98,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             console.log("Medleys by featured loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
+            $scope.medley_offset =  $scope.medley_offset + 20;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByMostRecent = function(cb){
@@ -110,6 +110,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             console.log("Medleys by most recent loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
+            $scope.medley_offset =  $scope.medley_offset + 5;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByVotes = function(cb){
@@ -121,6 +122,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             console.log("Medleys by most voted loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
+            $scope.medley_offset =  $scope.medley_offset + 20;
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByViews = function(cb){
@@ -132,6 +134,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             });
             console.log("Medleys by most views loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
+            $scope.medley_offset =  $scope.medley_offset + 20;
         }); // Medleys.getMostViewed
     };
     $scope.MedleysByProfile = function(username) {
