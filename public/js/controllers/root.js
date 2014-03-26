@@ -34,7 +34,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.fetchingmedleys_inprogress = false;
     $scope.medley_offset              = 0;
 
-
     // FOLDERS -----------------------------------------
     $scope.addMedleyToFolder = function(event, data) {
         if (Global.getCurrentUser()) {
@@ -78,7 +77,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         $scope.getFeed();
     };
     $scope.getFeed = function(type) {
-        if (type) { $scope.feed = type };
+        if (type && type !== $scope.feed) { $scope.medleys = []; $scope.medley_offset =  0; $scope.feed = type };
         if ($scope.feed === "Featured Medleys") {
             $scope.MedleysByFeatured(); 
         } else if ($scope.feed === "Most Voted Medleys") {
@@ -362,13 +361,13 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 }); 
             });
             // Listener - Watch Feed Type Change
-            $scope.$watch('feed', function(oldvariable, newvariable) {
-                if (oldvariable !== newvariable) {
-                    $scope.medleys       = [];
-                    $scope.medley_offset =  0;
-                    console.log("Offset Reset: ", $scope.medley_offset);
-                };
-            });
+            // $scope.$watch('feed', function(oldvariable, newvariable) {
+            //     if (oldvariable !== newvariable) {
+            //         $scope.medleys       = [];
+            //         $scope.medley_offset =  0;
+            //         console.log("Offset Reset: ", $scope.medley_offset);
+            //     };
+            // });
             // Listeners - State Changes
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
                   // Adjust Page Title
