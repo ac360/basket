@@ -184,7 +184,7 @@ var mongoose        = require('mongoose'),
 
     // Find Medley by Username
     exports.getByUsername = function(req, res) {
-        User.findOne({ username: req.params.username }).exec(function(err, user) {
+        User.findOne({ username: req.params.username }).limit(20).exec(function(err, user) {
             if (err) return next(new Error('Failed to load user' + req.params.username));
             // Find Medleys
             Medley.find({ user: user._id }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
@@ -199,8 +199,9 @@ var mongoose        = require('mongoose'),
 
     // Find Medleys by Hashtag
     exports.getByHashtag = function(req, res) {
+        console.log(req.params, req.query)
         var hashtag = '#' + req.params.hashtag;
-        Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
+        Medley.find({ hashtags: hashtag }).sort({ votes: -1 }).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;

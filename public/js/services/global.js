@@ -29,8 +29,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
     		resetMedley: function() {
     			mData.medley = { items: [] };
     		},
-    		getMedleysByHashtag: function(hashtag, callback) {
-    			Medleys.getByHashtag({ hashtag: hashtag }, function(medleys) {
+    		getMedleysByHashtag: function(offset, hashtag, callback) {
+    			Medleys.getByHashtag({ hashtag: hashtag, offset: offset }, function(medleys) {
     				console.log("hashtags found in Global:", medleys)
 	    			if (callback) { callback(medleys) };
 		        });

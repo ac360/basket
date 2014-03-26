@@ -159,7 +159,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         } else {
             $scope.hashtag = $stateParams.hashtag;
         };
-        Global.getMedleysByHashtag($scope.hashtag, function(medleys) { 
+        Global.getMedleysByHashtag({ offset: $scope.medley_offset }, $scope.hashtag, function(medleys) { 
             $scope.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
@@ -360,14 +360,6 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                     };
                 }); 
             });
-            // Listener - Watch Feed Type Change
-            // $scope.$watch('feed', function(oldvariable, newvariable) {
-            //     if (oldvariable !== newvariable) {
-            //         $scope.medleys       = [];
-            //         $scope.medley_offset =  0;
-            //         console.log("Offset Reset: ", $scope.medley_offset);
-            //     };
-            // });
             // Listeners - State Changes
             $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
                   // Adjust Page Title
@@ -390,18 +382,22 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             // Listener - Scroll for Infinite Loading
             $(window).scroll(function() {
                 if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
-                    // Browse Medleys Infinite Scroll
-                    if ($scope.fetchingmedleys_inprogress === false) {
-                        console.log("infinite scroll activated")
-                        $scope.fetchingmedleys_inprogress = true;
-                        $scope.getFeed();
-                    };
-                    // Search Area Infinite Scroll - Make Sure you have listings...
-                    if ($scope.search_results.length > 9) {
-                        if ($scope.scrollsearch_in_progress === false) {
-                            $scope.scrollSearch();
+                    if ($state.current.name === "home") {
+                        // Browse Medleys Infinite Scroll
+                        if ($scope.fetchingmedleys_inprogress === false) {
+                            console.log("infinite scroll activated")
+                            $scope.fetchingmedleys_inprogress = true;
+                            $scope.getFeed();
                         };
-                  };
+                    };
+                    if ($state.current.name === "search") {
+                        // Search Area Infinite Scroll - Make Sure you have listings...
+                        if ($scope.search_results.length > 9) {
+                            if ($scope.scrollsearch_in_progress === false) {
+                                $scope.scrollSearch();
+                            };
+                        };
+                    };
                 };
             });
 }]);
