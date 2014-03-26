@@ -59,7 +59,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }
     };
     $scope.deleteFolder = function(folder) {
-        var r = confirm("Are you sure you want to delete this folder?  You will lose all of the medleys in it!")
+        var r = confirm("Are you sure you want to delete this folder?  You will lose all of the medleys in it!");
         if (r === true) {
             Folders.delete({ folderId: folder._id }, function(folder){
                 console.log("Folder deleted:", folder);
@@ -102,6 +102,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         }); // Medleys.getMostVoted
     };
     $scope.MedleysByMostRecent = function(cb){
+        console.log("offset set for fetch: ", $scope.medley_offset)
         Medleys.getMostRecent({ offset: $scope.medley_offset }, function(medleys) {
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
@@ -111,7 +112,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
             console.log("Medleys by most recent loaded:", $scope.medleys);
             $scope.fetchingmedleys_inprogress = false;
             $scope.medley_offset =  $scope.medley_offset + 5;
-        }); // Medleys.getMostVoted
+        }); // Medleys.getMostRecent
     };
     $scope.MedleysByVotes = function(cb){
         Medleys.getMostVoted({ offset: $scope.medley_offset }, function(medleys) {
