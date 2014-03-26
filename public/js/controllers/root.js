@@ -79,7 +79,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
     $scope.getFeed = function(type) {
         if (type && type !== $scope.feed) { $scope.medleys = []; $scope.medley_offset =  0; $scope.feed = type };
         if ($scope.feed === "Featured Medleys") {
-            $scope.MedleysByFeatured(); 
+            $scope.MedleysByVotes(); 
         } else if ($scope.feed === "Most Voted Medleys") {
             $scope.MedleysByVotes();
         } else if ($scope.feed === "Most Viewed Medleys") {
