@@ -362,6 +362,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
                 if (oldvariable !== newvariable) {
                     $scope.medleys       = [];
                     $scope.medley_offset =  0;
+                    console.log("Offset Reset: ", $scope.medley_offset);
                 };
             });
             // Listeners - State Changes
