@@ -269,7 +269,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Recent Medleys
     exports.getByDate = function(req, res) {
-            Medley.find().sort({created: -1}).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({created: -1}).skip(req.query.offset).limit(5).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;

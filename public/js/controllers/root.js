@@ -73,7 +73,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         Modals.signIn();
     };
 
-    // MEDLEY FEEDS ------------------------------------
+    // MEDLEY FEEDS -------------------------------------
     $scope.initializeHome = function() {
         $scope.getFeed();
     };
@@ -88,7 +88,7 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         } else if ($scope.feed === "Most Recent Medleys") {
             $scope.MedleysByMostRecent();
         };
-        $scope.medley_offset =  $scope.medley_offset + 20;
+        $scope.medley_offset =  $scope.medley_offset + 5;
     };
     $scope.MedleysByFeatured = function(cb){
         Medleys.getFeatured({ offset: $scope.medley_offset }, function(medleys) {
@@ -185,9 +185,9 @@ angular.module('mean.system').controller('RootController', ['$rootScope', '$scop
         if ($scope.retailer == 'Etsy') { $scope.etsy_store_id = $('#etsy-store-id-field').val() } else { $scope.etsy_store_id = '' };
         // Check if there are keywords
         if( ($scope.retailer == 'All Retailers' && !$scope.search_keywords) || ($scope.retailer == 'Amazon' && !$scope.search_keywords) || ($scope.retailer == 'Etsy' && !$scope.etsy_store_id && !$scope.search_keywords) ) {
-          $scope.status.icon          = 'error';
-          $scope.status.message       = "Please enter something to search for...";
-          $scope.status.status        = true;
+          $scope.status.icon        = 'error';
+          $scope.status.message     = "Please enter something to search for...";
+          $scope.status.status      = true;
           return false;
         };
         $scope.status.icon          = "refresh"
