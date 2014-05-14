@@ -1,7 +1,7 @@
 <p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
 <div class="modal-content-container">
-	<h1 class="st-centered">Add Hashtags</h1>
-	<h5 class="st-centered">Separate them with spaces. At least one is required.</h5>
+	<h1 class="st-centered" style="font-size:25px;font-weight:800;margin-bottom:5px;">Add Hashtags</h1>
+	<p class="st-centered"  style="font-size:14px;opacity:0.6">Separate them with spaces. At least one is required.</p>
 	<p class="alert alert-danger st-centered" ng-show="hashtag_error">{{ hashtag_error }}</p>
 	<div contenteditable="true" id="hashtags-input" class="form-control" ng-keyup="validateHashtags()" ng-keypress="checkLimit($event)" ng-keydown="checkLimit($event)" maxlength="200"/>
 	<p class="st-centered" style="margin-bottom:20px;"><button class="btn btn-primary btn-lg" ng-click="validateAndPublish()"><i class="fa fa-check"></i> Publish</button></p>

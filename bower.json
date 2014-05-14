@@ -20,5 +20,8 @@
     "gridster": "~0.2.1",
     "angular-gridster": "~0.9.2",
     "angular-dragdrop": "~1.0.6"
+  },
+  "resolutions": {
+    "angular": "1.2.16"
   }
 }

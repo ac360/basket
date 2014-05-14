@@ -1,28 +1,55 @@
 <div class="row">
 	<div class="results-container col-md-7">
+
 		<div ng-repeat="item in search_results">
 			<div class="row result animated" ng-mouseleave="hideProductPreview()">
 				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)" medley-item>
 					<img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" class="result-image" draggable="false">
 					<div class="no-image-box" ng-hide="item.images.medium">No Image</div>
-					<h6><img class="result-retailer-logo" ng-src="img/{{ item.retailer | lowercase }}_logo.png"></h6>
+					<!-- <h6 ng-show="{{ item.retailer == 'Amazon' || item.retailer == 'Etsy' }}">
+						<img class="result-retailer-logo" ng-src="img/{{ item.retailer | lowercase }}_logo.png">
+					</h6> -->
+					<h5 ng-hide="{{ item.retailer == 'Amazon' || item.retailer == 'Etsy' }}">
+						{{ item.retailer }}
+					</h5>
 				</div>
 				<div class="col-md-8 result-title-container" ng-mouseover="showProductPreview(item)" medley-item>
-					<h4 class="result-title">{{ item.title | limitTo:80 }}</h4>
-					<h5>{{ item.category }}</h5>
-					<h6>{{ item.price_new }}</h6>
-					<h6>{{ item.price_used }}</h6>
+					<table class="table result-table">
+						<tbody>
+							<tr>
+								<td colspan="2" class="result-title">
+									{{ item.title | limitTo:80 }}
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2" class="result-description">
+									{{ item.description | limitTo:160 }}...
+								</td>
+							</tr>
+							<tr>
+								<td class="result-category">
+									{{ item.category }}
+								</td>
+								<td class="result-price">
+									$ {{ item.price_new }}
+								</td>
+							</tr>
+						</tbody>
+					</table>
 				</div>
 				<div class="col-md-1 add-btn" ng-click="addBasketItem(item, $event)" ng-mouseover="hideProductPreview(item)">
 					<i class="fa fa-plus"></i>
 				</div>
 			</div> <!-- .row -->
 		</div> <!-- ng-repeat -->
-		<div id="scroll-search-searching" class="row" ng-show="scrollsearch_in_progress">
-			<div class="col-md-12">
-				<i class="fa fa-refresh fa-spin"></i> Fetching more results from {{ retailer | lowercase }}...
-			</div>
-		</div>
+
+		<div class="row" ng-show="search_results.length > 19">
+              <div class="status col-md-6" ng-show="search_in_progress">
+                <i class="fa fa-refresh fa-spin"></i>
+                <span>Loading More Products...</span>
+              </div>
+        </div>
+
 		<div id="scroll-search-empty" class="row" ng-show="scrollsearch_empty">
 			<div class="col-md-12">
 				<i class="fa fa-times-circle"></i> <span>No more results available from {{ retailer | lowercase }}</span>
@@ -49,6 +76,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- product preview -->
 		<div class="row" ng-show="product_preview">
 			<div id="product-preview" class="col-md-offset-1 col-md-11">

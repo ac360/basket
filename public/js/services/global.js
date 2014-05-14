@@ -35,8 +35,8 @@ angular.module('mean.system').factory("Global", ['$http', '$rootScope', '$modal'
 	    			if (callback) { callback(medleys) };
 		        });
     		},
-    		getMedleysByFolder: function(folderId, callback) {
-    			Medleys.getByFolder({ folderId: folderId }, function(medleys) {
+    		getMedleysByFolder: function(folderId, offset, callback) {
+    			Medleys.getByFolder({ folderId: folderId, offset: offset }, function(medleys) {
     				console.log("Folder Medleys Loaded in Global:", medleys)
 	    			if (callback) { callback(medleys) };
 		        });

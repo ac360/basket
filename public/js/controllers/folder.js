@@ -1,8 +1,10 @@
 angular.module('mean.system').controller('FolderController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Defaults
-    $scope.folderpage = {};
-    $scope.folderpage.medleys = false;
+    $scope.folderpage               = {};
+    $scope.folderpage.medleys       = [];
+    $scope.folder_offset            = 0;
+    $scope.fetching_folder_medleys  = false;
 
     $scope.initializeFolderPage = function() {
         if ($scope.user) {
@@ -51,13 +53,14 @@ angular.module('mean.system').controller('FolderController', ['$scope', 'Global'
         }
     };
     $scope.getMedleysByFolder = function() {
-        Global.getMedleysByFolder($stateParams.folderId, function(medleys) {
+        Global.getMedleysByFolder($stateParams.folderId, $scope.folder_offset, function(medleys) {
             $scope.folderpage.medleys = [];
             // Set Medley Size
             angular.forEach(medleys, function(medley) {
                 $scope.folderpage.medleys.push( Global.sizeMedleySmall(medley) );
                 Global.updateMedleyViewCount(medley.short_id);
             });
+            $scope.folder_offset = $scope.folder_offset + 20;
         });
     };
 

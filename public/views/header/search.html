@@ -35,25 +35,47 @@
             </div> <!-- row -->
 
             <!-- Search Container -->
-            <div class="row" ng-if="status.status">
+            <div class="row" ng-show="search_in_progress">
               <div class="status col-md-6">
-                 <p><i class="fa fa-refresh fa-spin" ng-show=" status.icon == 'refresh' "></i><i class="fa fa-times-circle" ng-show=" status.icon == 'error' "></i><span>{{ status.message }}</span> </p>
+                <i class="fa fa-refresh fa-spin"></i>
+                <span>Searching...</span>
               </div>
             </div>
+           
             <form>
                 <div class="row">
                     <div id="search-container" class="col-md-7">
                         <div class="input-group">
                             <div class="input-group-btn">
-                                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">{{ retailer }} <span class="caret"></span></button>
+                                <button type="button" class="btn btn-primary btn-lg dropdown-toggle" data-toggle="dropdown">{{ search_meta.retailer }} <span class="caret"></span></button>
                                 <ul class="dropdown-menu">
-                                  <li><a ng-click="setRetailer('All Retailers')">All Retailers</a></li>
+                                  <li style="padding-top:10px;"><a ng-click="setRetailer('All Brands')">All Brands (500+ Brands)</a></li>
                                   <li class="divider"></li>
-                                  <li><a ng-click="setRetailer('Amazon')">Amazon</a></li>
-                                  <li><a ng-click="setRetailer('Etsy')">Etsy</a></li>
+                                  <!-- <li><a ng-click="setRetailer('Amazon')">Amazon</a></li> -->
+                                  <li><a ng-click="setRetailer('Anthropologie')">Anthropologie</a></li>
+                                  <li><a ng-click="setRetailer('Asos')">Asos</a></li>
+                                  <li><a ng-click="setRetailer('Banana Republic')">Banana Republic</a></li>
+                                  <li><a ng-click="setRetailer('Burberry')">Burberry</a></li>
+                                  <li><a ng-click="setRetailer('Coach')">Coach</a></li>
+                                  <!-- <li><a ng-click="setRetailer('Etsy')">Etsy</a></li> -->
+                                  <li><a ng-click="setRetailer('Forever 21')">Forever 21</a></li>
+                                  <li><a ng-click="setRetailer('Gap')">Gap</a></li>
+                                  <li><a ng-click="setRetailer('Gucci')">Gucci</a></li>
+                                  <li><a ng-click="setRetailer('J. Crew')">J.Crew</a></li>
+                                  <li><a ng-click="setRetailer('Marc Jacobs')">Marc Jacobs</a></li>
+                                  <li><a ng-click="setRetailer('Michael Kors')">Michael Kors</a></li>
+                                  <li><a ng-click="setRetailer('Nasty Gal')">Nasty Gal</a></li>
+                                  <li><a ng-click="setRetailer('Nike')">Nike</a></li>
+                                  <li><a ng-click="setRetailer('Old Navy')">Old Navy</a></li>
+                                  <li><a ng-click="setRetailer('Victorias Secret')">Victorias Secret</a></li>
+                                  <li><a ng-click="setRetailer('Yves Saint Laurent')">Yves Saint Laurent</a></li>
+                                  <li class="divider"></li>
+                                  <li style="padding:0px 10px 5px 10px;"><span style="font-size:10px;rgba(0,0,0,0.5);">
+                                     Note: Clicking on 'All Brands' will search over 500 brands
+                                  </span></li>
                                 </ul>
                             </div><!-- /btn-group -->
-                          <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_keywords" placeholder="Enter A Product"> 
+                          <input type="text" class="form-control input-lg" name="search_keywords" ng-model="search_meta.keywords" placeholder="Enter A Product"> 
                           <span class="input-group-btn">
                             <button class="btn btn-primary btn-lg" ng-click="searchRetailers(search_keywords)"><i class="fa fa-search"></i> Search</button>
                           </span>

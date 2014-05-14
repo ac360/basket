@@ -6,14 +6,17 @@ An implementation of gridster-like widgets for Angular JS.  This is not a wrappe
 Demo html/css/js is included and can be executed by running "grunt serve" or by opening app/index.html in a web browser.
 
 Here is an example of the default usage:
-
+```HTML
     <div gridster>
     	<ul>
     		<li gridster-item="item" ng-repeat="item in standardItems"></li>
     	</ul>
     </div>
-
+```
 Which expects a scope setup like the following:
+``` JavaScript
+    // IMPORTANT: Items should be placed in the grid in the order in which they should appear.
+    // In most cases the sorting should be by row ASC, col ASC
 
     // these map directly to gridsterItem directive options
     $scope.standardItems = [
@@ -29,25 +32,25 @@ Which expects a scope setup like the following:
       { sizeX: 1, sizeY: 1, row: 2, col: 3 },
       { sizeX: 1, sizeY: 1, row: 2, col: 4 }
     ];
-
+```
 Alternatively, you can use the html attributes, similar to the original gridster plugin, but with two-way data binding:
-
+```HTML
     <div gridster>
     	<ul>
     		<li gridster-item row="item.position[0]" col="item.position[1]" size-x="item.size.x" size-y="item.size.y" ng-repeat="item in customItems"></li>
     	</ul>
     </div>
-
+```
 or:
-
+```HTML
     <div data-gridster>
     	<ul>
     		<li data-gridster-item data-row="item.position[0]" data-col="item.position[1]" data-sizex="item.size.x" data-sizey="item.size.y" ng-repeat="item in customItems"></li>
     	</ul>
     </div>
-
+```
 This allows the items to provide their own structure for row, col, and size:
-
+```JavaScript
     $scope.customItems = [
       { size: { x: 2, y: 1 }, position: [0, 0] },
       { size: { x: 2, y: 2 }, position: [0, 2] },
@@ -61,17 +64,17 @@ This allows the items to provide their own structure for row, col, and size:
       { size: { x: 1, y: 1 }, position: [2, 3] },
       { size: { x: 1, y: 1 }, position: [2, 4] }
     ];
-
+```
 Instead of using attributes for row, col, and size, you can also just use a mapping object for the gridster-item directive:
-
+```HTML
     <div gridster="gridsterOpts">
     	<ul>
     		<li gridster-item="customItemMap" ng-repeat="item in customItems"></li>
     	</ul>
     </div>
-
+```
 This expects a scope similar to the previous example, but with customItemMap also defined in the scope:
-
+```JavaScript
     // maps the item from customItems in the scope to the gridsterItem options
     $scope.customItemMap = {
         sizeX: 'item.size.x',
@@ -79,17 +82,17 @@ This expects a scope similar to the previous example, but with customItemMap als
         row: 'item.position[0]',
         col: 'item.position[1]'
     };
-
+```
 The gridsterItem directive can be configured like this:
-
+```HTML
     <div gridster="gridsterOpts">
         <ul>
             <li gridster-item="item" ng-repeat="item in standardItems"></li>
         </ul>
     </div>
-
+```
 With a scope like:
-
+```JavaScript
     $scope.gridsterOpts = {
       minRows: 2, // the minimum height of the grid, in rows
       maxRows: 100,
@@ -100,10 +103,10 @@ With a scope like:
       defaultSizeX: 2, // the default width of a gridster item, if not specifed
       defaultSizeY: 1, // the default height of a gridster item, if not specified
       mobileBreakPoint: 600, // if the screen is not wider that this, remove the grid layout and stack the items
-      resize: {
+      resizable: {
          enabled: true,
          start: function(event, uiWidget, $element) {}, // optional callback fired when resize is started,
-         drag: function(event, uiWidget, $element) {}, // optional callback fired when item is resized,
+         resize: function(event, uiWidget, $element) {}, // optional callback fired when item is resized,
          stop: function(event, uiWidget, $element) {} // optional callback fired when item is finished resizing
       },
       draggable: {
@@ -114,7 +117,7 @@ With a scope like:
          stop: function(event, uiWidget, $element) {} // optional callback fired when item is finished dragging
       }
     };
-
+```
 This directive/plugin does not generate style tags, like the jQuery plugin.  It also uses standard camalCase for variables and object properties, while the original plugin used lower\_case\_with_underscores.  These options have not and may never be implemented:
 
 * widget_class - not necessary since directives already whatever classes and attributes you want to add
@@ -138,3 +141,34 @@ This directive/plugin does not generate style tags, like the jQuery plugin.  It 
 * collision.on_overlap
 * collision.on\_overlap\_stop
 
+
+Watching item size and position:
+
+The typical Angular way would be to do a $scope.$watch on your item or items in the scope.  Example:
+
+```JavaScript
+// two objects, converted to gridster items in the view via ng-repeat
+$scope.items = [{},{}];
+
+$scope.$watch('items', function(items){
+   // one of the items changed
+}, true);
+```
+
+or
+
+```JavaScript
+$scope.$watch('items[0]', function(){
+   // item0 changed
+}, true);
+```
+
+or
+
+```JavaScript
+$scope.$watch('items[0].sizeX', function(){
+   // item0 sizeX changed
+}, true);
+```
+
+The third argument, true, is to make the watch based on the value of the object, rather than just matching the reference to the object.

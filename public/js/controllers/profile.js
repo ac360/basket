@@ -20,7 +20,7 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
         });
     };
     $scope.MedleysByProfile = function(username) {
-        $scope.fetching_profile_medleys     = true;
+        $scope.fetching_profile_medleys        = true;
         // Fetch Your Medleys
         Medleys.getUserMedleys({ username: $scope.profilepage.profile.username, offset: $scope.profile_offset },function(medleys) {
             angular.forEach(medleys, function(medley) {
@@ -28,7 +28,7 @@ angular.module('mean.system').controller('ProfileController', ['$scope', 'Global
                 Global.updateMedleyViewCount(medley.short_id);
             });
             console.log("Medleys by profile "+$scope.profilepage.profile.username+" loaded:", $scope.profilepage.medleys);
-            $scope.profile_offset           = $scope.profile_offset + 20;
+            $scope.profile_offset               = $scope.profile_offset + 20;
             $timeout(function() {
                 $scope.fetching_profile_medleys = false;
             },1000);

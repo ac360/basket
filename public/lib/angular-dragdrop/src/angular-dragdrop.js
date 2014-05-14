@@ -22,7 +22,7 @@
  * Implementing Drag and Drop functionality in AngularJS is easier than ever.
  * Demo: http://codef0rmer.github.com/angular-dragdrop/
  *
- * @version 1.0.6
+ * @version 1.0.7
  *
  * (c) 2013 Amit Gharat a.k.a codef0rmer <amit.2006.it@gmail.com> - amitgharat.wordpress.com
  */
@@ -85,7 +85,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
       dropSettings.index = this.fixIndex(droppableScope, dropSettings, dropModelValue);
 
       jqyoui_pos = angular.isArray(dragModelValue) ? dragSettings.index : null;
-      dragItem = angular.isArray(dragModelValue) ? dragModelValue[jqyoui_pos] : dragModelValue;
+      dragItem = angular.copy(angular.isArray(dragModelValue) ? dragModelValue[jqyoui_pos] : dragModelValue);
 
       if (angular.isArray(dropModelValue) && dropSettings && dropSettings.index !== undefined) {
         dropItem = dropModelValue[dropSettings.index];
@@ -94,6 +94,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
       } else {
         dropItem = {};
       }
+      dropItem = angular.copy(dropItem);
 
       if (dragSettings.animate === true) {
         this.move($draggable, $droppableDraggable.length > 0 ? $droppableDraggable : $droppable, null, 'fast', dropSettings, null);
@@ -130,13 +131,13 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
       }
 
       var zIndex = 9999,
-        fromPos = $fromEl.offset(),
+        fromPos = $fromEl[dropSettings.containment || 'offset'](),
         wasVisible = $toEl && $toEl.is(':visible'),
         hadNgHideCls = $toEl.hasClass('ng-hide');
 
       if (toPos === null && $toEl.length > 0) {
         if (($toEl.attr('jqyoui-draggable') || $toEl.attr('data-jqyoui-draggable')) !== undefined && $toEl.ngattr('ng-model') !== undefined && $toEl.is(':visible') && dropSettings && dropSettings.multiple) {
-          toPos = $toEl.offset();
+          toPos = $toEl[dropSettings.containment || 'offset']();
           if (dropSettings.stack === false) {
             toPos.left+= $toEl.outerWidth(true);
           } else {
@@ -146,7 +147,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
           // Angular v1.2 uses ng-hide to hide an element 
           // so we've to remove it in order to grab its position
           if (hadNgHideCls) $toEl.removeClass('ng-hide');
-          toPos = $toEl.css({'visibility': 'hidden', 'display': 'block'}).offset();
+          toPos = $toEl.css({'visibility': 'hidden', 'display': 'block'})[dropSettings.containment || 'offset']();
           $toEl.css({'visibility': '','display': wasVisible ? 'block' : 'none'});
         }
       }
@@ -186,7 +187,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
     };
 
     this.mutateDraggable = function(scope, dropSettings, dragSettings, dragModel, dropModel, dropItem, $draggable) {
-      var isEmpty = angular.equals(angular.copy(dropItem), {}),
+      var isEmpty = angular.equals(dropItem, {}),
         dragModelValue = scope.$eval(dragModel);
 
       scope.dndDropItem = dropItem;
@@ -255,7 +256,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
                 start: function(event, ui) {
                   zIndex = angular.element(jqyouiOptions.helper ? ui.helper : this).css('z-index');
                   angular.element(jqyouiOptions.helper ? ui.helper : this).css('z-index', 9999);
-                  jqyoui.startXY = angular.element(this).offset();
+                  jqyoui.startXY = angular.element(this)[dragSettings.containment || 'offset']();
                   ngDragDropService.callEventCallback(scope, dragSettings.onStart, event, ui);
                 },
                 stop: function(event, ui) {
@@ -286,7 +287,7 @@ var jqyoui = angular.module('ngDragDrop', []).service('ngDragDropService', ['$ti
         var dropSettings;
         var updateDroppable = function(newValue, oldValue) {
           if (newValue) {
-            dropSettings = scope.$eval(angular.element(this).attr('jqyoui-droppable') || angular.element(this).attr('data-jqyoui-droppable')) || {};
+            dropSettings = scope.$eval(angular.element(element).attr('jqyoui-droppable') || angular.element(element).attr('data-jqyoui-droppable')) || {};
             element
               .droppable({disabled: false})
               .droppable(scope.$eval(attrs.jqyouiOptions) || {})

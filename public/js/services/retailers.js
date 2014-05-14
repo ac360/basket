@@ -1,7 +1,6 @@
 // Medleys service used for medleys REST endpoint
-angular.module('mean.retailers').factory("Retailers", ['$resource', function($resource) {
-    return $resource('retailers/search', {
-    }, {
+window.app.factory("Retailers", ['$resource', function($resource) {
+    return $resource( null, null, {
     	search:    {
     		method:  'GET',
             params:  { 
@@ -12,6 +11,16 @@ angular.module('mean.retailers').factory("Retailers", ['$resource', function($re
             	etsy_offset: '@etsy_offset'  
             },
     		isArray: false
-    	}
+    	},
+        searchShopStyle:    {
+            method:  'GET',
+            url:     'http://api.shopstyle.com/api/v2/products?pid=' + shopstyleKey,
+            params:  { 
+                fts:       '@fts', 
+                offset:    '@offset', 
+                limit:     '@limit' 
+            },
+            isArray: false
+        }
     });
 }]);

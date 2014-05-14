@@ -179,7 +179,6 @@ var mongoose        = require('mongoose'),
         } else {
             res.redirect('/');
         }
-        
     };
 
     // Find Medley by Username
@@ -215,6 +214,7 @@ var mongoose        = require('mongoose'),
 
     // Find Medleys by Folder
     exports.getByFolder = function(req, res) {
+        var offset = parseInt(req.query.offset);
         // Load Folder
         Folder.findOne({ _id: req.params.folderId, user: req.user }).exec(function(err, folder) {
             if (err) { 
@@ -225,7 +225,7 @@ var mongoose        = require('mongoose'),
                 res.jsonp({ error: "Folder Couldn't be Found" });
             } else {
                 // Get X Number of Medleys - TODO enable params here
-                var medleyIDs = folder.medleys.slice(0,20);
+                var medleyIDs = folder.medleys.slice(offset, offset + 20);
                 Medley.find( {'short_id': { $in: medleyIDs } }).populate('user', 'name username affiliate').exec(function(err, medleys) {
                     process_medleys(req.user, res, medleys, function(medleys){
                         medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
