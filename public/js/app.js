@@ -16,6 +16,7 @@ app.run(function($rootScope, $state, $compile, Retailers) {
 
 		$rootScope.setRetailer = function(retailer) {
 	        $rootScope.search_meta.retailer = retailer;
+	        if ($rootScope.search_results === 'none') { $rootScope.search_results = false };
 	    };
 
 		$rootScope.searchRetailers = function(scrollsearch) {
@@ -44,7 +45,11 @@ app.run(function($rootScope, $state, $compile, Retailers) {
 	        	// Perform Search
 	        	Retailers.searchShopStyle( params_shopstyle, function(results) {
 		            $rootScope.formatResultsShopStyle(results, function(results) {
-		            	$rootScope.search_results = $rootScope.search_results.concat(results);
+		            	if (!results.length) {
+		            		$rootScope.search_results = 'none'
+		            	} else {
+		            		$rootScope.search_results = $rootScope.search_results.concat(results);
+		            	};
 		            	console.log("ShopStyle Results: ", $rootScope.search_results);
 		            	$rootScope.search_in_progress = false;
 		            }); // $rootScope.formatResultsShopStyle

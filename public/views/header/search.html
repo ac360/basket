@@ -41,6 +41,15 @@
                 <span>Searching...</span>
               </div>
             </div>
+
+            <div class="row" ng-show=" search_results === 'none' ">
+              <div class="status col-md-6">
+                <i class="fa fa-times-circle" style="margin-right:0px;"></i>
+                <span>No results found for "{{ search_meta.keywords }}" at {{ search_meta.retailer }} </span>
+              </div>
+            </div>
+
+
            
             <form>
                 <div class="row">
