@@ -18,11 +18,15 @@ app.run(function($rootScope, $state, $compile, Retailers) {
 	        $rootScope.search_meta.retailer = retailer;
 	    };
 
-		$rootScope.searchRetailers = function() {
+		$rootScope.searchRetailers = function(scrollsearch) {
 			$rootScope.search_in_progress = true;
 	        // Check State, Navigate to Search Page
 	        if ($state.current.name !== "search") {
 	            $state.go('search', {}, {});
+	        };
+	        // Check if Infinite Scroll Search
+	        if (!scrollsearch) {
+	        	$rootScope.search_results = [];
 	        };
 			// Check Retailers
 	        if ($rootScope.search_meta.retailer === 'All Brands' || $rootScope.search_meta.retailer === 'Anthropologie'  || $rootScope.search_meta.retailer === 'Asos' || $rootScope.search_meta.retailer === 'Banana Republic' || $rootScope.search_meta.retailer === 'Burberry' || $rootScope.search_meta.retailer === 'Coach' || $rootScope.search_meta.retailer === 'Forever 21' || $rootScope.search_meta.retailer === 'Gap' || $rootScope.search_meta.retailer === 'Gucci' || $rootScope.search_meta.retailer === 'J. Crew' || $rootScope.search_meta.retailer === 'Marc Jacobs' || $rootScope.search_meta.retailer === 'Michael Kors' || $rootScope.search_meta.retailer === 'Nasty Gal' || $rootScope.search_meta.retailer === 'Nike' || $rootScope.search_meta.retailer === 'Old Navy' || $rootScope.search_meta.retailer === "Victorias Secret" || $rootScope.search_meta.retailer === 'Yves Saint Laurent') {
@@ -90,7 +94,7 @@ app.run(function($rootScope, $state, $compile, Retailers) {
                         if ($rootScope.search_in_progress === false) {
                         	// Add to the Offset
                             $rootScope.search_meta.offset = $rootScope.search_meta.offset + 20;
-                            $rootScope.searchRetailers();
+                            $rootScope.searchRetailers(true);
                         };
                     };
                 };
