@@ -10,7 +10,7 @@ app.run(function($rootScope, $state, $compile, Retailers) {
 	
 	// SEARCH FUNCTIONS ------------------------------------------
 		// Defaults
-		$rootScope.search_results 		  = [];
+		$rootScope.search_results 		  = false;
 		$rootScope.search_meta    		  = { keywords: '', retailer: 'All Brands', offset: 0, limit: 20 };
 		$rootScope.search_in_progress     = false;
 

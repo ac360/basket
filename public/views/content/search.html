@@ -43,11 +43,20 @@
 			</div> <!-- .row -->
 		</div> <!-- ng-repeat -->
 
-		<div class="row" ng-show="search_results.length > 19">
-              <div class="status col-md-6" ng-show="search_in_progress">
-                <i class="fa fa-refresh fa-spin"></i>
-                <span>Loading More Products...</span>
-              </div>
+		<div class="row" ng-show="!search_results">
+			<div class="col-md-12 well" id="search-instructions">
+				<i class="fa fa-search" style="font-size:30px;opacity:0.2;margin-right:10px;"></i> 
+				<span style="font-size:22px;opacity:0.2">Search millions of products in the above search bar!</span>
+			</div>
+		</div>
+
+		<div class="row" style="min-height:30px;padding-top:15px;">
+			<div ng-show="search_results.length > 19">
+                <div class="status col-md-12 st-centered" ng-show="search_in_progress">
+                    <i class="fa fa-refresh fa-spin"></i>
+                    <span>Loading More Products...</span>
+                </div>
+            </div>
         </div>
 
 		<div id="scroll-search-empty" class="row" ng-show="scrollsearch_empty">
