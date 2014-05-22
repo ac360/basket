@@ -50,6 +50,7 @@ app.run(function($rootScope, $state, $compile, Retailers) {
 		            	} else {
 		            		$rootScope.search_results = $rootScope.search_results.concat(results);
 		            	};
+		            	console.log("Search completed: ", $rootScope.search_meta)
 		            	console.log("ShopStyle Results: ", $rootScope.search_results);
 		            	$rootScope.search_in_progress = false;
 		            }); // $rootScope.formatResultsShopStyle
@@ -101,6 +102,8 @@ app.run(function($rootScope, $state, $compile, Retailers) {
                             $rootScope.search_meta.offset = $rootScope.search_meta.offset + 20;
                             $rootScope.searchRetailers(true);
                         };
+                    } else {
+                    	$rootScope.search_meta.offset = 0
                     };
                 };
             };
