@@ -87,10 +87,10 @@ app.run(function($rootScope, $state, $compile, Retailers) {
             if ( $(window).scrollTop() >= ( $(document).height() - $(window).height() ) ) {
                 if ($state.current.name === "home") {
                     // Browse Medleys Infinite Scroll
-                    if ($scope.fetchingmedleys_inprogress === false) {
+                    if ($rootScope.fetchingmedleys_inprogress === false) {
                         console.log("infinite scroll activated")
-                        $scope.fetchingmedleys_inprogress = true;
-                        $scope.getFeed();
+                        $rootScope.fetchingmedleys_inprogress = true;
+                        $rootScope.getFeed();
                     };
                 };
                 if ($state.current.name === "search") {
