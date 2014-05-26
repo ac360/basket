@@ -2,7 +2,7 @@ extends layouts/default
 
 block content
   section.container
-    div(ui-view="header")
-    div(ui-view="content")
-    div(ui-view="footer")
+    div(ui-view="header",  autoscroll="false")
+    div(ui-view="content", autoscroll="false")
+    div(ui-view="footer",  autoscroll="false")
   #fb-root

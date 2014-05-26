@@ -1,10 +1,9 @@
 <p class="close-container"><button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="font-size:25px;" ng-click="close()">&times;</button></p>
 <div class="modal-content-container">
-	<h1 class="st-centered">Create New Folder</h1>
-	<h5 class="st-centered">Enter A Folder Title</h5>
+	<h3 class="st-centered" style="font-weight:300;color:#777777;margin-bottom:10px;">Create New Folder</h3>
 	<form ng-submit="createNewFolder()">
 		<div class="form-group">
-			<input id="folder-input" type="text" ng-model="title" maxlength="25" ng-trim="true" class="form-control" placeholder="Folder Title" autofocus="true">
+			<input id="folder-input" type="text" ng-model="title" maxlength="25" ng-trim="true" class="form-control" placeholder="Enter Folder Name" autofocus="true" autofocus>
 		</div>
 		<p class="st-centered" style="margin-bottom:20px;"><input type="submit" class="btn btn-primary btn-lg" value="Create"></p>
 	</form>

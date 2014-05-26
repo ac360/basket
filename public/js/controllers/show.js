@@ -1,14 +1,13 @@
-angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
+angular.module('mean.system').controller('ShowController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.show_medley      = false;
     $scope.load_error       = false;
     $scope.templateReady    = false;
 
     $scope.getVoteStatus = function() {
-        Global.getMedleyVoteStatus($scope.show_medley._id, function(vote) {
+        Global.getMedleyVoteStatus($rootScope.show_medley._id, function(vote) {
             // If User Has Not Voted
             if (vote) {
                 $('.fa-heart-o').removeClass('fa-heart-o').addClass('fa-heart');
@@ -21,67 +20,54 @@ angular.module('mean.system').controller('ShowController', ['$scope', 'Global', 
 
     $scope.applyTemplate = function(template) {
         // Add Template Style
-        var h = $(window).height() + 40
+        var h = $(window).height() + 40;
         $('body').addClass(template);
-
         $scope.templateReady = true;
     };
 
     $scope.initializeShow = function() {
-        var self = this;
-        Global.showMedley( $stateParams.basketId, function(medley) {
+        $rootScope.showMedley( $stateParams.basketId, function(medley) {
             if(!medley.items) {
                 $timeout(function(){ 
                     $scope.load_error = true;
                 },1000);
             } else {
-                console.log("show medley: ", medley)
-                $scope.show_medley = Global.sizeMedleyMedium(medley);
+                $rootScope.show_medley = $rootScope.sizeMedleyMedium(medley);
+                console.log("Show Medley: ", $rootScope.show_medley);
                 // Update Page Title
-                var pageTitle = "Medley - " + $scope.show_medley.hashtags.join(" ");
+                var pageTitle = "Medley - " + $rootScope.show_medley.hashtags.join(" ");
                 $(document).attr('title', pageTitle);
                 // Apply Template
-                $scope.applyTemplate(medley.template);
+                $scope.applyTemplate($rootScope.show_medley.template);
                 // Check Share Option
-                if ($scope.share == true) {
+                if ($rootScope.share == true) {
                     $timeout(function() {
                         if ($state.current.name === 'show') {
-                            Modals.publishedShare($scope.show_medley);
-                            $scope.$parent.$parent.share = false;
+                            Modals.publishedShare($rootScope.show_medley);
+                            $rootScope.share = false;
                         };
                     }, 4000);
                 };
                 // Update View Count
-                Global.updateMedleyViewCount($scope.show_medley.short_id)
+                $rootScope.updateMedleyViewCount($rootScope.show_medley.short_id)
                 // Get Vote Status
-                if ($scope.user) {
+                if ($rootScope.user) {
                     $timeout(function() {
-                        $scope.getVoteStatus();
-                    })
+                        $rootScope.getMedleyVoteStatus($rootScope.show_medley.short_id);
+                    }, 5000)
                 };
             } // If No Medley found 
-        });
+        }); // $rootScope.showMedley()
     }; // initializeShow();
 
     // Initialize
 
+        $scope.initializeShow();
+
         // Listeners - Medley Updated
         $scope.$on('MedleyUpdated', function(e, medley) {
-            console.log("Updated: ", medley);
-            $scope.show_medley.votes = medley.votes;
-            $scope.show_medley.views = medley.views;
+            console.log("Show Medley Updated: ", medley);
+            $rootScope.show_medley.votes = medley.votes;
+            $rootScope.show_medley.views = medley.views;
         });
-
-        if ($scope.user) {
-            $scope.initializeShow();
-        } else {
-            $scope.initializeShow();
-            // Listener - Authetication
-            $scope.$on('SignedInViaFacebook', function(e, user){
-                $timeout(function() {
-                    $scope.getVoteStatus();
-                })
-            });
-        }
-    
 }]);

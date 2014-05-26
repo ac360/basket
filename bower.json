@@ -6,7 +6,7 @@
     "angular": "1.2.10",
     "angular-resource": "latest",
     "angular-cookies": "latest",
-    "angular-bootstrap": "~0.10.0",
+    "angular-bootstrap": "0.11.0",
     "json3": "latest",
     "jquery": "latest",
     "angular-ui-router": "latest",

@@ -154,6 +154,7 @@ border:none!important;text-align: center;padding-top:55px;margin-left:15px;heigh
 	.hashtag-modal .modal-content-container {padding:0px 30px 50px 30px;}	
 	.hashtag-modal .modal-content h1 {font-weight:300!important;color:#666;}
 	.hashtag-modal .modal-content h5 {font-weight:300!important;color:#888;margin-bottom:20px;font-size:18px;}
+	.hashtag-modal .modal-content p  {color:#555;}
 	.hashtag-modal .modal-content #hashtags-input {max-width:400px;color:#555;text-align:center;padding-top:20px;padding-bottom:20px;margin: 0 auto;height:100px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.hashtag-modal .modal-content #hashtags-input span {color:#7bb4f5;}
 
@@ -163,7 +164,7 @@ border:none!important;text-align: center;padding-top:55px;margin-left:15px;heigh
 	.folder-modal .modal-content-container {padding:0px 30px 50px 30px;}	
 	.folder-modal .modal-content h1 {font-weight:300!important;color:#666;}
 	.folder-modal .modal-content h5 {font-weight:300!important;color:#888!important;margin-bottom:20px;font-size:18px;}
-	.folder-modal .modal-content #folder-input {max-width:300px;text-align:center;border-top:1px solid rgba(0,0,0,0.08);border-right:1px solid rgba(0,0,0,0.08);border-left:1px solid rgba(0,0,0,0.08);padding-top:5px;padding-bottom:5px;margin: 0 auto;height:45px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
+	.folder-modal .modal-content #folder-input {max-width:300px;text-align:center;padding-top:5px;padding-bottom:5px;margin: 0 auto;height:45px;overflow:auto;margin-bottom:20px;-webkit-box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);box-shadow: 0 2px 0 0 rgba(0,0,0,0.2);}
 	.folder-modal .modal-content #folder-input span {color:#7bb4f5;}
 
 	/* Account */
@@ -202,8 +203,9 @@ border:none!important;text-align: center;padding-top:55px;margin-left:15px;heigh
 	.share-modal .modal-content 			{background:#f6f6f6;min-height:300px;height:auto;padding:0px;border:none!important;-webkit-box-shadow: none!important;box-shadow:none!important;}
 	.share-modal .modal-content-container   {padding:0px 30px 50px 30px;}							   
 	.share-modal .close-container 			{height:30px;padding-right:8px;padding-top:3px;}
-	.share-modal h2 						{font-weight:300!important;margin:0px 0px 15px 0px;}
+	.share-modal h2 						{font-weight:300!important;margin:0px 0px 15px 0px;color:#666666!important;}
 	.share-modal h4 						{font-weight:300!important;color:#888!important;margin-top:20px;font-size:18px;}
+	.share-modal .modal-content p           {color:#666;}
 
 	/* Product */
 	.product-modal {background:transparent;}

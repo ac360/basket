@@ -37,10 +37,10 @@
                     </div><!-- #side-container -->
 
                 </div> <!-- col-md-3 -->
-                <div class="col-md-6" ng-show="folderpage.medleys">
+                <div class="col-md-6">
                     <div class="home-col-left medleys-list">
 
-                        <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in folderpage.medleys">
+                        <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
                             <div class="medley-hashtags">
                                 <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
                             </div>
@@ -59,13 +59,17 @@
                             </div>
                         </div>
 
-                        <div id="loading-box" ng-show="folderpage.medleys === false"><i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> Loading Medleys</div>
+                        <div id="loading-box" ng-show="loading_medleys">
+                            <i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> 
+                            Loading Medleys
+                        </div>
+
+                        <div id="loading-box" ng-show="end_medleys">
+                            No Medleys...
+                        </div>
 
                     </div>
                 </div> <!-- col-md-6 -->
-                <div class="col-md-6 medleys-list" ng-show="folderpage.medleys.length == 0">
-                    <h4 style="margin-top:40px;">This folder has no Medleys...</h4>
-                </div>
             </div><!-- row -->
 
         </div><!-- col-md-12 -->

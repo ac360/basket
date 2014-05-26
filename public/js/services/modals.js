@@ -28,7 +28,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                                 if (response.error) {
                                     $scope.signUpError(response.error);
                                 } else if (response.email) {
-                                    Global.loadCurrentUser();
+                                    $rootScope.loadUser();
                                     $modalInstance.close();
                                 };
                             });
@@ -86,6 +86,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                 templateUrl: 'views/modals/share_modal.html',
                 controller:  function ($scope, $modalInstance, Global) {
                     $scope.medley = medley;
+                    console.log(medley)
                     $scope.shareFacebook = function() {
 
                         FB.getLoginStatus(function(response) {
@@ -111,7 +112,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                             display: 'iframe',
                             picture: $scope.medley.items[0].images.medium,
                             name:    'Medley - ' + $scope.medley.hashtags.join(" ")
-                        },  function(response){
+                        },  function(response) {
                               console.log(response);
                         });
                     };
@@ -138,7 +139,6 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
 		          templateUrl: 'views/modals/product_modal.html',
           		controller:  function ($scope, $modalInstance, $timeout, Global) {
             			$scope.product = product;
-            			console.log(product)
             			// $('.container').addClass('st-blur');
             			$scope.close = function() {
             				$modalInstance.close();
@@ -151,18 +151,11 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
               windowClass: 'account-modal',
               templateUrl: 'views/modals/account_modal.html',
               controller:  function ($scope, $modalInstance, $timeout, Global, Users) {
-                  $scope.user         = Global.getCurrentUser();
-                  $scope.$on('UserUpdated', function(e, user){
-                      $scope.user     = user;
-                  });
-                  $scope.$on('UserAuthenticated', function(e, user){
-                      $scope.user     = user;
-                  });
                   $scope.success      = false;
                   $scope.descriptionA = true;
                   $scope.updateUser   = function() {
                       if ($scope.user.current_password) {
-                          Global.updateUser($scope.user, function(user){
+                          $rootScope.updateUser($scope.user, function(user){
                               if ( user.error ) { 
                                   return $scope.updateError(user.error) 
                               };
@@ -176,7 +169,6 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
                       };
                   };
                   $scope.updateError = function(error) {
-                        Global.loadCurrentUser();
                         $scope.update_error = error;
                         $timeout(function(){
                             $scope.update_error = false;
@@ -195,7 +187,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
               controller:  function ($scope, $modalInstance, $timeout, Global) {
                     $scope.createNewFolder = function() {
                         var title = $('#folder-input').val().substring(0, 25);
-                        Global.createNewFolder(title, function(err, folder){
+                        $rootScope.createNewFolder(title, function(err, folder){
                             if (err) {return console.log(err) }
                             console.log("Folder Created: ", folder);
                         });
@@ -213,7 +205,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
         hashtag: function(product) {
         	var modalInstance = $modal.open({
           		windowClass: 'hashtag-modal',
-		        templateUrl: 'views/modals/hashtag_modal.html',
+		          templateUrl: 'views/modals/hashtag_modal.html',
           		controller:  function ($scope, $modalInstance, $timeout, $state, Global) {
               			// Defaults	
               			$scope.hashtag_error = false;
@@ -228,17 +220,16 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           				        angular.forEach(tagslistarr, function(hashtag,val) {
           				            if(hashtag.indexOf('#') == 0){
           				              hashtags.push(hashtag);  
-          				            }
+          				            };
           				        });
           				        if (hashtags.length > 0) {
-          				        	Global.setMedleyProperty("hashtags", hashtags, function(medley){
-              								Global.publishMedley();
-              							});
+                            $rootScope.basket.hashtags = hashtags;
+              							$rootScope.publishMedley();
           				        } else {
-          				           $scope.hashtag_error = 'Please enter at least one hashtag';
-          				           $timeout(function(){
+          				            $scope.hashtag_error = 'Please enter at least one hashtag';
+          				            $timeout(function() {
           				              $scope.hashtag_error = false;
-          				           }, 5000);
+          				            }, 5000);
           				        } // if statement
           					}; // validateAndPublish  
                     $scope.checkLimit = function(e) {
@@ -251,15 +242,14 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
               			};
 
               			// Listener - Medley Published
-              			$scope.$on('MedleyPublished', function(e, medley) {
+              			$rootScope.$on('MedleyPublished', function(e, medley) {
                 				$modalInstance.close();
       						      $('#create-stage ul').html('');
       			            $state.go('show', { basketId: medley.short_id });
-      			            $scope.share = true;
       			        });
 				      }
 		    });
-        }
+      }
     }; // return
   }
 ]);

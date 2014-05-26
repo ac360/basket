@@ -30,16 +30,8 @@ var mongoose        = require('mongoose'),
     };
 
     process_medleys = function(user, res, medleys, callback) {
-            // Add Affiliate Code
-            medleys.forEach(function(m, index){
-                if (m.user.affilate !== 'medley01-20') {
-                    m.items.forEach(function(i){
-                        i.link = i.link.replace("medley01-20", m.user.affiliate);    
-                    });
-                };
-            });
             // Add Voted Attribute
-            if (user) {
+            if (user  && medleys.length > 0) {
                 var processedMedleys = [];
                 medleys.forEach(function(m, index){
                     // Find Vote And Process
@@ -204,7 +196,7 @@ var mongoose        = require('mongoose'),
                     console.log(err) ;
                     return false;
                 } else {
-                    process_medleys(req.user, res, medleys, function(medleys){
+                    process_medleys(req.user, res, medleys, function(medleys) {
                         medleys.sort( function(obj1, obj2) { return obj2.votes - obj1.votes });
                         res.jsonp(medleys);
                     });
@@ -269,7 +261,7 @@ var mongoose        = require('mongoose'),
 
     // Show Most Recent Medleys
     exports.getByDate = function(req, res) {
-            Medley.find().sort({created: -1}).skip(req.query.offset).limit(5).populate('user', 'name username affiliate').exec(function(err, medleys) {
+            Medley.find().sort({created: -1}).skip(req.query.offset).limit(20).populate('user', 'name username affiliate').exec(function(err, medleys) {
                 if (err) { 
                     console.log(err) ;
                     return false;
@@ -291,9 +283,9 @@ var mongoose        = require('mongoose'),
             res.jsonp(medleys); 
         });
         // Get By Votes
-        Medley.find().sort({votes: -1}).skip(req.query.offset).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
+        Medley.find().sort({votes: -1}).skip(req.query.offset).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByVotes) {            
             // Get By Views
-            Medley.find().sort({views: -1}).skip(req.query.offset).limit(17).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
+            Medley.find().sort({views: -1}).skip(req.query.offset).limit(10).populate('user', 'name username affiliate').exec(function(err, medleysByViews) {
                 allMedleys = allMedleys.concat(medleysByVotes);
                 allMedleys = allMedleys.concat(medleysByViews);
                 // Randomize Order

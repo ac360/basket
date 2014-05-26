@@ -10,7 +10,7 @@
                                 <img class="page-image" draggable="false" ng-src="img/hashtag_image.png">
                             </p>
                             <h6 class="st-centered">Medleys with this hashtag:</h6>
-                            <h1 class="st-centered user-profile-name">#{{ hashtagpage.hashtag }}</h1>
+                            <h1 class="st-centered user-profile-name">#{{ hashtag }}</h1>
                             <h4>Your Saved Medleys</h4>
                             <small style="font-size:10px;">Drag a Medley over a folder to save it</small>
                             <ul class="list-unstyled">
@@ -41,12 +41,17 @@
 
                 <div class="medleys-list col-md-6"> 
 
-                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in hashtagpage.medleys">
+                    <div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
                         <div class="medley-hashtags">
                             <a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
                         </div>
-                        <div class="medley-box medley-box-small" style="height:{{medley.height}}px" 
-                        ui-draggable="{{ draggable }}" drag="medley">
+                        <div 
+                            class="medley-box medley-box-small" 
+                            style="height:{{medley.height}}px" 
+                            ui-draggable="{{ draggable }}" 
+                            ng-model="medley"
+                            drag="medley"
+                        >
                             <div class="medley-item" style="position:absolute;width:{{item.width}}px;height:{{item.height}}px;top:{{item.top}}px;left:{{item.left}}px;display:block;" ng-repeat="item in medley.items" medley-item>
                                 <img ng-src="{{item.images.medium}}" draggable="false">
                             </div>
@@ -59,7 +64,14 @@
                         </div>
                     </div>
 
-                    <div id="loading-box" ng-show="hashtagpage.medleys === false"><i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> Loading Medleys</div>
+                    <div id="loading-box" ng-show="loading_medleys">
+                        <i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> 
+                        Loading Medleys
+                    </div>
+
+                    <div id="loading-box" ng-show="end_medleys">
+                        No More Medleys...
+                    </div>
 
                 </div> <!-- col-md-6 -->
             </div><!-- row -->

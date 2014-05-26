@@ -55,7 +55,7 @@ app.directive("deleteMedley", function() {
             $element.click(function() {
                 var c = confirm("Are you sure you want to delete this medley?  It can never be recovered...");
                 if (c) {
-                    Global.deleteMedley($attrs.deleteMedley);
+                    $rootScope.deleteMedley($attrs.deleteMedley);
                 };
             })
         }
@@ -69,7 +69,7 @@ app.directive("accountPopup", function() {
         replace: true,
         controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
             $element.click(function() {
-                if ( Global.getCurrentUser() ) {
+                if ( $rootScope.user ) {
                     Modals.account();
                 } else {
                     Modals.signIn();
@@ -86,6 +86,7 @@ app.directive("shareLink", function() {
         replace: true,
         controller: function($scope, $element, $attrs, $rootScope, Global, Modals, Medleys){
             $element.click(function() {
+                console.log("hello")
                 Modals.share($attrs.shareLink);
             })
         }
@@ -127,10 +128,9 @@ app.directive("voteLink", function() {
         replace: true,
         controller: function($scope, $element, $attrs, $rootScope, Global, Users, Modals) {
             $element.click(function() {
-                if ( Global.getCurrentUser() ) {
-                    Global.voteMedley($attrs.voteLink, function(medley) {
-                        Global.getMedleyVoteStatus(medley._id, function(vote) {
-                            console.log(vote)
+                if ( $rootScope.user ) {
+                    $rootScope.voteMedley($attrs.voteLink, function(medley) {
+                        $rootScope.getMedleyVoteStatus(medley._id, function(vote) {
                             // If User Has Voted
                             if (vote) {
                                 $( '.' + medley.short_id ).find( "i" ).removeClass('fa-heart-o').addClass('fa-heart');

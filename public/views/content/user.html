@@ -40,7 +40,7 @@
 				</div> <!-- col-md-6 -->
 				<div id="user-profile-medleys" class="medleys-list col-md-6"> 
 
-					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in profilepage.medleys">
+					<div class="medley-small {{ medley.template }}-embed" ng-repeat="medley in medleys">
 						<div class="medley-hashtags">
 							<a class="hashtag" href="#!/hashtag/{{ hashtag | removehashtag }}" ng-repeat="hashtag in medley.hashtags">{{ hashtag }}</a>
 						</div>
@@ -61,7 +61,14 @@
 						</div>
 					</div>
 
-                    <div id="loading-box" ng-show="profilepage.medleys === false"><i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> Loading Medleys</div>
+                    <div id="loading-box" ng-show="loading_medleys">
+                        <i class="fa fa-refresh fa-spin" style="margin-right:2px;"></i> 
+                        Loading Medleys
+                    </div>
+
+                    <div id="loading-box" ng-show="end_medleys">
+                        No More Medleys...
+                    </div>
 
 				</div> <!-- col-md-6 -->
 

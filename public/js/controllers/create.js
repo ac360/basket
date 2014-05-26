@@ -1,14 +1,13 @@
-angular.module('mean.system').controller('CreateController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, Modals) {
+angular.module('mean.system').controller('CreateController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Initialization Methods At Bottom
 
     // Set Defaults
-    $scope.global           = Global;
     $scope.hashtag_error    = false;
 
     $scope.resizeItem = function($event) {
       var hashkey = $($event.currentTarget).data('hashkey');
-      angular.forEach($scope.basket.items, function(bItem, bIndex){
+      angular.forEach($rootScope.basket.items, function(bItem, bIndex){
         // Find matching basket item
         if (bItem.$$hashKey == hashkey) {
             // Detect size and change
@@ -31,10 +30,10 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
         var r = confirm("Are you sure you want to remove this item?");
         if  (r == true) {
             var hashkey = $($event.currentTarget.parentElement).data('hashkey');
-            angular.forEach($scope.basket.items, function(bItem, bIndex){
+            angular.forEach($rootScope.basket.items, function(bItem, bIndex){
               // Find matching basket item and delete it from basket
               if (bItem.$$hashKey == hashkey) {
-                $scope.basket.items.splice(bIndex, 1);
+                $rootScope.basket.items.splice(bIndex, 1);
                 $scope.gridster.remove_widget( $($event.currentTarget.parentElement), function(){
                     self.updateBasketFromGrid();
                 });
@@ -48,36 +47,27 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
       var serialized = $scope.gridster.serialize();
       // Save Data to Basket
       angular.forEach(serialized, function(sItem, sIndex){
-          angular.forEach($scope.basket.items, function(bItem, bIndex){
+          angular.forEach($rootScope.basket.items, function(bItem, bIndex){
               if (bItem.$$hashKey === sItem.$$hashKey) {
                   bItem.col    = sItem.col;
                   bItem.row    = sItem.row;
                   bItem.size_x = sItem.size_x;
                   bItem.size_y = sItem.size_y;
-                  $scope.basket.items.splice(bIndex, 1);
-                  $scope.basket.items.push(bItem);
+                  $rootScope.basket.items.splice(bIndex, 1);
+                  $rootScope.basket.items.push(bItem);
               };
           });
-          // console.log("Serialized Data:", serialized);
-          // console.log("Updated Basket:", $scope.basket);
-      });
-      Global.setMedleyProperty("items", $scope.basket.items, function(medley) {
-        $scope.basket = medley;
-        console.log("From Global: ", $scope.basket)
       });
     };
 
     $scope.changeTemplate = function(template) {
-      Global.setMedleyProperty("template", template, function(medley) {
-        $scope.basket = medley;
-        console.log("From Global: ", $scope.basket)
-      });
+      $rootScope.basket.template = template;
       $('body').removeClass().addClass(template);
-      $('.logo').html('<img src="img/logo_'+$scope.basket.template+'.png" draggable="false">');
+      $('.logo').html('<img src="img/logo_' + $rootScope.basket.template + '.png" draggable="false">');
     };
 
     $scope.showPublishModal = function(){
-        if (Global.getCurrentUser()) {
+        if ($rootScope.user) {
             Modals.hashtag()
         } else {
             Modals.signIn();
@@ -87,32 +77,31 @@ angular.module('mean.system').controller('CreateController', ['$scope', 'Global'
     // Initialize
 
     $scope.initializeCreate = function() {
-        var self = this;
         // Init Gridster
         $scope.gridster =   $(".gridster ul").gridster({
-                                  widget_margins: [3, 3],
-                                  widget_base_dimensions: [100, 100],
-                                  avoid_overlapped_widgets: true,
-                                  max_cols: 6,
-                                  min_rows: 6,
-                                  max_rows: 5,
-                                  draggable: {
-                                      stop: function(event, ui){ 
-                                        self.updateBasketFromGrid(event, ui);
-                                      }
-                                  },
-                                  serialize_params: function($w, wgd) { 
-                                      return { 
-                                             $$hashKey: $($w).attr('data-hashkey'), 
-                                             col: wgd.col, 
-                                             row: wgd.row, 
-                                             size_x: wgd.size_x, 
-                                             size_y: wgd.size_y 
-                                      };
-                                  }
-                            }).data("gridster");
+                  widget_margins: [3, 3],
+                  widget_base_dimensions: [100, 100],
+                  avoid_overlapped_widgets: true,
+                  max_cols: 6,
+                  min_rows: 6,
+                  max_rows: 5,
+                  draggable: {
+                      stop: function(event, ui){ 
+                        $scope.updateBasketFromGrid(event, ui);
+                      }
+                  },
+                  serialize_params: function($w, wgd) { 
+                      return { 
+                             $$hashKey: $($w).attr('data-hashkey'), 
+                             col: wgd.col, 
+                             row: wgd.row, 
+                             size_x: wgd.size_x, 
+                             size_y: wgd.size_y 
+                      };
+                  }
+        }).data("gridster");
         // Add Scope Items
-        angular.forEach($scope.basket.items, function(item, index){
+        angular.forEach($rootScope.basket.items, function(item, index){
           var html = '<li class="medley-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'" tooltip-html-unsafe="<b>Drag</b> wherever and <b>Double-Click</b> to change the size" tooltip-popup-delay="1300"><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
           $scope.gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
         });

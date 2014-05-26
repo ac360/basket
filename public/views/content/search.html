@@ -1,7 +1,7 @@
 <div class="row">
 	<div class="results-container col-md-7">
 
-		<div ng-repeat="item in search_results">
+		<div ng-repeat="item in search_results" ng-hide="item.hidden">
 			<div class="row result animated" ng-mouseleave="hideProductPreview()">
 				<div class="result-image-container col-md-3" ng-mouseover="showProductPreview(item)" medley-item>
 					<img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" class="result-image" draggable="false">
@@ -80,7 +80,7 @@
 					<div class="new-basket-item animated bounceIn">
 						<div class="new-basket-item-image"><img ng-show="item.images.medium" ng-src="{{ item.images.medium }}" draggable="false"><p ng-hide="item.images.medium" style="padding-top:16px;margin:0px;font-size:12px;color:#aaa">No Image</p></div>
 						<div class="new-basket-item-title">{{ item.title | limitTo:35 }}</div>
-						<div class="new-basket-item-options"><i class="fa fa-times" ng-click="removeArrayItem(item.$$hashKey, basket.items)"></i></div>
+						<div class="new-basket-item-options"><i class="fa fa-times" ng-click="removeMedleyItem(item.$$hashKey, basket.items)"></i></div>
 					</div>
 				</div>
 			</div>
