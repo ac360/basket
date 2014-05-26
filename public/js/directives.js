@@ -51,7 +51,7 @@ app.directive("deleteMedley", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
+        controller: function($scope, $element, $attrs, $rootScope, Modals){
             $element.click(function() {
                 var c = confirm("Are you sure you want to delete this medley?  It can never be recovered...");
                 if (c) {
@@ -67,7 +67,7 @@ app.directive("accountPopup", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Modals, Global){
+        controller: function($scope, $element, $attrs, $rootScope, Modals){
             $element.click(function() {
                 if ( $rootScope.user ) {
                     Modals.account();
@@ -84,7 +84,7 @@ app.directive("shareLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Modals, Medleys){
+        controller: function($scope, $element, $attrs, $rootScope, Modals, Medleys){
             $element.click(function() {
                 console.log("hello")
                 Modals.share($attrs.shareLink);
@@ -98,7 +98,7 @@ app.directive("shareFacebookLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Modals, Medleys){
+        controller: function($scope, $element, $attrs, $rootScope, Modals, Medleys){
             $element.click(function() {
                 Global.shareFacebook($attrs.shareFacebookLink);
             })
@@ -111,7 +111,7 @@ app.directive("signInLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Users, Modals){
+        controller: function($scope, $element, $attrs, $rootScope, Users, Modals){
             $element.click(function() {
                 console.log("clicked!");
                 // Check if user is logged in
@@ -126,7 +126,7 @@ app.directive("voteLink", function() {
     return {
         restrict: "A",
         replace: true,
-        controller: function($scope, $element, $attrs, $rootScope, Global, Users, Modals) {
+        controller: function($scope, $element, $attrs, $rootScope, Users, Modals) {
             $element.click(function() {
                 if ( $rootScope.user ) {
                     $rootScope.voteMedley($attrs.voteLink, function(medley) {

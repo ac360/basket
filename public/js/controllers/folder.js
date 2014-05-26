@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('FolderController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
+angular.module('mean.system').controller('FolderController', ['$rootScope', '$scope', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Defaults
 

@@ -7,14 +7,14 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           	var modalInstance = $modal.open({
             		windowClass: 'signin-modal',
   		          templateUrl: 'views/modals/sign_in_modal.html',
-            		controller:  function ($scope, $modalInstance, Global, $timeout, $state, Users) {
+            		controller:  function ($rootScope, $scope, $modalInstance, $timeout, $state, Users) {
               			$scope.signUp = function() {
                         if (this.email && this.password && this.username){
                             Users.signUpManual({ email: this.email, password: this.password, username: this.username }, function(response) {
                                 if (response.error) {
                                     $scope.signUpError(response.error);
                                 } else if (response.email) {
-                                    Global.loadCurrentUser();
+                                    $rootScope.loadCurrentUser();
                                     $modalInstance.close();
                                 };
                             });
@@ -126,7 +126,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
             var modalInstance = $modal.open({
                 windowClass: 'contact-modal',
                 templateUrl: 'views/modals/contact_modal.html',
-                controller:  function ($scope, $modalInstance, Global) {
+                controller:  function ($scope, $modalInstance) {
                     $scope.close = function() {
                       $modalInstance.close();
                     };
@@ -137,7 +137,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
         	var modalInstance = $modal.open({
           		windowClass: 'product-modal',
 		          templateUrl: 'views/modals/product_modal.html',
-          		controller:  function ($scope, $modalInstance, $timeout, Global) {
+          		controller:  function ($scope, $modalInstance, $timeout) {
             			$scope.product = product;
             			// $('.container').addClass('st-blur');
             			$scope.close = function() {
@@ -150,7 +150,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           var modalInstance = $modal.open({
               windowClass: 'account-modal',
               templateUrl: 'views/modals/account_modal.html',
-              controller:  function ($scope, $modalInstance, $timeout, Global, Users) {
+              controller:  function ($scope, $modalInstance, $timeout, Users) {
                   $scope.success      = false;
                   $scope.descriptionA = true;
                   $scope.updateUser   = function() {
@@ -184,7 +184,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
           var modalInstance = $modal.open({
               windowClass: 'folder-modal',
               templateUrl: 'views/modals/folder_modal.html',
-              controller:  function ($scope, $modalInstance, $timeout, Global) {
+              controller:  function ($scope, $modalInstance, $timeout) {
                     $scope.createNewFolder = function() {
                         var title = $('#folder-input').val().substring(0, 25);
                         $rootScope.createNewFolder(title, function(err, folder){
@@ -206,7 +206,7 @@ angular.module('mean.system').factory('Modals', ['$http', '$rootScope', '$modal'
         	var modalInstance = $modal.open({
           		windowClass: 'hashtag-modal',
 		          templateUrl: 'views/modals/hashtag_modal.html',
-          		controller:  function ($scope, $modalInstance, $timeout, $state, Global) {
+          		controller:  function ($scope, $modalInstance, $timeout, $state) {
               			// Defaults	
               			$scope.hashtag_error = false;
                     $scope.hashtags;

@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('AdminController', ['$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', 'Admin', function ($scope, Global, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals, Admin) {
+angular.module('mean.system').controller('AdminController', ['$scope', 'Medleys', 'Retailers', 'Users', 'Votes', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', 'Admin', function ($scope, Medleys, Retailers, Users, Votes, storage, $state, $stateParams, $location, $timeout, Modals, Admin) {
 
     // Defaults
     $scope.admin = {};

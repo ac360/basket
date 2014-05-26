@@ -1,4 +1,4 @@
-angular.module('mean.system').controller('CreateController', ['$rootScope', '$scope', 'Global', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Global, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, Modals) {
+angular.module('mean.system').controller('CreateController', ['$rootScope', '$scope', 'Medleys', 'Retailers', 'Users', 'storage', '$state', '$stateParams', '$location', '$timeout', 'Modals', function ($rootScope, $scope, Medleys, Retailers, Users, storage, $state, $stateParams, $location, $timeout, Modals) {
 
     // Initialization Methods At Bottom
 
