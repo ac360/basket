@@ -102,7 +102,7 @@ angular.module('mean.system').controller('CreateController', ['$rootScope', '$sc
         }).data("gridster");
         // Add Scope Items
         angular.forEach($rootScope.basket.items, function(item, index){
-          var html = '<li class="medley-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'" tooltip-html-unsafe="<b>Drag</b> wherever and <b>Double-Click</b> to change the size" tooltip-popup-delay="1300"><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
+          var html = '<li class="medley-item" ng-dblClick="resizeItem($event)" data-hashkey="'+item.$$hashKey+'" ><i class="fa fa-times pull-right" ng-click="removeBasketItem($event)"></i><img src="'+item.images.large+'"></li>';
           $scope.gridster.add_widget( html, item.size_x, item.size_y, item.col, item.row );
         });
         // Save Positions Immediately
